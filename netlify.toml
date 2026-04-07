@@ -1,0 +1,53 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+  command = "npm install"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@anthropic-ai/sdk", "@supabase/supabase-js"]
+
+# CORS headers for all API routes
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+
+# Route /api/* to Netlify functions
+[[redirects]]
+  from = "/api/trends"
+  to = "/.netlify/functions/trends"
+  status = 200
+
+[[redirects]]
+  from = "/api/recommend"
+  to = "/.netlify/functions/recommend"
+  status = 200
+
+[[redirects]]
+  from = "/api/analyse"
+  to = "/.netlify/functions/analyse"
+  status = 200
+
+[[redirects]]
+  from = "/api/itinerary"
+  to = "/.netlify/functions/itinerary"
+  status = 200
+
+[[redirects]]
+  from = "/api/closet"
+  to = "/.netlify/functions/closet"
+  status = 200
+
+[[redirects]]
+  from = "/api/waitlist"
+  to = "/.netlify/functions/waitlist"
+  status = 200
+
+# Fallback — SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
