@@ -56,6 +56,22 @@ function normalizePins(items) {
     .filter(function(p) { return p.imageUrl; });
 }
 
+async function fetchWithAuth(url, accessToken) {
+  const res = await fetch(url, {
+    headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+  });
+  const text = await res.text();
+  let json;
+  try { json = JSON.parse(text); } catch { json = { raw: text }; }
+  if (!res.ok) {
+    console.error("Pinterest API error " + res.status + ":", text.slice(0, 500));
+    throw new Error("Pinterest API " + res.status);
+  }
+  console.log("Pinterest response keys:", Object.keys(json).join(", "));
+  console.log("Items count:", (json.items || json.data || []).length);
+  return json;
+}
+
 exports.handler = async function(event) {
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -75,25 +91,48 @@ exports.handler = async function(event) {
   const limit = Math.min(parseInt(p.limit || "16", 10), 24);
   const query = city + " " + style;
   const cacheKey = "pinterest:" + city + ":" + style + ":" + limit;
+
   const cached = await getCached(cacheKey);
   if (cached) {
     return { statusCode: 200, headers, body: JSON.stringify({ pins: cached, source: "cache", city, query }) };
   }
+
   try {
-    const url = PINTEREST_BASE + "/pins?query=" + encodeURIComponent(query) + "&page_size=" + limit;
-    const res = await fetch(url, {
-      headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
-    });
-    if (!res.ok) {
-      const errText = await res.text();
-      throw new Error("Pinterest API " + res.status + ": " + errText);
+    let pins = [];
+
+    // Try pin search first (requires Standard API access)
+    try {
+      const searchUrl = PINTEREST_BASE + "/pins?query=" + encodeURIComponent(query) + "&page_size=" + limit;
+      const json = await fetchWithAuth(searchUrl, accessToken);
+      pins = normalizePins(json.items || json.data || []);
+    } catch (searchErr) {
+      console.log("Pin search failed, trying board fallback:", searchErr.message);
     }
-    const json = await res.json();
-    const pins = normalizePins(json.items || json.data || []);
-    await setCache(cacheKey, pins);
-    return { statusCode: 200, headers, body: JSON.stringify({ pins, source: "api", city, query }) };
+
+    // Fallback: pull from user own boards (works with any access level)
+    if (pins.length === 0) {
+      try {
+        const boardsJson = await fetchWithAuth(PINTEREST_BASE + "/boards?page_size=10", accessToken);
+        const boards = boardsJson.items || boardsJson.data || [];
+        console.log("Found boards:", boards.length);
+        for (const board of boards) {
+          if (pins.length >= limit) break;
+          const pinsJson = await fetchWithAuth(
+            PINTEREST_BASE + "/boards/" + board.id + "/pins?page_size=" + limit,
+            accessToken
+          );
+          pins = pins.concat(normalizePins(pinsJson.items || pinsJson.data || []));
+        }
+        console.log("Total board pins found:", pins.length);
+      } catch (boardErr) {
+        console.error("Board fallback failed:", boardErr.message);
+      }
+    }
+
+    if (pins.length > 0) await setCache(cacheKey, pins);
+    return { statusCode: 200, headers, body: JSON.stringify({ pins: pins.slice(0, limit), source: "api", city, query, count: pins.length }) };
   } catch (err) {
-    console.error("Pinterest error:", err.message);
+    console.error("Pinterest handler error:", err.message);
     return { statusCode: 500, headers, body: JSON.stringify({ error: err.message, pins: [] }) };
   }
 };
