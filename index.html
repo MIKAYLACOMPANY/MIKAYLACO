@@ -1095,3 +1095,78 @@ setInterval(async()=>{const now=Date.now();const cached=trendCache[city];if(!cac
 </script>
 </body>
 </html>
+
+
+// ── PINTEREST PHOTO LOADER ──────────────────────────────
+const _pinCache = {};
+
+async function loadPinterestPhotos(city) {
+  const key = city.toLowerCase();
+  if (_pinCache[key]) { applyPins(_pinCache[key], city); return; }
+  try {
+    const res = await fetch(`/.netlify/functions/pinterest?city=${encodeURIComponent(key)}&limit=16`);
+    const json = await res.json();
+    if (json.pins && json.pins.length) {
+      _pinCache[key] = json.pins;
+      applyPins(json.pins, city);
+    }
+  } catch(e) { console.log('Pinterest load skipped:', e.message); }
+}
+
+function applyPins(pins, city) {
+  // Find all photo areas in visible cards
+  const photoAreas = document.querySelectorAll('.mcard-photo, .card-photo, .mcardphoto, [data-photo], .mcard .photo');
+  if (!photoAreas.length) {
+    // Fallback: find by background-only divs inside mcards
+    const mcards = document.querySelectorAll('.mcard');
+    mcards.forEach((card, i) => {
+      const pin = pins[i % pins.length];
+      if (!pin) return;
+      // Find the largest child div that looks like a photo placeholder
+      const divs = card.querySelectorAll('div');
+      let photoDiv = null;
+      divs.forEach(d => {
+        const s = window.getComputedStyle(d);
+        if (s.position === 'relative' || s.position === 'absolute' || s.background.includes('gradient') || d.className.includes('photo') || d.className.includes('img') || d.className.includes('visual')) {
+          photoDiv = d;
+        }
+      });
+      if (photoDiv) injectPhoto(photoDiv, pin);
+    });
+    return;
+  }
+  photoAreas.forEach((area, i) => {
+    const pin = pins[i % pins.length];
+    if (pin) injectPhoto(area, pin);
+  });
+}
+
+function injectPhoto(container, pin) {
+  if (container.dataset.pinLoaded) return;
+  container.dataset.pinLoaded = '1';
+  container.style.position = 'relative';
+  container.style.overflow = 'hidden';
+  const img = new Image();
+  img.src = pin.imageUrl;
+  img.alt = pin.title || 'fashion';
+  img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.7s ease;z-index:1;';
+  img.onload = () => { img.style.opacity = '1'; };
+  img.onerror = () => { container.dataset.pinLoaded = ''; };
+  container.appendChild(img);
+  if (pin.link) {
+    container.style.cursor = 'pointer';
+    container.onclick = (e) => { if(!e.target.closest('button,a')) window.open(pin.link,'_blank'); };
+  }
+}
+
+// Hook into pickCity — load Pinterest photos whenever city changes
+const _origPickCity = window.pickCity;
+if (typeof _origPickCity === 'function') {
+  window.pickCity = async function(city, el) {
+    await _origPickCity(city, el);
+    setTimeout(() => loadPinterestPhotos(city), 300);
+  };
+}
+
+// Also load for initial city on page load
+setTimeout(() => loadPinterestPhotos('paris'), 1000);
