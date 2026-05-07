@@ -1105,6 +1105,11 @@ async function loadPinterestPhotos(city) {
   } catch(e) {}
 }
 function applyPins(pins) {
+  // Inject Pinterest photos into hero tiles
+  document.querySelectorAll('.ht-art').forEach((area, i) => {
+    const pin = pins[i % pins.length];
+    if (pin) injectPhoto(area, pin);
+  });
   document.querySelectorAll('.mcard').forEach((card, i) => {
     const pin = pins[i % pins.length];
     if (!pin) return;
