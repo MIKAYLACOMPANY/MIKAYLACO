@@ -636,7 +636,7 @@ function buildHeroTiles(){
   const c=document.getElementById('heroTiles');
   c.innerHTML=HERO_TILES.map((t,i)=>`
     <div class="hero-tile" onclick="pickCity('${t.city.toLowerCase()}',null);document.getElementById('trends').scrollIntoView({behavior:'smooth'})">
-      <div class="ht-art" style="background:${t.bg};background-image:url(https://source.unsplash.com/featured/400x500/?fashion,${encodeURIComponent(t.label)});background-size:cover;background-position:center;min-height:${[0,2].includes(i)?'200px':'100px'}">
+      <div class="ht-art" style="background:${t.bg};background-image:url(${getUnsplashUrl(t.label, 400, 500)});background-size:cover;background-position:center;min-height:${[0,2].includes(i)?'200px':'100px'}">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
           <span style="font-family:'Playfair Display',serif;font-size:${i===0?'5rem':'3rem'};font-weight:300;color:rgba(255,255,255,.05);letter-spacing:.08em;text-transform:uppercase">${t.city}</span>
         </div>
@@ -790,9 +790,14 @@ const UNSPLASH_SEEDS = [
 let _unsplashSeedIdx = Math.floor(Date.now() / 3600000) % UNSPLASH_SEEDS.length;
 
 function getUnsplashUrl(query, w, h) {
-  const seed = Math.floor(Date.now() / 3600000); // Changes every hour
-  const fullQuery = encodeURIComponent(query + ' fashion');
-  return 'https://source.unsplash.com/featured/' + w + 'x' + h + '/?' + fullQuery + '&' + seed;
+  // Use lorem.space fashion photos - free, fast, fashion-specific
+  // Seed changes every hour so photos rotate
+  const hourSeed = Math.floor(Date.now() / 3600000);
+  // Mix query hash with hour for variety
+  let qHash = 0;
+  for (let i = 0; i < query.length; i++) qHash = (qHash * 31 + query.charCodeAt(i)) & 0xFFFF;
+  const finalSeed = (hourSeed * 7 + qHash) % 9999 + 1;
+  return 'https://api.lorem.space/image/fashion?w=' + w + '&h=' + h + '&hash=' + finalSeed;
 }
 
 // Refresh all Unsplash photos every hour
@@ -803,7 +808,7 @@ setInterval(() => {
     const tile = HERO_TILES[i % HERO_TILES.length];
     if (tile) {
       const seed = Math.floor(Date.now() / 3600000);
-      el.style.backgroundImage = 'url(https://source.unsplash.com/featured/400x500/?' + encodeURIComponent(tile.label + ' fashion') + '&' + seed + ')';
+      el.style.backgroundImage = 'url(' + getUnsplashUrl(tile.label, 400, 500) + ')';
     }
   });
   // Re-render trends/celebs to get new photos
@@ -1041,6 +1046,7 @@ function renderCelebs(){
     const artOpacity=cachedImg?'opacity:0;':'';
 const celebKeyword=encodeURIComponent((c.name||'celebrity fashion').split(' ')[0]+' fashion');
 const celebPhotoStyle=cachedImg?photoStyle:`background-image:url(${getUnsplashUrl(c.name + ' street style', 400, 500)});background-size:cover;background-position:center top;`;
+    const finalArtOpacity='opacity:0;';
     return `
     <div class="ccard">
       <div class="cc-ig-header">
@@ -1088,7 +1094,7 @@ function filterPDT(tier,el){pdt=tier;document.querySelectorAll('.pdt').forEach(b
 function renderPieces(layer,tier){
   const cat=PIECES[layer];if(!cat)return;
   const items=tier==='all'?[...(cat.budget||[]),...(cat.mid||[]),...(cat.luxury||[])]:(cat[tier]||[]);
-  document.getElementById('pieceScroll').innerHTML=items.map(p=>`<div class="pcard ${outfit[layer]?.id===p.id?'sel':''}" onclick="pickPiece('${layer}','${p.id}')" id="pc-${p.id}"><div class="pcard-em"><img class="pcard-img" src="https://source.unsplash.com/featured/200x200/?fashion,${(p.n||'fashion').split(' ').slice(0,2).join('+')}" alt="${p.n}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.remove()"><span class="pcard-emoji">${p.e}</span></div><div class="pcard-bd"><strong>${p.n}</strong><span class="pp">${p.p}</span><span class="pb">${p.b}</span></div></div>`).join('');
+  document.getElementById('pieceScroll').innerHTML=items.map(p=>`<div class="pcard ${outfit[layer]?.id===p.id?'sel':''}" onclick="pickPiece('${layer}','${p.id}')" id="pc-${p.id}"><div class="pcard-em"><img class="pcard-img" src="https://api.lorem.space/image/fashion?w=200&h=200&hash=${encodeURIComponent((p.n||'fashion').replace(/\s+/g,'_'))}" alt="${p.n}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.remove()"><span class="pcard-emoji">${p.e}</span></div><div class="pcard-bd"><strong>${p.n}</strong><span class="pp">${p.p}</span><span class="pb">${p.b}</span></div></div>`).join('');
 }
 function pickPiece(layer,id){
   const all=Object.values(PIECES[layer]).flat();const piece=all.find(p=>p.id===id);if(!piece)return;
