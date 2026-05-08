@@ -312,7 +312,11 @@ button{cursor:pointer;font-family:var(--sans);border:none;background:none}
 .pcard{flex-shrink:0;width:108px;background:var(--b);cursor:pointer;transition:background .12s;position:relative}
 .pcard:hover,.pcard.sel{background:#1A1A1A}
 .pcard.sel::after{content:'✓';position:absolute;top:4px;right:4px;background:#fff;color:var(--b);width:14px;height:14px;border-radius:50%;font-size:.52rem;display:flex;align-items:center;justify-content:center;font-weight:700}
-.pcard-em{width:100%;height:78px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;border-bottom:1px solid #1E1E1E}
+.pcard-em{width:100%;height:120px;position:relative;overflow:hidden;border-bottom:1px solid #1E1E1E;background:#0D0D0D}
+.pcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+.pcard-img.loaded{opacity:.85}
+.pcard-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;z-index:1;transition:opacity .3s;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.pcard-img.loaded~.pcard-emoji{opacity:0}
 .pcard-bd{padding:6px 7px}
 .pcard-bd strong{display:block;font-size:.6rem;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
 .pcard-bd .pp{font-size:.6rem;color:#888;display:block}
@@ -632,7 +636,7 @@ function buildHeroTiles(){
   const c=document.getElementById('heroTiles');
   c.innerHTML=HERO_TILES.map((t,i)=>`
     <div class="hero-tile" onclick="pickCity('${t.city.toLowerCase()}',null);document.getElementById('trends').scrollIntoView({behavior:'smooth'})">
-      <div class="ht-art" style="background:${t.bg};min-height:${[0,2].includes(i)?'200px':'100px'}">
+      <div class="ht-art" style="background:${t.bg};background-image:url(https://source.unsplash.com/featured/400x500/?fashion,${encodeURIComponent(t.label)});background-size:cover;background-position:center;min-height:${[0,2].includes(i)?'200px':'100px'}">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
           <span style="font-family:'Playfair Display',serif;font-size:${i===0?'5rem':'3rem'};font-weight:300;color:rgba(255,255,255,.05);letter-spacing:.08em;text-transform:uppercase">${t.city}</span>
         </div>
@@ -769,6 +773,43 @@ const ESSENTIALS=[
   {cat:'Dresses',name:'The Linen Midi',desc:'Packs small, looks like you planned everything.',tiers:[{l:'Budget',r:'$30–65',h:amz('women linen midi dress summer')},{l:'Mid',r:'$100–200',h:'https://www.thereformation.com/clothing/dresses'},{l:'Luxury',r:'$400+',h:'https://www.zimmermannwear.com/collections/dresses'}]},
   {cat:'Beauty',name:'Carry-On Beauty Kit',desc:'TSA-approved. Land looking polished.',tiers:[{l:'Budget',r:'$20–40',h:amz('travel size beauty kit women')},{l:'Mid',r:'$60–120',h:'https://www.sephora.com/travel-size-beauty'},{l:'Luxury',r:'$200+',h:'https://www.net-a-porter.com/en-us/shop/beauty'}]},
 ];
+
+
+// ── UNSPLASH FASHION PHOTO ENGINE ────────────────────
+// Continuously rotates fresh trending fashion photos every hour
+const UNSPLASH_SEEDS = [
+  'paris fashion week street style editorial',
+  'milan fashion week outfit model',
+  'street style fashion week 2024',
+  'fashion editorial luxury brand',
+  'instagram outfit of the day',
+  'vogue fashion editorial couture',
+  'trendy outfit women fashion',
+  'luxury fashion brand editorial',
+];
+let _unsplashSeedIdx = Math.floor(Date.now() / 3600000) % UNSPLASH_SEEDS.length;
+
+function getUnsplashUrl(query, w, h) {
+  const seed = Math.floor(Date.now() / 3600000); // Changes every hour
+  const fullQuery = encodeURIComponent(query + ' fashion');
+  return 'https://source.unsplash.com/featured/' + w + 'x' + h + '/?' + fullQuery + '&' + seed;
+}
+
+// Refresh all Unsplash photos every hour
+setInterval(() => {
+  _unsplashSeedIdx = Math.floor(Date.now() / 3600000) % UNSPLASH_SEEDS.length;
+  // Refresh hero tiles
+  document.querySelectorAll('.ht-art').forEach((el, i) => {
+    const tile = HERO_TILES[i % HERO_TILES.length];
+    if (tile) {
+      const seed = Math.floor(Date.now() / 3600000);
+      el.style.backgroundImage = 'url(https://source.unsplash.com/featured/400x500/?' + encodeURIComponent(tile.label + ' fashion') + '&' + seed + ')';
+    }
+  });
+  // Re-render trends/celebs to get new photos
+  renderTrends();
+  renderCelebs();
+}, 3600000); // 1 hour
 
 // ── UPLOAD ────────────────────────────────────────────
 document.getElementById('upFile').addEventListener('change',e=>{
@@ -942,6 +983,9 @@ function renderTrends(){
       ? `background-image:url(${cachedImg});background-size:cover;background-position:center;`
       : '';
     const artOpacity = cachedImg ? 'opacity:0;' : '';
+    const unsplashKeyword = encodeURIComponent((t.name||'fashion').split(' ').slice(0,2).join(' '));
+    const realPhotoStyle = cachedImg ? photoStyle : `background-image:url(${getUnsplashUrl(t.name, 400, 500)});background-size:cover;background-position:center;`;
+    const finalArtOpacity = 'opacity:0;';
 
     return `<div class="mcard">
       <div class="ig-frame">
@@ -953,10 +997,10 @@ function renderTrends(){
         </div>
         <div class="ig-frame-inner">
           <div class="ig-img-area">
-            <div class="ig-img-placeholder ${cachedImg?'og-loaded':''}" data-og-url="${postUrl}" style="${photoStyle}">
+            <div class="ig-img-placeholder ${cachedImg?'og-loaded':''}" data-og-url="${postUrl}" style="${realPhotoStyle}">
               <div class="ig-placeholder-bg"></div>
-              <div class="ipc-city" style="${artOpacity}">${city.charAt(0).toUpperCase()+city.slice(1)}</div>
-              <div class="ipc-trend" style="${artOpacity}">${t.name}</div>
+              <div class="ipc-city" style="${finalArtOpacity}">${city.charAt(0).toUpperCase()+city.slice(1)}</div>
+              <div class="ipc-trend" style="${finalArtOpacity}">${t.name}</div>
             </div>
           </div>
         </div>
@@ -995,6 +1039,8 @@ function renderCelebs(){
     const cachedImg=ogCache[c.post];
     const photoStyle=cachedImg?`background-image:url(${cachedImg});background-size:cover;background-position:center top;`:'';
     const artOpacity=cachedImg?'opacity:0;':'';
+const celebKeyword=encodeURIComponent((c.name||'celebrity fashion').split(' ')[0]+' fashion');
+const celebPhotoStyle=cachedImg?photoStyle:`background-image:url(${getUnsplashUrl(c.name + ' street style', 400, 500)});background-size:cover;background-position:center top;`;
     return `
     <div class="ccard">
       <div class="cc-ig-header">
@@ -1002,9 +1048,9 @@ function renderCelebs(){
         <div class="cc-handle-col"><span class="cc-name">${c.name}</span><span class="cc-handle">@${c.handle}</span></div>
         <span class="cc-platform ${c.platform}">${c.platform==='ig'?'IG':'TT'}</span>
       </div>
-      <div class="cc-photo-art ${cachedImg?'og-loaded':''}" data-og-url="${c.post}" style="${photoStyle}">
-        <div class="cc-photo-city" style="${artOpacity}">${c.city.charAt(0).toUpperCase()+c.city.slice(1)}</div>
-        <div class="cc-photo-content" style="${artOpacity}">
+      <div class="cc-photo-art ${cachedImg?'og-loaded':''}" data-og-url="${c.post}" style="${celebPhotoStyle}">
+        <div class="cc-photo-city" style="${finalArtOpacity}">${c.city.charAt(0).toUpperCase()+c.city.slice(1)}</div>
+        <div class="cc-photo-content" style="${finalArtOpacity}">
           <div class="cc-photo-name-big">${c.name.split(' ')[0]}</div>
           <div class="cc-geo-tag">📍 ${c.geo.replace('📍 ','')}</div>
         </div>
@@ -1042,7 +1088,7 @@ function filterPDT(tier,el){pdt=tier;document.querySelectorAll('.pdt').forEach(b
 function renderPieces(layer,tier){
   const cat=PIECES[layer];if(!cat)return;
   const items=tier==='all'?[...(cat.budget||[]),...(cat.mid||[]),...(cat.luxury||[])]:(cat[tier]||[]);
-  document.getElementById('pieceScroll').innerHTML=items.map(p=>`<div class="pcard ${outfit[layer]?.id===p.id?'sel':''}" onclick="pickPiece('${layer}','${p.id}')" id="pc-${p.id}"><div class="pcard-em">${p.e}</div><div class="pcard-bd"><strong>${p.n}</strong><span class="pp">${p.p}</span><span class="pb">${p.b}</span></div></div>`).join('');
+  document.getElementById('pieceScroll').innerHTML=items.map(p=>`<div class="pcard ${outfit[layer]?.id===p.id?'sel':''}" onclick="pickPiece('${layer}','${p.id}')" id="pc-${p.id}"><div class="pcard-em"><img class="pcard-img" src="https://source.unsplash.com/featured/200x200/?fashion,${(p.n||'fashion').split(' ').slice(0,2).join('+')}" alt="${p.n}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.remove()"><span class="pcard-emoji">${p.e}</span></div><div class="pcard-bd"><strong>${p.n}</strong><span class="pp">${p.p}</span><span class="pb">${p.b}</span></div></div>`).join('');
 }
 function pickPiece(layer,id){
   const all=Object.values(PIECES[layer]).flat();const piece=all.find(p=>p.id===id);if(!piece)return;
@@ -1093,120 +1139,7 @@ setInterval(async()=>{const now=Date.now();const cached=trendCache[city];if(!cac
   setTimeout(()=>['santorini','milan'].forEach(c=>fetch(`${API}/trends?city=${c}`).catch(()=>{})),5000);
 
 
-// ── PINTEREST PHOTO LOADER ──────────────────────────────
-const _pinCache = {};
-async function loadPinterestPhotos(city) {
-  const key = city.toLowerCase();
-  if (_pinCache[key]) { applyPins(_pinCache[key]); return; }
-  try {
-    const res = await fetch('/.netlify/functions/pinterest?city=' + encodeURIComponent(key) + '&limit=16');
-    const json = await res.json();
-    if (json.pins && json.pins.length) { _pinCache[key] = json.pins; applyPins(json.pins); }
-  } catch(e) {}
-}
-function applyPins(pins) {
-  // Inject Pinterest photos into hero tiles
-  document.querySelectorAll('.ht-art').forEach((area, i) => {
-    const pin = pins[i % pins.length];
-    if (pin) injectPhoto(area, pin);
-  });
-  document.querySelectorAll('.mcard').forEach((card, i) => {
-    const pin = pins[i % pins.length];
-    if (!pin) return;
-    const divs = Array.from(card.querySelectorAll('div'));
-    const target = divs.find(d => d.offsetHeight > 60 && !d.querySelector('span,button,a,.mcard-trend,.mcard-city') && !d.dataset.pinLoaded);
-    if (target) injectPhoto(target, pin);
-  });
-}
-function injectPhoto(el, pin) {
-  if (el.dataset.pinLoaded) return;
-  el.dataset.pinLoaded = '1';
-  el.style.cssText += ';position:relative;overflow:hidden;';
-  const img = new Image();
-  img.src = pin.imageUrl;
-  img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.8s;z-index:1;';
-  img.onload = () => img.style.opacity = '1';
-  img.onerror = () => { el.dataset.pinLoaded = ''; };
-  el.appendChild(img);
-}
-setTimeout(() => loadPinterestPhotos('paris'), 1500);
-
 })();
 </script>
 </body>
 </html>
-
-
-// ── PINTEREST PHOTO LOADER ──────────────────────────────
-const _pinCache = {};
-
-async function loadPinterestPhotos(city) {
-  const key = city.toLowerCase();
-  if (_pinCache[key]) { applyPins(_pinCache[key], city); return; }
-  try {
-    const res = await fetch(`/.netlify/functions/pinterest?city=${encodeURIComponent(key)}&limit=16`);
-    const json = await res.json();
-    if (json.pins && json.pins.length) {
-      _pinCache[key] = json.pins;
-      applyPins(json.pins, city);
-    }
-  } catch(e) { console.log('Pinterest load skipped:', e.message); }
-}
-
-function applyPins(pins, city) {
-  // Find all photo areas in visible cards
-  const photoAreas = document.querySelectorAll('.mcard-photo, .card-photo, .mcardphoto, [data-photo], .mcard .photo');
-  if (!photoAreas.length) {
-    // Fallback: find by background-only divs inside mcards
-    const mcards = document.querySelectorAll('.mcard');
-    mcards.forEach((card, i) => {
-      const pin = pins[i % pins.length];
-      if (!pin) return;
-      // Find the largest child div that looks like a photo placeholder
-      const divs = card.querySelectorAll('div');
-      let photoDiv = null;
-      divs.forEach(d => {
-        const s = window.getComputedStyle(d);
-        if (s.position === 'relative' || s.position === 'absolute' || s.background.includes('gradient') || d.className.includes('photo') || d.className.includes('img') || d.className.includes('visual')) {
-          photoDiv = d;
-        }
-      });
-      if (photoDiv) injectPhoto(photoDiv, pin);
-    });
-    return;
-  }
-  photoAreas.forEach((area, i) => {
-    const pin = pins[i % pins.length];
-    if (pin) injectPhoto(area, pin);
-  });
-}
-
-function injectPhoto(container, pin) {
-  if (container.dataset.pinLoaded) return;
-  container.dataset.pinLoaded = '1';
-  container.style.position = 'relative';
-  container.style.overflow = 'hidden';
-  const img = new Image();
-  img.src = pin.imageUrl;
-  img.alt = pin.title || 'fashion';
-  img.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.7s ease;z-index:1;';
-  img.onload = () => { img.style.opacity = '1'; };
-  img.onerror = () => { container.dataset.pinLoaded = ''; };
-  container.appendChild(img);
-  if (pin.link) {
-    container.style.cursor = 'pointer';
-    container.onclick = (e) => { if(!e.target.closest('button,a')) window.open(pin.link,'_blank'); };
-  }
-}
-
-// Hook into pickCity — load Pinterest photos whenever city changes
-const _origPickCity = window.pickCity;
-if (typeof _origPickCity === 'function') {
-  window.pickCity = async function(city, el) {
-    await _origPickCity(city, el);
-    setTimeout(() => loadPinterestPhotos(city), 300);
-  };
-}
-
-// Also load for initial city on page load
-setTimeout(() => loadPinterestPhotos('paris'), 1000);
