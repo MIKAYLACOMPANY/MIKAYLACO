@@ -3,1166 +3,262 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>MIKAYLA</title>
-<meta name="description" content="What to wear, everywhere. AI travel fashion intelligence."/>
+<title>MIKAYLA â AI Travel Fashion Intelligence</title>
+<meta name="description" content="Every city has its own dress code. MIKAYLA surfaces what's actually trending â sourced from TikTok, Instagram, Vogue â with every outfit linked to shop right now."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-/* ─── TOKENS ─────────────────────────────── */
-:root{
-  --b:#0A0A0A; --w:#FFFFFF; --g5:#F5F5F5; --g8:#888; --g4:#444; --g2:#222;
-  --serif:'Playfair Display',Georgia,serif;
-  --sans:'Inter',system-ui,sans-serif;
-  --pad:clamp(16px,5vw,72px);
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+ 18px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.45);
+  cursor:pointer;transition:all .2s;margin-right:-1px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--w);color:var(--b);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-button{cursor:pointer;font-family:var(--sans);border:none;background:none}
-::-webkit-scrollbar{width:2px;height:2px}
-::-webkit-scrollbar-thumb{background:var(--b)}
-::selection{background:var(--b);color:var(--w)}
-
-/* ─── NAV ─────────────────────────────────── */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:48px;padding:0 var(--pad);background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid #E8E8E8}
-.nav-logo{font-family:var(--serif);font-size:1.1rem;font-weight:400;letter-spacing:.25em;text-transform:uppercase}
-.nav-links{display:flex;gap:24px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g8)}
-.nav-links a:hover{color:var(--b)}
-.nav-pill{background:var(--b);color:var(--w);padding:6px 16px;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;transition:opacity .15s}
-.nav-pill:hover{opacity:.7}
-
-/* ─── TICKER ─────────────────────────────── */
-.ticker{background:var(--b);padding:7px 0;overflow:hidden;margin-top:48px}
-.ticker-t{display:flex;white-space:nowrap;animation:tick 36s linear infinite}
-.ticker-t span{font-size:.54rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.45);padding:0 28px}
-.ticker-t b{color:rgba(255,255,255,.15)}
-@keyframes tick{to{transform:translateX(-50%)}}
-
-/* ─── HERO ────────────────────────────────── */
-.hero{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1fr 1fr;position:relative}
-.hero-l{display:flex;flex-direction:column;justify-content:flex-end;padding:60px var(--pad) 60px;background:var(--w);position:relative}
-.hero-number{font-family:var(--serif);font-size:clamp(8rem,18vw,22rem);line-height:.82;font-weight:300;color:#F0F0F0;position:absolute;top:40px;left:0;letter-spacing:-.04em;pointer-events:none;user-select:none}
-.hero-label{font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g8);margin-bottom:16px;position:relative;z-index:1}
-.hero-h1{font-family:var(--serif);font-size:clamp(2.2rem,3.8vw,5rem);line-height:1.05;font-weight:300;letter-spacing:-.01em;position:relative;z-index:1;margin-bottom:20px}
-.hero-h1 em{font-style:italic}
-.hero-sub{font-size:.72rem;color:var(--g8);line-height:1.95;max-width:340px;position:relative;z-index:1;margin-bottom:32px;letter-spacing:.02em}
-.hero-ctas{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
-.btn-solid{background:var(--b);color:var(--w);padding:11px 24px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;transition:opacity .15s}
-.btn-solid:hover{opacity:.7}
-.btn-line{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g8);border-bottom:1px solid #CCC;padding-bottom:2px;transition:all .15s}
-.btn-line:hover{color:var(--b);border-color:var(--b)}
-
-/* HERO RIGHT: Pinterest-style mood board using CSS art + real photos */
-.hero-r{background:var(--b);display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);gap:2px;padding:2px;overflow:hidden;position:relative}
-.hero-tile{position:relative;overflow:hidden;cursor:pointer}
-.hero-tile:hover .ht-info{opacity:1}
-.hero-tile img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(100%);transition:filter .3s,transform .4s}
-.hero-tile:hover img{filter:grayscale(60%);transform:scale(1.04)}
-/* CSS fashion tiles — pure design, no stock photos */
-.ht-art{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .4s;position:relative}
-.hero-tile:hover .ht-art{transform:scale(1.04)}
-.ht-info{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;flex-direction:column;justify-content:flex-end;padding:10px;opacity:0;transition:opacity .25s}
-.ht-city{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px}
-.ht-name{font-family:var(--serif);color:#fff;font-size:.78rem;font-weight:400;font-style:italic}
-/* Tile spanning */
-.hero-tile:nth-child(1){grid-row:1/3}
-.hero-tile:nth-child(3){grid-row:2/4}
-.hero-tile:nth-child(5){grid-row:3/5}
-.hero-tile:nth-child(2){grid-row:1/2}
-
-/* ─── CITY RAIL ──────────────────────────── */
-.city-rail{border-bottom:1px solid #E8E8E8;position:sticky;top:48px;z-index:100;background:var(--w)}
-.city-rail-inner{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 var(--pad)}
-.city-rail-inner::-webkit-scrollbar{display:none}
-.ctab{padding:13px 16px;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g8);white-space:nowrap;border-bottom:1px solid transparent;cursor:pointer;transition:all .15s;margin-bottom:-1px}
-.ctab.on{color:var(--b);border-bottom-color:var(--b)}
-.ctab:hover:not(.on){color:var(--b)}
-
-/* ─── TREND FEED — PINTEREST MASONRY ─────── */
-.feed-section{padding:40px var(--pad)}
-.feed-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
-.feed-title-block{}
-.feed-city{font-family:var(--serif);font-size:clamp(1.6rem,2.6vw,3rem);font-weight:300;line-height:1.1;letter-spacing:-.01em}
-.feed-city em{font-style:italic}
-.feed-meta{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g8);margin-top:4px;display:flex;align-items:center;gap:8px}
-.live-dot{width:5px;height:5px;border-radius:50%;background:var(--b);animation:pulse 2s ease-in-out infinite;flex-shrink:0}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-.feed-controls{display:flex;align-items:center;gap:8px}
-.refresh-btn{display:flex;align-items:center;gap:5px;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g8);border:1px solid #E8E8E8;padding:7px 12px;transition:all .15s;cursor:pointer;font-family:var(--sans)}
-.refresh-btn:hover{border-color:var(--b);color:var(--b)}
-.refresh-btn.spin .r-ic{animation:rot .6s linear infinite}
-@keyframes rot{to{transform:rotate(360deg)}}
-.cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px}
-.cpill{padding:5px 12px;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid #E8E8E8;cursor:pointer;transition:all .15s;font-family:var(--sans);color:var(--g8)}
-.cpill.on{background:var(--b);color:var(--w);border-color:var(--b)}
-.cpill:hover:not(.on){border-color:var(--b);color:var(--b)}
-
-/* MASONRY GRID */
-.masonry{columns:4;column-gap:10px}
-@media(max-width:1100px){.masonry{columns:3}}
-@media(max-width:700px){.masonry{columns:2}}
-@media(max-width:420px){.masonry{columns:1}}
-.mcard{break-inside:avoid;margin-bottom:10px;cursor:pointer;position:relative;display:block}
-.mcard-visual{position:relative;overflow:hidden;background:var(--g5)}
-.mcard-visual img{width:100%;display:block;transition:transform .4s cubic-bezier(.4,0,.2,1);filter:grayscale(20%)}
-.mcard:hover .mcard-visual img{transform:scale(1.04);filter:grayscale(0%)}
-/* CSS art card — for when no photo is available */
-.mcard-art{width:100%;position:relative;overflow:hidden;background:var(--b)}
-.mcard-art-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;min-height:200px}
-.mcard:hover .mcard-art-inner{opacity:.85}
-.ma-city-text{font-family:var(--serif);font-size:3rem;font-weight:300;color:rgba(255,255,255,.08);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;letter-spacing:.05em}
-.ma-rank{font-family:var(--serif);font-size:4rem;font-weight:300;color:rgba(255,255,255,.12);position:absolute;bottom:8px;right:12px;line-height:1}
-.ma-badge-row{display:flex;gap:4px;margin-bottom:10px;position:relative;z-index:1}
-.ma-badge{font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5)}
-.ma-name{font-family:var(--serif);color:#fff;font-size:1rem;font-weight:400;font-style:italic;text-align:center;position:relative;z-index:1;margin-bottom:6px}
-.ma-heat{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);position:relative;z-index:1}
-/* Instagram-style photo frame */
-.ig-frame{width:100%;background:var(--g5);position:relative;overflow:hidden}
-.ig-frame-inner{aspect-ratio:4/5;background:var(--b);display:flex;flex-direction:column}
-.ig-frame-top{padding:8px 10px;display:flex;align-items:center;gap:7px;background:#fff;border-bottom:1px solid #F0F0F0}
-.ig-avatar{width:22px;height:22px;border-radius:50%;background:var(--b);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.45rem;color:#fff;font-weight:600}
-.ig-handle{font-size:.58rem;font-weight:500;letter-spacing:.01em}
-.ig-location{font-size:.52rem;color:var(--g8);margin-top:1px}
-.ig-img-area{flex:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.ig-img-area img{width:100%;height:100%;object-fit:cover;display:block}
-.ig-img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;position:relative}
-.ig-placeholder-bg{position:absolute;inset:0;background:var(--b)}
-.ig-placeholder-content{position:relative;z-index:1;text-align:center;padding:20px}
-.ipc-city{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:rgba(255,255,255,.06);letter-spacing:.06em;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap}
-.ipc-trend{font-family:var(--serif);font-size:1rem;font-style:italic;color:rgba(255,255,255,.7);position:relative;z-index:1;text-align:center;line-height:1.4;padding:0 12px}
-.ig-bottom{background:#fff;padding:8px 10px}
-.ig-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:5px}
-.ig-tag{font-size:.52rem;color:var(--g4);letter-spacing:.01em}
-.ig-caption{font-size:.62rem;color:var(--b);line-height:1.6;letter-spacing:.01em}
-.ig-view-link{font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g8);display:inline-flex;align-items:center;gap:3px;margin-top:4px}
-/* Card info */
-.mcard-info{padding:10px 2px}
-.mcard-trend-name{font-family:var(--serif);font-size:.88rem;font-weight:400;font-style:italic;margin-bottom:3px;line-height:1.3;letter-spacing:.01em}
-.mcard-why{font-size:.6rem;color:var(--g8);line-height:1.65;margin-bottom:8px;letter-spacing:.01em}
-.mcard-srefs{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
-.mcard-sref{display:flex;align-items:center;gap:6px;padding:4px 7px;background:var(--g5);transition:background .12s}
-.mcard-sref:hover{background:#EBEBEB}
-.ms-plat{font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g8);flex-shrink:0;width:16px}
-.ms-body strong{font-size:.62rem;font-weight:500;color:var(--b);display:block;letter-spacing:.01em}
-.ms-body span{font-size:.54rem;color:var(--g8)}
-.ms-arrow{margin-left:auto;font-size:.6rem;color:var(--g8)}
-.heat-strip{height:1px;background:#EBEBEB;margin-bottom:8px;position:relative;overflow:hidden}
-.heat-fill{height:100%;background:var(--b);transition:width 1s ease}
-.mcard-shop{display:flex;flex-direction:column;gap:2px}
-.shop-tier{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border:1px solid #EBEBEB;transition:all .12s;text-decoration:none}
-.shop-tier:hover{border-color:var(--b);background:var(--b);color:var(--w)}
-.shop-tier:hover .st-brand,.shop-tier:hover .st-arrow{color:rgba(255,255,255,.6)}
-.st-left{display:flex;align-items:center;gap:6px;min-width:0}
-.st-badge{font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;padding:1px 5px;border:1px solid;flex-shrink:0}
-.st-badge.b{border-color:#DDD;color:var(--g8)}
-.st-badge.m{border-color:#BBB;color:var(--g4)}
-.st-badge.l{border-color:var(--b);color:var(--b)}
-.st-name{font-size:.66rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;letter-spacing:.01em}
-.st-right{display:flex;align-items:center;gap:4px;flex-shrink:0}
-.st-brand{font-size:.54rem;color:var(--g8)}
-.st-price{font-family:var(--serif);font-size:.78rem}
-.st-arrow{font-size:.6rem;color:var(--g8)}
-
-/* loading */
-.load-state{padding:60px;text-align:center;display:none}
-.load-state.on{display:block}
-.load-state p{font-size:.64rem;color:var(--g8);letter-spacing:.1em;margin-top:12px}
-.spin-ic{display:inline-block;width:14px;height:14px;border:1px solid #DDD;border-top-color:var(--b);border-radius:50%;animation:rot .7s linear infinite}
-
-/* ─── SEEN ON — MASONRY CELEB ────────────── */
-.seen-section{background:var(--b);padding:52px var(--pad)}
-.seen-header{margin-bottom:28px}
-.seen-label{font-size:.54rem;letter-spacing:.26em;text-transform:uppercase;color:#555;margin-bottom:10px}
-.seen-title{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2.8rem);font-weight:300;color:#fff;letter-spacing:-.01em}
-.seen-city-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:22px}
-.scpill{font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;padding:4px 11px;border:1px solid #333;color:#555;cursor:pointer;transition:all .15s;font-family:var(--sans)}
-.scpill.on,.scpill:hover{border-color:#fff;color:#fff}
-/* celeb masonry same structure */
-.celeb-masonry{columns:4;column-gap:8px}
-@media(max-width:1100px){.celeb-masonry{columns:3}}
-@media(max-width:700px){.celeb-masonry{columns:2}}
-@media(max-width:420px){.celeb-masonry{columns:1}}
-.ccard{break-inside:avoid;margin-bottom:8px;background:#111;transition:background .15s}
-.ccard:hover{background:#181818}
-/* IG-style header on celeb */
-.cc-ig-header{padding:8px 10px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #1E1E1E}
-.cc-avatar{width:26px;height:26px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-size:.5rem;font-weight:700;color:#888;flex-shrink:0}
-.cc-handle-col{}
-.cc-name{font-size:.66rem;font-weight:500;color:#fff;display:block;letter-spacing:.01em}
-.cc-handle{font-size:.54rem;color:#555}
-.cc-platform{margin-left:auto;font-size:.46rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;flex-shrink:0}
-.cc-platform.ig{background:#C13584;color:#fff}
-.cc-platform.tt{background:#010101;color:#EE1D52;border:1px solid #333}
-/* The celeb "photo" — CSS art */
-.cc-photo-art{position:relative;aspect-ratio:4/5;overflow:hidden;background:#0D0D0D;display:flex;align-items:center;justify-content:center}
-.cc-photo-city{font-family:var(--serif);font-size:3.5rem;font-weight:300;color:rgba(255,255,255,.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);letter-spacing:.1em;white-space:nowrap}
-.cc-photo-content{position:relative;z-index:1;text-align:center;padding:20px}
-.cc-photo-name-big{font-family:var(--serif);font-size:1.4rem;font-style:italic;color:rgba(255,255,255,.12);line-height:1.2;letter-spacing:.02em}
-.cc-geo-tag{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:#444;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px}
-.cc-info{padding:10px}
-.cc-desc{font-size:.62rem;color:#666;line-height:1.7;margin-bottom:8px;letter-spacing:.01em}
-.cc-items{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
-.cc-item{font-size:.6rem;color:#888;padding:3px 6px;background:#0D0D0D;letter-spacing:.01em}
-.cc-links{display:flex;flex-direction:column;gap:3px}
-.cc-post-link{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;background:#fff;color:var(--b);font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;transition:opacity .15s;font-family:var(--sans);font-weight:500}
-.cc-post-link:hover{opacity:.8}
-.cc-shop-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px}
-.cc-shop{font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;padding:5px;border:1px solid #222;color:#555;text-align:center;transition:all .15s}
-.cc-shop.lux{border-color:#444;color:#888}
-.cc-shop:hover{border-color:#fff;color:#fff}
-
-/* ─── SCAN SECTION ───────────────────────── */
-.scan-section{padding:52px var(--pad);background:var(--g5)}
-.scan-inner{max-width:520px;margin:0 auto}
-.scan-label{font-size:.54rem;letter-spacing:.26em;text-transform:uppercase;color:var(--g8);margin-bottom:12px}
-.scan-title{font-family:var(--serif);font-size:clamp(1.6rem,2.8vw,3rem);font-weight:300;margin-bottom:8px;letter-spacing:-.01em}
-.scan-sub{font-size:.7rem;color:var(--g8);line-height:1.9;margin-bottom:24px;letter-spacing:.02em}
-.up-zone{border:1px solid #DDD;padding:28px 16px;text-align:center;cursor:pointer;position:relative;transition:border-color .15s;margin-bottom:10px;background:var(--w)}
-.up-zone:hover{border-color:var(--b)}
-.up-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.up-zone p{font-size:.64rem;color:var(--g8);line-height:1.8;letter-spacing:.04em}
-.up-zone strong{color:var(--b);font-weight:500}
-.prev-box{display:none;position:relative;margin-bottom:8px}
-.prev-box.on{display:block}
-.prev-box img{width:100%;max-height:200px;object-fit:cover;filter:grayscale(30%)}
-.prev-box .rm{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.75);color:#fff;padding:2px 8px;font-size:.6rem;border:none;cursor:pointer}
-.scan-row{display:flex;gap:6px;margin-bottom:6px}
-.sc-sel{flex:1;background:var(--w);border:1px solid #DDD;color:var(--b);padding:9px 11px;font-size:.68rem;font-family:var(--sans);outline:none}
-.sc-sel:focus{border-color:var(--b)}
-.sc-sel option{background:#fff}
-.bud-row{display:flex;gap:4px;margin-bottom:10px}
-.bp{flex:1;padding:7px;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid #DDD;color:var(--g8);transition:all .15s;font-family:var(--sans)}
-.bp.on{background:var(--b);color:var(--w);border-color:var(--b)}
-.bp:hover{border-color:var(--b)}
-.scan-btn{width:100%;background:var(--b);color:var(--w);padding:12px;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;transition:opacity .15s;border:none;cursor:pointer;font-family:var(--sans)}
-.scan-btn:hover{opacity:.75}
-.scan-btn:disabled{opacity:.3;cursor:not-allowed}
-.scan-result{margin-top:16px;display:none;background:var(--w);padding:16px}
-.scan-result.on{display:block}
-.sr-vibe{border-left:1px solid var(--b);padding-left:10px;margin-bottom:12px}
-.sr-vibe strong{display:block;font-family:var(--serif);font-size:.9rem;font-style:italic;margin-bottom:3px}
-.sr-vibe p{font-size:.64rem;color:var(--g8);line-height:1.65}
-.sr-pieces{display:flex;flex-direction:column;gap:4px}
-.sr-piece{padding:8px 0;border-bottom:1px solid #F0F0F0}
-.sr-piece:last-child{border:none}
-.sr-piece strong{font-size:.64rem;display:block;margin-bottom:4px;font-weight:500;letter-spacing:.01em}
-.sr-links{display:flex;gap:3px;flex-wrap:wrap}
-.sr-link{font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border:1px solid;transition:all .15s;white-space:nowrap}
-.sr-link.b{border-color:#DDD;color:var(--g8)}
-.sr-link.m{border-color:#999;color:var(--g4)}
-.sr-link.l{border-color:var(--b);color:var(--b)}
-.sr-link:hover{background:var(--b);border-color:var(--b);color:var(--w)}
-
-/* ─── OG PHOTO LOADING ───────────────────────────────── */
-/* Cards show CSS art instantly, real photos fade in behind */
-.ig-img-placeholder{transition:background-image .3s ease}
-.ig-img-placeholder .ig-placeholder-bg{transition:opacity .4s ease}
-.ig-img-placeholder.og-loaded .ig-placeholder-bg{opacity:0}
-.ig-img-placeholder .ipc-city,.ig-img-placeholder .ipc-trend{transition:opacity .3s ease}
-.cc-photo-art{transition:background-image .3s ease}
-.cc-photo-art .cc-photo-city,.cc-photo-art .cc-photo-content{transition:opacity .3s ease}
-/* Shimmer on cards waiting for photo */
-@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-.ig-placeholder-bg{background:linear-gradient(90deg,#111 25%,#1A1A1A 50%,#111 75%);background-size:800px 100%;animation:shimmer 1.8s infinite linear}
-.ig-img-placeholder.og-loaded .ig-placeholder-bg{animation:none}
-
-/* ─── ESSENTIALS ─────────────────────────── */
-.ess-section{padding:52px var(--pad)}
-.ess-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#E8E8E8;margin-top:28px}
-.ecrd{background:var(--w);padding:20px 16px;transition:background .15s}
-.ecrd:hover{background:var(--g5)}
-.ecrd-cat{font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g8);margin-bottom:8px}
-.ecrd-name{font-family:var(--serif);font-size:.92rem;font-weight:400;margin-bottom:6px;font-style:italic;letter-spacing:.01em}
-.ecrd-desc{font-size:.62rem;color:var(--g8);line-height:1.7;margin-bottom:10px;letter-spacing:.01em}
-.etiers{display:flex;flex-direction:column;gap:1px;background:#E8E8E8}
-.etier{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:var(--w);text-decoration:none;transition:all .12s}
-.etier:hover{background:var(--b);color:var(--w)}
-.etier:hover .et-r{color:rgba(255,255,255,.6)}
-.et-l{font-size:.48rem;letter-spacing:.16em;text-transform:uppercase}
-.et-l.b{color:var(--g8)}.et-l.m{color:var(--g4)}.et-l.l{color:var(--b)}
-.et-r{font-size:.62rem;color:var(--g8)}
-
-/* ─── CLOSET ─────────────────────────────── */
-.closet-section{background:var(--b);padding:52px var(--pad)}
-.closet-wrap{display:grid;grid-template-columns:1fr 1.3fr;gap:40px;align-items:start}
-.closet-l .c-label{font-size:.52rem;letter-spacing:.26em;text-transform:uppercase;color:#555;margin-bottom:10px}
-.closet-l h2{font-family:var(--serif);font-size:clamp(1.5rem,2.4vw,2.6rem);font-weight:300;color:#fff;letter-spacing:-.01em;margin-bottom:8px}
-.closet-l p{font-size:.66rem;color:#666;line-height:1.9;max-width:320px;margin-bottom:20px;letter-spacing:.02em}
-.layer-stack{display:flex;flex-direction:column;gap:1px;background:#222;margin-bottom:16px}
-.lrow{background:var(--b);display:flex;align-items:center;gap:10px;padding:11px 12px;cursor:pointer;transition:background .12s}
-.lrow.on,.lrow:hover{background:#1A1A1A}
-.lrow-ic{font-size:.95rem;flex-shrink:0;width:22px;text-align:center}
-.lrow-n{font-size:.68rem;color:#fff;flex:1;letter-spacing:.02em}
-.lrow-s{font-size:.56rem;color:#444;letter-spacing:.01em}
-.lrow-ct{font-family:var(--serif);font-size:.68rem;color:#555;margin-left:auto}
-.pdrawer{display:none;background:#111;border-top:1px solid #222}
-.pdrawer.on{display:block}
-.pd-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #1E1E1E}
-.pd-head h4{font-family:var(--serif);font-size:.88rem;font-weight:400;color:#fff;letter-spacing:.02em}
-.pd-head button{font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:#444;transition:color .15s}
-.pd-head button:hover{color:#fff}
-.pd-tier-bar{display:flex;gap:1px;background:#222}
-.pdt{flex:1;padding:7px;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;text-align:center;cursor:pointer;background:var(--b);color:#555;transition:all .12s;border:none;font-family:var(--sans)}
-.pdt.on{background:#fff;color:var(--b)}
-.pdt:hover:not(.on){background:#111;color:#888}
-.piece-scroll{display:flex;gap:1px;overflow-x:auto;background:#222;scrollbar-width:none}
-.piece-scroll::-webkit-scrollbar{display:none}
-.pcard{flex-shrink:0;width:108px;background:var(--b);cursor:pointer;transition:background .12s;position:relative}
-.pcard:hover,.pcard.sel{background:#1A1A1A}
-.pcard.sel::after{content:'✓';position:absolute;top:4px;right:4px;background:#fff;color:var(--b);width:14px;height:14px;border-radius:50%;font-size:.52rem;display:flex;align-items:center;justify-content:center;font-weight:700}
-.pcard-em{width:100%;height:120px;position:relative;overflow:hidden;border-bottom:1px solid #1E1E1E;background:#0D0D0D}
-.pcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
-.pcard-img.loaded{opacity:.85}
-.pcard-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2rem;z-index:1;transition:opacity .3s;text-shadow:0 2px 8px rgba(0,0,0,.8)}
-.pcard-img.loaded~.pcard-emoji{opacity:0}
-.pcard-bd{padding:6px 7px}
-.pcard-bd strong{display:block;font-size:.6rem;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
-.pcard-bd .pp{font-size:.6rem;color:#888;display:block}
-.pcard-bd .pb{font-size:.52rem;color:#555;display:block}
-.closet-r{position:sticky;top:68px}
-.look-preview{background:#0D0D0D;border:1px solid #1E1E1E;padding:16px;margin-bottom:1px}
-.lp-label{font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:#444;margin-bottom:12px}
-.look-slots{display:flex;flex-direction:column;gap:1px;background:#1E1E1E;margin-bottom:14px}
-.lslot{background:var(--b);padding:9px 11px;display:flex;align-items:center;gap:9px;cursor:pointer;min-height:46px;transition:background .12s}
-.lslot.filled:hover,.lslot:not(.filled):hover{background:#111}
-.ls-ic{font-size:.9rem;flex-shrink:0}
-.ls-info{flex:1;min-width:0}
-.ls-name{font-size:.66rem;color:#fff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}
-.ls-label{font-size:.5rem;color:#444;letter-spacing:.12em;text-transform:uppercase}
-.ls-rm{font-size:.58rem;color:#444;padding:1px 4px;margin-left:auto;flex-shrink:0;transition:color .12s;display:none;background:none;border:none;cursor:pointer}
-.lslot.filled:hover .ls-rm{display:block;color:#888}
-.look-total{display:flex;justify-content:space-between;align-items:center;padding:10px 11px;background:#111}
-.look-total span{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:#555}
-.look-total strong{font-family:var(--serif);font-size:.95rem;color:#fff;font-weight:400}
-.look-acts{display:flex;gap:1px;background:#222}
-.la{flex:1;padding:9px;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;text-align:center;cursor:pointer;background:var(--b);color:#555;transition:all .12s;font-family:var(--sans);border:none}
-.la:hover{background:#1A1A1A;color:#fff}
-.la.pri{background:#fff;color:var(--b);font-weight:500}
-.la.pri:hover{background:#DDD}
-
-/* ─── COMMUNITY ──────────────────────────── */
-.community{padding:72px var(--pad);text-align:center;border-top:1px solid #E8E8E8}
-.community h2{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,4.5rem);font-weight:300;letter-spacing:-.01em;margin-bottom:10px;line-height:1.05}
-.community h2 em{font-style:italic}
-.community .sub{font-size:.7rem;color:var(--g8);line-height:1.9;max-width:360px;margin:0 auto 32px;letter-spacing:.02em}
-.email-form{display:flex;max-width:380px;margin:0 auto}
-.email-form input{flex:1;padding:11px 13px;border:1px solid #DDD;background:var(--w);color:var(--b);font-size:.68rem;font-family:var(--sans);outline:none}
-.email-form input:focus{border-color:var(--b)}
-.email-form button{background:var(--b);color:var(--w);padding:11px 22px;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;font-family:var(--sans);transition:opacity .15s;white-space:nowrap}
-.email-form button:hover{opacity:.7}
-.wl-msg{margin-top:14px;font-size:.62rem;color:var(--g8);letter-spacing:.06em}
-
-/* ─── FOOTER ─────────────────────────────── */
-footer{background:var(--b);padding:28px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-.fl{font-family:var(--serif);color:#fff;font-size:.9rem;letter-spacing:.25em;text-transform:uppercase;font-weight:300}
-.fl-links{display:flex;gap:18px;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase}
-.fl-links a{color:#555;transition:color .12s}.fl-links a:hover{color:#fff}
-.fl-copy{font-size:.52rem;color:#333;letter-spacing:.04em}
-
-/* ─── MODAL ──────────────────────────────── */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-bg.on{display:flex}
-.modal-box{background:var(--w);max-width:420px;width:100%;max-height:85vh;overflow-y:auto}
-.mb-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #E8E8E8}
-.mb-head h3{font-family:var(--serif);font-size:1.05rem;font-weight:400;font-style:italic}
-.mb-head button{font-size:.6rem;color:var(--g8);transition:color .12s}
-.mb-head button:hover{color:var(--b)}
-.mb-body{padding:18px 20px}
-.mb-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F0F0F0}
-.mb-item:last-child{border:none}
-.mb-item strong{font-size:.68rem;font-weight:400;letter-spacing:.01em}
-.mb-item a{font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;padding:4px 9px;border:1px solid var(--b);color:var(--b);transition:all .15s}
-.mb-item a:hover{background:var(--b);color:var(--w)}
-.mb-total{display:flex;justify-content:space-between;padding:10px 0 14px;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase}
-.mb-total strong{font-family:var(--serif);font-size:1.05rem;font-weight:400;text-transform:none}
-.mb-close{width:100%;padding:10px;background:var(--b);color:var(--w);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);transition:opacity .15s;border:none}
-.mb-close:hover{opacity:.7}
-
-/* ─── RESPONSIVE ─────────────────────────── */
-@media(max-width:960px){
-  .hero{grid-template-columns:1fr}.hero-r{min-height:50vw;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,1fr)}
-  .hero-tile:nth-child(1),.hero-tile:nth-child(3),.hero-tile:nth-child(5){grid-row:auto}
-  .closet-wrap{grid-template-columns:1fr}.closet-r{position:static}
-  .ess-grid{grid-template-columns:repeat(2,1fr)}
-  .nav-links{display:none}
+.city-tab.active,.city-tab:hover{
+  background:var(--gold);color:var(--b);border-color:var(--gold);z-index:1;
 }
-@media(max-width:580px){.ess-grid{grid-template-columns:1fr}.email-form{flex-direction:column}}
-</style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav class="nav">
-  <div class="nav-logo">Mikayla</div>
-  <div class="nav-links">
-    <a href="#trends">Trending</a>
-    <a href="#seen-on">Seen On</a>
-    <a href="#closet">Closet</a>
-    <a href="#essentials">Shop</a>
-  </div>
-  <a href="#community" class="nav-pill">Early Access</a>
-</nav>
-
-<!-- TICKER -->
-<div class="ticker"><div class="ticker-t">
-  <span>Paris</span><b>·</b><span>Santorini</span><b>·</b><span>Milan</span><b>·</b><span>Ibiza</span><b>·</b><span>Tokyo</span><b>·</b><span>New York</span><b>·</b><span>Positano</span><b>·</b><span>Mykonos</span><b>·</b><span>Barcelona</span><b>·</b><span>London</span><b>·</b><span>Dubai</span><b>·</b><span>Amalfi</span><b>·</b>
-  <span>Paris</span><b>·</b><span>Santorini</span><b>·</b><span>Milan</span><b>·</b><span>Ibiza</span><b>·</b><span>Tokyo</span><b>·</b><span>New York</span><b>·</b><span>Positano</span><b>·</b><span>Mykonos</span><b>·</b><span>Barcelona</span><b>·</b><span>London</span><b>·</b><span>Dubai</span><b>·</b><span>Amalfi</span><b>·</b>
-</div></div>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-l">
-    <div class="hero-number" aria-hidden="true">M</div>
-    <p class="hero-label">AI Travel Fashion Intelligence</p>
-    <h1 class="hero-h1">Every city<br/>has its own<br/><em>dress code.</em></h1>
-    <p class="hero-sub">We do the work. Pick your destination and MIKAYLA surfaces what's actually trending — sourced from TikTok, Instagram, Vogue, and street style — with every outfit linked to shop right now.</p>
-    <div class="hero-ctas">
-      <a href="#trends" class="btn-solid">Explore Trends</a>
-      <a href="#closet" class="btn-line">Build My Look</a>
-    </div>
-  </div>
-  <!-- Hero tiles: CSS art panels, no stock photos -->
-  <div class="hero-r" id="heroTiles"></div>
-</section>
-
-<!-- CITY RAIL -->
-<div class="city-rail">
-  <div class="city-rail-inner" id="cityRail">
-    <div class="ctab on" onclick="pickCity('paris',this)">Paris</div>
-    <div class="ctab" onclick="pickCity('santorini',this)">Santorini</div>
-    <div class="ctab" onclick="pickCity('ibiza',this)">Ibiza</div>
-    <div class="ctab" onclick="pickCity('positano',this)">Positano</div>
-    <div class="ctab" onclick="pickCity('milan',this)">Milan</div>
-    <div class="ctab" onclick="pickCity('tokyo',this)">Tokyo</div>
-    <div class="ctab" onclick="pickCity('new york',this)">New York</div>
-    <div class="ctab" onclick="pickCity('barcelona',this)">Barcelona</div>
-    <div class="ctab" onclick="pickCity('mykonos',this)">Mykonos</div>
-    <div class="ctab" onclick="pickCity('london',this)">London</div>
-    <div class="ctab" onclick="pickCity('dubai',this)">Dubai</div>
-    <div class="ctab" onclick="pickCity('amalfi coast',this)">Amalfi</div>
-  </div>
-</div>
-
-<!-- TREND FEED -->
-<section id="trends" class="feed-section">
-  <div class="feed-header">
-    <div class="feed-title-block">
-      <div class="feed-city" id="feedCity">What's trending in <em>Paris</em></div>
-      <div class="feed-meta">
-        <span class="live-dot"></span>
-        <span id="feedMeta">Loading…</span>
-      </div>
-    </div>
-    <div class="feed-controls">
-      <button class="refresh-btn" id="refreshBtn" onclick="refreshTrends()">
-        <span class="r-ic">↻</span> Refresh
-      </button>
-    </div>
-  </div>
-  <div class="cat-pills">
-    <button class="cpill on" onclick="filterCat('all',this)">All</button>
-    <button class="cpill" onclick="filterCat('day',this)">Day</button>
-    <button class="cpill" onclick="filterCat('dinner',this)">Dinner</button>
-    <button class="cpill" onclick="filterCat('evening',this)">Evening</button>
-    <button class="cpill" onclick="filterCat('beach',this)">Beach</button>
-    <button class="cpill" onclick="filterCat('travel',this)">Travel</button>
-  </div>
-  <div class="load-state" id="loadState">
-    <span class="spin-ic"></span>
-    <p>Scanning TikTok, Instagram &amp; Vogue for <strong id="loadCity">Paris</strong>…</p>
-  </div>
-  <div class="masonry" id="trendMasonry"></div>
-</section>
-
-<!-- SEEN ON -->
-<section id="seen-on" class="seen-section">
-  <div class="seen-header">
-    <div class="seen-label">Spotted &amp; geo-tagged</div>
-    <div class="seen-title">Seen on <em>them.</em></div>
-  </div>
-  <div class="seen-city-pills">
-    <button class="scpill on" onclick="filterCelebs('all',this)">All</button>
-    <button class="scpill" onclick="filterCelebs('paris',this)">Paris</button>
-    <button class="scpill" onclick="filterCelebs('milan',this)">Milan</button>
-    <button class="scpill" onclick="filterCelebs('santorini',this)">Santorini</button>
-    <button class="scpill" onclick="filterCelebs('ibiza',this)">Ibiza</button>
-    <button class="scpill" onclick="filterCelebs('new york',this)">New York</button>
-  </div>
-  <div class="celeb-masonry" id="celebMasonry"></div>
-</section>
-
-<!-- SCAN -->
-<section class="scan-section">
-  <div class="scan-inner">
-    <div class="scan-label">Optional · AI analysis</div>
-    <h2 class="scan-title">Scan<br/>your look.</h2>
-    <p class="scan-sub">Upload any photo and we'll score it against live city trends — then find shoppable alternatives at your budget tier.</p>
-    <div class="up-zone" id="upZone">
-      <input type="file" id="upFile" accept="image/*"/>
-      <p>📸 <strong>Drop photo or tap to upload</strong><br/>JPG · PNG · HEIC</p>
-    </div>
-    <div class="prev-box" id="prevBox"><img id="prevImg" src="" alt=""/><button class="rm" onclick="clearUp()">✕</button></div>
-    <div class="scan-row">
-      <select class="sc-sel" id="scanCity">
-        <option value="">Select city…</option>
-        <option>Paris</option><option>Milan</option><option>Santorini</option><option>Ibiza</option>
-        <option>Positano</option><option>Mykonos</option><option>Barcelona</option><option>London</option>
-        <option>New York</option><option>Tokyo</option><option>Dubai</option><option>Amalfi Coast</option>
-      </select>
-    </div>
-    <div class="bud-row">
-      <button class="bp" onclick="setBud('budget',this)">Budget</button>
-      <button class="bp on" onclick="setBud('mid',this)">Mid</button>
-      <button class="bp" onclick="setBud('luxury',this)">Luxury</button>
-    </div>
-    <button class="scan-btn" id="scanBtn" onclick="runScan()" disabled>Analyse My Look</button>
-    <div class="scan-result" id="scanResult"></div>
-  </div>
-</section>
-
-<!-- ESSENTIALS -->
-<section id="essentials" class="ess-section">
-  <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px">
-    <div>
-      <div style="font-size:.52rem;letter-spacing:.26em;text-transform:uppercase;color:var(--g8);margin-bottom:8px">Curated for every trip</div>
-      <div style="font-family:var(--serif);font-size:clamp(1.4rem,2.2vw,2.4rem);font-weight:300;font-style:italic;letter-spacing:-.01em">Travel Essentials</div>
-    </div>
-    <p style="font-size:.62rem;color:var(--g8);letter-spacing:.04em">Budget · Mid · Luxury → direct retailer links</p>
-  </div>
-  <div class="ess-grid" id="essGrid"></div>
-</section>
-
-<!-- CLOSET -->
-<section id="closet" class="closet-section">
-  <div class="closet-wrap">
-    <div class="closet-l">
-      <div class="c-label">Mix &amp; match</div>
-      <h2>Closet<br/><em style="font-weight:300">Builder.</em></h2>
-      <p>Layer from outerwear to shoes. Browse every budget tier. See your full look — then shop each piece in one tap.</p>
-      <div class="layer-stack" id="layerStack">
-        <div class="lrow on" onclick="openLayer('tops',this)"><span class="lrow-ic">👚</span><span class="lrow-n">Tops</span><span class="lrow-s">Blouses · tees · bodysuits</span><span class="lrow-ct">12</span></div>
-        <div class="lrow" onclick="openLayer('bottoms',this)"><span class="lrow-ic">👖</span><span class="lrow-n">Bottoms</span><span class="lrow-s">Trousers · skirts · shorts</span><span class="lrow-ct">10</span></div>
-        <div class="lrow" onclick="openLayer('dresses',this)"><span class="lrow-ic">👗</span><span class="lrow-n">Dresses</span><span class="lrow-s">Midi · maxi · mini · resort</span><span class="lrow-ct">8</span></div>
-        <div class="lrow" onclick="openLayer('shoes',this)"><span class="lrow-ic">👡</span><span class="lrow-n">Shoes</span><span class="lrow-s">Sandals · mules · loafers</span><span class="lrow-ct">8</span></div>
-        <div class="lrow" onclick="openLayer('bags',this)"><span class="lrow-ic">👜</span><span class="lrow-n">Bags</span><span class="lrow-s">Totes · crossbody · clutch</span><span class="lrow-ct">7</span></div>
-        <div class="lrow" onclick="openLayer('accessories',this)"><span class="lrow-ic">💍</span><span class="lrow-n">Accessories</span><span class="lrow-s">Jewellery · scarves · hats</span><span class="lrow-ct">10</span></div>
-        <div class="lrow" onclick="openLayer('outerwear',this)"><span class="lrow-ic">🧥</span><span class="lrow-n">Outerwear</span><span class="lrow-s">Blazers · trench · coats</span><span class="lrow-ct">6</span></div>
-      </div>
-      <div class="pdrawer" id="pdrawer">
-        <div class="pd-head"><h4 id="pdTitle">Tops</h4><button onclick="closeDrawer()">Close ✕</button></div>
-        <div class="pd-tier-bar">
-          <button class="pdt on" onclick="filterPDT('all',this)">All</button>
-          <button class="pdt" onclick="filterPDT('budget',this)">Budget</button>
-          <button class="pdt" onclick="filterPDT('mid',this)">Mid</button>
-          <button class="pdt" onclick="filterPDT('luxury',this)">Luxury</button>
-        </div>
-        <div class="piece-scroll" id="pieceScroll"></div>
-      </div>
-    </div>
-    <div class="closet-r">
-      <div class="look-preview">
-        <div class="lp-label">Your look · click any slot to swap</div>
-        <div class="look-slots" id="lookSlots">
-          <div class="lslot" id="ls-outerwear" onclick="openLayer('outerwear',null)"><span class="ls-ic">🧥</span><span class="ls-info"><span class="ls-label">Outerwear</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('outerwear')">✕</button></div>
-          <div class="lslot" id="ls-tops" onclick="openLayer('tops',null)"><span class="ls-ic">👚</span><span class="ls-info"><span class="ls-label">Top</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('tops')">✕</button></div>
-          <div class="lslot" id="ls-dresses" onclick="openLayer('dresses',null)" style="display:none"><span class="ls-ic">👗</span><span class="ls-info"><span class="ls-label">Dress</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('dresses')">✕</button></div>
-          <div class="lslot" id="ls-bottoms" onclick="openLayer('bottoms',null)"><span class="ls-ic">👖</span><span class="ls-info"><span class="ls-label">Bottom</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('bottoms')">✕</button></div>
-          <div class="lslot" id="ls-shoes" onclick="openLayer('shoes',null)"><span class="ls-ic">👡</span><span class="ls-info"><span class="ls-label">Shoes</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('shoes')">✕</button></div>
-          <div class="lslot" id="ls-bags" onclick="openLayer('bags',null)"><span class="ls-ic">👜</span><span class="ls-info"><span class="ls-label">Bag</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('bags')">✕</button></div>
-          <div class="lslot" id="ls-accessories" onclick="openLayer('accessories',null)"><span class="ls-ic">💍</span><span class="ls-info"><span class="ls-label">Accessories</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('accessories')">✕</button></div>
-        </div>
-      </div>
-      <div class="look-total"><span>Total</span><strong id="lookTotal">—</strong></div>
-      <div class="look-acts">
-        <button class="la" onclick="clearLook()">Clear</button>
-        <button class="la" onclick="randomLook()">✦ Surprise</button>
-        <button class="la pri" onclick="shopLook()">Shop Look →</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMMUNITY -->
-<section class="community" id="community">
-  <h2>Dress well,<br/><em>wherever you go.</em></h2>
-  <p class="sub">Daily trend drops. AI outfit scoring. City-specific wardrobe intelligence.</p>
-  <div class="email-form">
-    <input type="email" id="wlEmail" placeholder="your@email.com"/>
-    <button onclick="joinWL()">Get Access</button>
-  </div>
-  <p class="wl-msg" id="wlMsg">2,400+ style-forward travellers on the list</p>
-</section>
-
-<footer>
-  <div class="fl">Mikayla</div>
-  <div class="fl-links"><a href="#trends">Trending</a><a href="#seen-on">Seen On</a><a href="#closet">Closet</a><a href="#essentials">Shop</a></div>
-  <div class="fl-copy">© 2026 MIKAYLA · Affiliate links may earn a commission</div>
-</footer>
-
-<div class="modal-bg" id="shopModal" onclick="if(event.target===this)closeMdl()">
-  <div class="modal-box">
-    <div class="mb-head"><h3>Your Look</h3><button onclick="closeMdl()">✕</button></div>
-    <div class="mb-body">
-      <div id="mbItems"></div>
-      <div class="mb-total"><span>Total</span><strong id="mbTotal">—</strong></div>
-      <button class="mb-close" onclick="closeMdl()">Done</button>
-    </div>
-  </div>
-</div>
-
-<script>
-const API='/.netlify/functions';
-let budget='mid',scanImg=null,city='paris',catFilter='all';
-let trends=[],celebFilter='all';
-let activeLayer='tops',pdt='all';
-let outfit={tops:null,bottoms:null,dresses:null,shoes:null,bags:null,accessories:null,outerwear:null};
-const trendCache={};
-const CACHE_TTL=6*60*60*1000;
-
-const amz=q=>`https://www.amazon.com/s?k=${encodeURIComponent(q)}&tag=mikayla-20`;
-
-// ── HERO TILES — CSS art, no stock photos ──────────────
-const HERO_TILES=[
-  {city:'Paris',label:'Ballet Core',bg:'#0A0A0A',accent:'#F0F0F0'},
-  {city:'Santorini',label:'White Linen',bg:'#141414',accent:'#E8E8E8'},
-  {city:'Milan',label:'Monochrome',bg:'#0D0D0D',accent:'#DDDDDD'},
-  {city:'Ibiza',label:'Boho Glam',bg:'#111',accent:'#EBEBEB'},
-  {city:'Tokyo',label:'Avant-Garde',bg:'#0A0A0A',accent:'#E0E0E0'},
-  {city:'New York',label:'Downtown',bg:'#0F0F0F',accent:'#E5E5E5'},
-];
-function buildHeroTiles(){
-  const c=document.getElementById('heroTiles');
-  c.innerHTML=HERO_TILES.map((t,i)=>`
-    <div class="hero-tile" onclick="pickCity('${t.city.toLowerCase()}',null);document.getElementById('trends').scrollIntoView({behavior:'smooth'})">
-      <div class="ht-art" style="background:${t.bg};background-image:url(${getUnsplashUrl(t.label, 400, 500)});background-size:cover;background-position:center;min-height:${[0,2].includes(i)?'200px':'100px'}">
-        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
-          <span style="font-family:'Playfair Display',serif;font-size:${i===0?'5rem':'3rem'};font-weight:300;color:rgba(255,255,255,.05);letter-spacing:.08em;text-transform:uppercase">${t.city}</span>
-        </div>
-        <div style="position:relative;z-index:1;text-align:center">
-          <div style="font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px">${t.city}</div>
-          <div style="font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,.65);font-size:.78rem">${t.label}</div>
-        </div>
-      </div>
-      <div class="ht-info">
-        <div class="ht-city">${t.city}</div>
-        <div class="ht-name">${t.label}</div>
-      </div>
-    </div>`).join('');
+.trends-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.trend-card{
+  background:#111;position:relative;overflow:hidden;cursor:pointer;
+  aspect-ratio:3/4;
+}
+.trend-card img{height:100%;transition:transform .5s ease}
+.trend-card:hover img{transform:scale(1.06)}
+.trend-card-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 20px 20px;
+  background:linear-gradient(transparent,rgba(0,0,0,.88));
+}
+.trend-card-city{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.trend-card-name{font-family:var(--serif);font-size:18px;color:var(--cr);margin-bottom:10px;line-height:1.2}
+.trend-heat{display:flex;align-items:center;gap:8px}
+.trend-heat-bar{flex:1;height:2px;background:rgba(255,255,255,.15);border-radius:1px}
+.trend-heat-fill{height:100%;border-radius:1px;background:var(--gold);transition:width .8s ease}
+.trend-heat-pct{font-size:9px;color:var(--gold);letter-spacing:.08em}
+.trend-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.trend-tag{
+  font-size:8px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);
+  border-radius:12px;
+}
+.trends-loading{
+  grid-column:1/-1;padding:80px;text-align:center;
+  color:var(--light);font-size:12px;letter-spacing:.1em;
 }
 
-// ── STATIC TREND DATA ────────────────────────────────
-const STATIC={
-  paris:[
-    {rank:1,name:'Ballet Flat Revival',category:'day',heat:96,desc:'Repetto and dupe ballet flats replacing trainers. Wide-leg trousers, silk cami, zero effort.',why_trending:'18M TikTok views post-FW. Every French influencer switched overnight.',
-     social_refs:[
-       {platform:'tiktok',handle:'@parisiangirlstyle',followers:'2.1M',geo_note:'Palais Royal',post_url:'https://www.tiktok.com/search?q=ballet+flat+paris+2026'},
-       {platform:'instagram',handle:'@emilieinparis_not_netflix',followers:'890K',geo_note:'Le Marais',post_url:'https://www.instagram.com/explore/tags/parisballetflat/'}
-     ],
-     pieces:[
-       {type:'Shoes',name:'Ballet Flat',budget:{item:'Pointed Toe Ballet Flat',brand:'Amazon',price:'$28',link:amz('pointed toe ballet flat women black leather')},mid:{item:'Felicia Ballet Flat',brand:'Sam Edelman',price:'$85',link:'https://www.nordstrom.com/sr?keyword=sam+edelman+ballet+flats'},luxury:{item:'Cendrillon',brand:'Repetto',price:'$380',link:'https://www.repetto.com/en_US/women/shoes/ballet-flats/'}},
-       {type:'Trouser',name:'Wide-Leg',budget:{item:'Linen Wide-Leg Trousers',brand:'Amazon',price:'$32',link:amz('wide leg linen trousers women beige')},mid:{item:'Tailored Wide-Leg',brand:'Mango',price:'$79',link:'https://shop.mango.com/us/en/search?q=wide+leg+trousers'},luxury:{item:'Silk-Wool Trouser',brand:'The Row',price:'$890',link:'https://www.therow.com/en-us/clothing/trousers'}}
-     ]},
-    {rank:2,name:'Oversized Trench',category:'day',heat:91,desc:'Camel or ecru, belt loosely tied, silk slip underneath. The Saint-Germain formula.',why_trending:'Vogue Paris March cover + #quietluxury at 340M views.',
-     social_refs:[
-       {platform:'instagram',handle:'@quietluxury.paris',followers:'1.1M',geo_note:'Pont Alexandre III',post_url:'https://www.instagram.com/explore/tags/parisiantrench/'},
-       {platform:'vogue',handle:'Vogue France',followers:'8.2M',geo_note:'Paris FW SS26',post_url:'https://www.vogue.fr/fashion'}
-     ],
-     pieces:[
-       {type:'Outerwear',name:'Trench Coat',budget:{item:'Belted Oversized Trench Camel',brand:'Amazon',price:'$55',link:amz('oversized belted trench coat women camel')},mid:{item:'Classic Trench',brand:'Mango',price:'$129',link:'https://shop.mango.com/us/en/search?q=trench+coat+women'},luxury:{item:'Westminster Heritage',brand:'Burberry',price:'$2,190',link:'https://us.burberry.com/c/trench-coats/'}}
-     ]},
-    {rank:3,name:'Silk Scarf Restyled',category:'day',heat:88,desc:'Not around the neck — on the bag handle, in the hair, looped on a belt. Everywhere.',why_trending:'#silkscarf at 2.1B TikTok views. A dozen tutorials from every Paris influencer.',
-     social_refs:[{platform:'tiktok',handle:'@parisaccordingtoeve',followers:'3.4M',geo_note:'Faubourg Saint-Honoré',post_url:'https://www.tiktok.com/search?q=silk+scarf+paris+style+2026'}],
-     pieces:[{type:'Accessory',name:'Silk Scarf',budget:{item:'Satin Square Scarf Printed',brand:'Amazon',price:'$16',link:amz('satin square scarf women printed silk look')},mid:{item:'Printed Silk Scarf',brand:'Mango',price:'$35',link:'https://shop.mango.com/us/en/search?q=silk+scarf'},luxury:{item:'Twilly',brand:'Hermès',price:'$220',link:'https://www.hermes.com/us/en/category/women/accessories/scarves-and-silk/'}}]},
-    {rank:4,name:'Old Money Tailored Set',category:'dinner',heat:85,desc:'Matching ivory blazer and trouser. Cami underneath, minimal gold. Gallery opening uniform.',why_trending:'Jacquemus SS26 made this the Parisian default. #oldmoney at 14B views.',
-     social_refs:[{platform:'instagram',handle:'@ireneisgood',followers:'2.8M',geo_note:'Centre Pompidou',post_url:'https://www.instagram.com/explore/tags/parisiansuitset/'},{platform:'tiktok',handle:'@oldmoneyparisienne',followers:'1.2M',geo_note:'Palais Royal',post_url:'https://www.tiktok.com/search?q=parisian+old+money+suit'}],
-     pieces:[{type:'Blazer',name:'Tailored Blazer',budget:{item:'Structured Blazer Women Ivory',brand:'Amazon',price:'$45',link:amz('structured blazer women ivory cream tailored')},mid:{item:'Linen Blazer',brand:'COS',price:'$175',link:'https://www.cos.com/en_usd/search?q=blazer+women'},luxury:{item:'Silk-Wool Jacket',brand:'The Row',price:'$1,890',link:'https://www.therow.com/en-us/clothing/jackets-and-blazers'}}]},
-  ],
-  santorini:[
-    {rank:1,name:'All-White Linen',category:'day',heat:98,desc:'Head-to-toe white linen against the blue domes. Photographs like a professional shoot every time.',why_trending:'Oia is Europe\'s most Instagrammed location. White linen is the dress code.',
-     social_refs:[{platform:'instagram',handle:'@oiastyle',followers:'890K',geo_note:'Oia blue domes',post_url:'https://www.instagram.com/explore/tags/santoriniwhitelinen/'},{platform:'tiktok',handle:'@greekislandlooks',followers:'2.1M',geo_note:'Amoudi Bay',post_url:'https://www.tiktok.com/search?q=santorini+white+linen+outfit+2026'}],
-     pieces:[{type:'Dress',name:'Linen Maxi',budget:{item:'White Linen Maxi Dress Resort',brand:'Amazon',price:'$38',link:amz('white linen maxi dress women resort')},mid:{item:'Linen Midi Dress',brand:'Faithfull the Brand',price:'$185',link:'https://faithfullthebrand.com/collections/dresses'},luxury:{item:'Linen Wrap Dress',brand:'Zimmermann',price:'$595',link:'https://www.zimmermannwear.com/collections/resort-dresses'}}]},
-    {rank:2,name:'Stacked Gold',category:'beach',heat:93,desc:'Multiple thin chains, chunky hoops, hammered bangles. Mediterranean maximalism.',why_trending:'#goldstacked at 4B views. Aegean light makes gold the only metal that makes sense.',
-     social_refs:[{platform:'instagram',handle:'@cyclades.style',followers:'560K',geo_note:'Perissa beach',post_url:'https://www.instagram.com/explore/tags/greekislandgold/'}],
-     pieces:[{type:'Jewellery',name:'Gold Set',budget:{item:'14K Gold Plated Layered Necklace',brand:'Amazon',price:'$22',link:amz('14k gold plated layered necklace set women')},mid:{item:'Gold Necklace Set',brand:'Gorjana',price:'$95',link:'https://gorjana.com/collections/necklaces'},luxury:{item:'Gold Necklace',brand:'Monica Vinader',price:'$298',link:'https://www.monicavinader.com/us/necklaces'}}]},
-    {rank:3,name:'Silk Kaftan at Sunset',category:'dinner',heat:89,desc:'Billowing printed kaftans for clifftop terrace dinners. The volume catches the wind perfectly.',why_trending:'Every major travel influencer visiting wears this. It\'s THE Santorini look.',
-     social_refs:[{platform:'instagram',handle:'@resortstyle.greece',followers:'780K',geo_note:'Canaves Oia',post_url:'https://www.instagram.com/explore/tags/santorinikaftan/'},{platform:'tiktok',handle:'@aegeansunset',followers:'1.4M',geo_note:'Santo Wines cliff',post_url:'https://www.tiktok.com/search?q=santorini+kaftan+sunset'}],
-     pieces:[{type:'Dress',name:'Silk Kaftan',budget:{item:'Printed Kaftan Maxi',brand:'Amazon',price:'$42',link:amz('printed kaftan maxi dress women resort')},mid:{item:'Silk Kaftan',brand:'Ulla Johnson',price:'$395',link:'https://ullajohnson.com/collections/dresses'},luxury:{item:'Printed Kaftan',brand:'Zimmermann',price:'$850',link:'https://www.zimmermannwear.com/collections/dresses'}}]},
-  ],
-  milan:[
-    {rank:1,name:'Monochrome Tailoring',category:'day',heat:94,desc:'Head-to-toe one colour — camel, ivory, or chocolate. Milan says colour is for tourists.',why_trending:'MFW SS26 street style defined this as the Milan Uniform. #monochrome at 8B views.',
-     social_refs:[{platform:'instagram',handle:'@milanstreetlooks',followers:'1.4M',geo_note:'Brera District',post_url:'https://www.instagram.com/explore/tags/milanmonochrome/'},{platform:'tiktok',handle:'@italianfashiontok',followers:'3.2M',geo_note:'Via Montenapoleone',post_url:'https://www.tiktok.com/search?q=milan+monochrome+outfit+2026'}],
-     pieces:[{type:'Set',name:'Tailored Co-ord',budget:{item:'Monochrome Blazer Women',brand:'Amazon',price:'$55',link:amz('women structured blazer monochrome tailored')},mid:{item:'Tailored Blazer',brand:'COS',price:'$175',link:'https://www.cos.com/en_usd/search?q=blazer+women'},luxury:{item:'Wool Blazer',brand:'Max Mara',price:'$1,200',link:'https://www.maxmara.com/us/women/jackets/'}}]},
-    {rank:2,name:'Platform Loafer',category:'day',heat:90,desc:'Chunky platform loafers with gold hardware. Milan\'s answer to the trainer.',why_trending:'Gucci Horsebit dupes went #1 on TikTok Shop Italy. 22M #loafer views.',
-     social_refs:[{platform:'tiktok',handle:'@loafertok',followers:'2.2M',geo_note:'Via della Spiga',post_url:'https://www.tiktok.com/search?q=platform+loafer+women+2026'}],
-     pieces:[{type:'Shoes',name:'Platform Loafer',budget:{item:'Chunky Platform Loafer Women',brand:'Amazon',price:'$45',link:amz('chunky platform loafer women gold hardware')},mid:{item:'Platform Loafer',brand:'Steve Madden',price:'$99',link:'https://www.stevemadden.com/collections/womens-loafers'},luxury:{item:'Horsebit Loafer',brand:'Gucci',price:'$890',link:'https://www.gucci.com/us/en/ca/women/shoes/loafers-c-women-shoes-loafers'}}]},
-  ],
-  tokyo:[
-    {rank:1,name:'Sheer Layer',category:'day',heat:95,desc:'Sheer blouses over graphic tees, midi skirts, chunky boots. Every rule broken intentionally.',why_trending:'#tokyostreetfashion at 12M views this month. Harajuku is having its global moment.',
-     social_refs:[{platform:'tiktok',handle:'@tokyostreetfashion',followers:'4.1M',geo_note:'Takeshita Street, Harajuku',post_url:'https://www.tiktok.com/search?q=harajuku+fashion+2026'},{platform:'instagram',handle:'@tokyofashiondiaries',followers:'1.7M',geo_note:'Omotesando Hills',post_url:'https://www.instagram.com/explore/tags/harajukustyle/'}],
-     pieces:[{type:'Top',name:'Sheer Layer',budget:{item:'Sheer Long Sleeve Blouse Women',brand:'Amazon',price:'$28',link:amz('sheer blouse women long sleeve layering')},mid:{item:'Sheer Organza',brand:'& Other Stories',price:'$79',link:'https://www.stories.com/en_usd/search?q=sheer+blouse'},luxury:{item:'Pleated Sheer',brand:'Issey Miyake',price:'$380',link:'https://www.isseymiyake.com/en/collections/'}}]},
-  ],
-};
-['ibiza','positano','mykonos','barcelona','london','new york','dubai','amalfi coast'].forEach(c=>{
-  if(!STATIC[c])STATIC[c]=[{rank:1,name:'Local It-Look',category:'day',heat:87,desc:`The signature trending style in ${c} right now. Sourced from local creators and current editorial.`,why_trending:`${c}'s aesthetic is going global this season.`,social_refs:[{platform:'instagram',handle:`@${c.replace(/[\s']/g,'_')}style`,followers:'450K',geo_note:`Central ${c}`,post_url:`https://www.instagram.com/explore/tags/${c.replace(/[\s']/g,'')}fashion/`}],pieces:[{type:'Dress',name:'Resort Dress',budget:{item:'Summer Resort Dress Women',brand:'Amazon',price:'$35',link:amz('summer dress women resort')},mid:{item:'Linen Midi',brand:'Reformation',price:'$168',link:'https://www.thereformation.com/clothing/dresses'},luxury:{item:'Resort Dress',brand:'Zimmermann',price:'$595',link:'https://www.zimmermannwear.com/collections/resort-dresses'}}]}];
-});
-
-// ── CELEBRITY DATA — with real IG post links ─────────
-const CELEBS=[
-  {name:'Hailey Bieber',handle:'haileybieber',platform:'ig',city:'paris',geo:'📍 Rue du Faubourg Saint-Honoré, Paris',followers:'51M',initials:'HB',
-   desc:'Beige-on-beige quiet luxury. Bottega trench, The Row trousers, Manolo pumps. Photographed leaving a private dinner.',
-   items:['Bottega Veneta Caramel Trench','The Row Wide-Leg Ivory Trousers','Manolo Blahnik BB Pump'],
-   post:'https://www.instagram.com/haileybieber/',
-   shop:{b:amz('caramel trench coat women oversized dupe'),m:'https://shop.mango.com/us/en/search?q=trench+coat+camel',l:'https://www.bottegaveneta.com/en-us/coats-and-jackets/'}},
-  {name:'Sofia Richie',handle:'sofiarichie',platform:'ig',city:'paris',geo:'📍 Hôtel de Crillon, Paris',followers:'9.4M',initials:'SR',
-   desc:'Cream oversized blazer as a dress, tailored shorts, ballet flats, Chanel bag. Viral — 2.4M likes.',
-   items:['Cream Oversized Blazer as Dress','Repetto Ballet Flats','Classic Flap Bag'],
-   post:'https://www.instagram.com/sofiarichie/',
-   shop:{b:amz('oversized blazer dress women cream ivory'),m:'https://www.cos.com/en_usd/search?q=oversized+blazer',l:'https://www.chanel.com/us/fashion/handbags/'}},
-  {name:'Chiara Ferragni',handle:'chiaraferragni',platform:'ig',city:'milan',geo:'📍 Via della Spiga, Brera, Milan',followers:'29.1M',initials:'CF',
-   desc:'Head-to-toe Valentino Pink PP monochrome. 7.2M impressions the morning after Milan Fashion Week.',
-   items:['Valentino Pink Blazer','High-Waist Tailored Shorts','Rockstud Ankle-Strap Heels'],
-   post:'https://www.instagram.com/chiaraferragni/',
-   shop:{b:amz('pink blazer women structured tailored'),m:'https://www.zara.com/us/en/search?searchTerm=pink+blazer',l:'https://www.valentino.com/en-us/women/'}},
-  {name:'Kylie Jenner',handle:'kyliejenner',platform:'ig',city:'santorini',geo:'📍 Oia Village, Santorini',followers:'399M',initials:'KJ',
-   desc:'All-white Jacquemus linen co-ord against the blue domes. Most-saved travel outfit on Instagram this year.',
-   items:['Jacquemus White Linen Co-ord','Ancient Greek Sandals','Le Chiquito Mini Bag'],
-   post:'https://www.instagram.com/kyliejenner/',
-   shop:{b:amz('white linen co ord set women wide leg'),m:'https://faithfullthebrand.com/collections/sets',l:'https://www.jacquemus.com/category/clothing'}},
-  {name:'Dua Lipa',handle:'dualipa',platform:'ig',city:'ibiza',geo:'📍 Ushuaïa Beach Club, Ibiza',followers:'89.3M',initials:'DL',
-   desc:'Crochet micro dress, platform espadrilles, vintage Fendi sunnies. Posted 2hrs before her DJ set.',
-   items:['Crochet Micro Mini Dress','Platform Espadrille Wedges','Wide-Leg Palazzo Pants'],
-   post:'https://www.instagram.com/dualipa/',
-   shop:{b:amz('crochet micro mini dress women boho'),m:'https://www.revolve.com/dresses/br/d96d34/',l:'https://ullajohnson.com/collections/dresses'}},
-  {name:'Bella Hadid',handle:'bellahadid',platform:'ig',city:'new york',geo:'📍 West Village, New York',followers:'60.1M',initials:'BH',
-   desc:'Low-rise vintage Levi\'s, fine knit crop, Bottega Jodie bag, black loafers. Off-duty model perfection.',
-   items:['Vintage Low-Rise Straight Jeans','Fine Knit Crop Top','Bottega Veneta Jodie Bag'],
-   post:'https://www.instagram.com/bellahadid/',
-   shop:{b:amz('vintage low rise straight jeans women'),m:'https://www.levi.com/US/en_US/women/jeans/',l:'https://www.bottegaveneta.com/en-us/bags/'}},
-  {name:'Kendall Jenner',handle:'kendalljenner',platform:'ig',city:'paris',geo:'📍 Palais Royal, Paris',followers:'295M',initials:'KJ',
-   desc:'Khaite sweater, Toteme cream trousers, Bottega mules. Zero jewellery. The quiet luxury template.',
-   items:['Ribbed Cream Oversized Sweater','Toteme Wide-Leg Trousers','Bottega Veneta Mules'],
-   post:'https://www.instagram.com/kendalljenner/',
-   shop:{b:amz('ribbed oversized sweater women cream beige'),m:'https://toteme-studio.com/collections/trousers',l:'https://www.bottegaveneta.com/en-us/shoes/'}},
-  {name:'Gigi Hadid',handle:'gigihadid',platform:'ig',city:'milan',geo:'📍 Duomo di Milano, MFW',followers:'79.8M',initials:'GH',
-   desc:'Oversized black blazer as a mini dress, micro bag, over-the-knee boots. MFW street style gold.',
-   items:['Oversized Blazer as Mini Dress','Micro Structured Bag','Over-the-Knee Boots'],
-   post:'https://www.instagram.com/gigihadid/',
-   shop:{b:amz('oversized blazer dress women black longline'),m:'https://www.zara.com/us/en/search?searchTerm=oversized+blazer',l:'https://www.stuartweitzman.com/products/overtheknee-boots/'}},
-];
-
-// ── CLOSET PIECES ────────────────────────────────────
-const PIECES={
-  tops:{budget:[{id:'t1',n:'Silk Cami',b:'Amazon',p:'$28',e:'👚',l:amz('silk camisole women bias cut')},{id:'t2',n:'Breton Tee',b:'Amazon',p:'$19',e:'👚',l:amz('breton stripe tee women cotton')},{id:'t3',n:'Linen Blouse',b:'Amazon',p:'$22',e:'👚',l:amz('linen blouse women white')},{id:'t4',n:'Crochet Top',b:'Amazon',p:'$24',e:'👚',l:amz('crochet top women')},{id:'t5',n:'Bodysuit',b:'Amazon',p:'$18',e:'👚',l:amz('seamless bodysuit women')}],mid:[{id:'t6',n:'Silk Blouse',b:'& Other Stories',p:'$89',e:'👚',l:'https://www.stories.com/en_usd/search?q=silk+blouse'},{id:'t7',n:'Linen Tee',b:'COS',p:'$65',e:'👚',l:'https://www.cos.com/en_usd/search?q=linen+t-shirt'},{id:'t8',n:'Knit Tank',b:'Vince',p:'$120',e:'👚',l:'https://www.vince.com/search?q=knit+tank'}],luxury:[{id:'t9',n:'Cashmere Turtleneck',b:'The Row',p:'$690',e:'👚',l:'https://www.therow.com/en-us/clothing/knitwear'},{id:'t10',n:'Silk Charmeuse',b:'Celine',p:'$890',e:'👚',l:'https://www.celine.com/en-us/celine-shop-women/tops/'}]},
-  bottoms:{budget:[{id:'b1',n:'Wide-Leg Linen',b:'Amazon',p:'$32',e:'👖',l:amz('wide leg linen trousers women beige')},{id:'b2',n:'Satin Midi Skirt',b:'Amazon',p:'$24',e:'👖',l:amz('satin midi skirt women')},{id:'b3',n:'Linen Shorts',b:'Amazon',p:'$26',e:'👖',l:amz('high waist linen shorts women')},{id:'b4',n:'Pleated Mini',b:'Amazon',p:'$22',e:'👖',l:amz('pleated mini skirt women')}],mid:[{id:'b5',n:'Tailored Trousers',b:'Mango',p:'$79',e:'👖',l:'https://shop.mango.com/us/en/search?q=tailored+trousers'},{id:'b6',n:'Linen Wide-Leg',b:'COS',p:'$89',e:'👖',l:'https://www.cos.com/en_usd/search?q=linen+wide+leg'}],luxury:[{id:'b7',n:'Silk Wide-Leg',b:'The Row',p:'$890',e:'👖',l:'https://www.therow.com/en-us/clothing/trousers'},{id:'b8',n:'Tailored Midi Skirt',b:'Toteme',p:'$420',e:'👖',l:'https://toteme-studio.com/collections/skirts'}]},
-  dresses:{budget:[{id:'d1',n:'Linen Midi',b:'Amazon',p:'$38',e:'👗',l:amz('linen midi dress women summer')},{id:'d2',n:'Slip Maxi',b:'Amazon',p:'$32',e:'👗',l:amz('slip maxi dress women satin')},{id:'d3',n:'Crochet Mini',b:'Amazon',p:'$28',e:'👗',l:amz('crochet mini dress beach')},{id:'d4',n:'Wrap Midi',b:'Amazon',p:'$42',e:'👗',l:amz('wrap midi dress women')}],mid:[{id:'d5',n:'Silk Slip Dress',b:'Reformation',p:'$168',e:'👗',l:'https://www.thereformation.com/clothing/dresses'},{id:'d6',n:'Kaftan Maxi',b:'Ulla Johnson',p:'$395',e:'👗',l:'https://ullajohnson.com/collections/dresses'}],luxury:[{id:'d7',n:'Bias-Cut Gown',b:'Saint Laurent',p:'$2,400',e:'👗',l:'https://www.ysl.com/en-us/women/dresses'},{id:'d8',n:'Resort Dress',b:'Zimmermann',p:'$595',e:'👗',l:'https://www.zimmermannwear.com/collections/resort-dresses'}]},
-  shoes:{budget:[{id:'s1',n:'Strappy Sandals',b:'Amazon',p:'$24',e:'👡',l:amz('strappy flat leather sandals women tan')},{id:'s2',n:'Ballet Flats',b:'Amazon',p:'$19',e:'👡',l:amz('pointed toe ballet flats women black')},{id:'s3',n:'Platform Espadrilles',b:'Amazon',p:'$32',e:'👡',l:amz('platform espadrille wedge sandal women')},{id:'s4',n:'Platform Loafers',b:'Amazon',p:'$38',e:'👡',l:amz('chunky platform loafer women')}],mid:[{id:'s5',n:'Strappy Sandal',b:'Vagabond',p:'$120',e:'👡',l:'https://www.nordstrom.com/sr?keyword=vagabond+shoemakers+sandals'},{id:'s6',n:'Block-Heel Mule',b:'Steve Madden',p:'$95',e:'👡',l:'https://www.stevemadden.com/collections/womens-heels'}],luxury:[{id:'s7',n:'Leather Sandal',b:'Ancient Greek Sandals',p:'$245',e:'👡',l:'https://www.ancient-greek-sandals.com/collections/women-sandals'},{id:'s8',n:'Horsebit Loafer',b:'Gucci',p:'$890',e:'👡',l:'https://www.gucci.com/us/en/ca/women/shoes/loafers-c-women-shoes-loafers'}]},
-  bags:{budget:[{id:'ba1',n:'Mini Crossbody',b:'Amazon',p:'$22',e:'👜',l:amz('mini crossbody bag women leather')},{id:'ba2',n:'Raffia Tote',b:'Amazon',p:'$18',e:'👜',l:amz('raffia woven tote bag women')},{id:'ba3',n:'Chain Shoulder',b:'Amazon',p:'$25',e:'👜',l:amz('chain strap shoulder bag women small')}],mid:[{id:'ba4',n:'Crescent Bag',b:'Madewell',p:'$158',e:'👜',l:'https://www.madewell.com/c/bags'},{id:'ba5',n:'Woven Shoulder',b:'Anthropologie',p:'$128',e:'👜',l:'https://www.anthropologie.com/bags'}],luxury:[{id:'ba6',n:'Le Chiquito',b:'Jacquemus',p:'$570',e:'👜',l:'https://www.jacquemus.com/category/bags'},{id:'ba7',n:'Jodie Bag',b:'Bottega Veneta',p:'$2,800',e:'👜',l:'https://www.bottegaveneta.com/en-us/bags/'}]},
-  accessories:{budget:[{id:'ac1',n:'Gold Hoops',b:'Amazon',p:'$14',e:'💍',l:amz('large gold hoop earrings women')},{id:'ac2',n:'Layered Necklaces',b:'Amazon',p:'$16',e:'💍',l:amz('layered gold necklace set women')},{id:'ac3',n:'Woven Belt',b:'Amazon',p:'$18',e:'💍',l:amz('woven leather belt women wide')},{id:'ac4',n:'Straw Hat',b:'Amazon',p:'$22',e:'💍',l:amz('wide brim straw hat women summer')}],mid:[{id:'ac5',n:'Silk Scarf',b:'Mango',p:'$48',e:'💍',l:'https://shop.mango.com/us/en/search?q=silk+scarf'},{id:'ac6',n:'Gold Bracelet',b:'Gorjana',p:'$85',e:'💍',l:'https://gorjana.com/collections/bracelets'}],luxury:[{id:'ac7',n:'Twilly',b:'Hermès',p:'$220',e:'💍',l:'https://www.hermes.com/us/en/category/women/accessories/scarves-and-silk/'},{id:'ac8',n:'Tennis Bracelet',b:'Monica Vinader',p:'$195',e:'💍',l:'https://www.monicavinader.com/us/bracelets'}]},
-  outerwear:{budget:[{id:'ow1',n:'Denim Jacket',b:'Amazon',p:'$38',e:'🧥',l:amz('oversized denim jacket women')},{id:'ow2',n:'Linen Blazer',b:'Amazon',p:'$45',e:'🧥',l:amz('linen blazer women')},{id:'ow3',n:'Belted Trench',b:'Amazon',p:'$55',e:'🧥',l:amz('belted trench coat women camel')}],mid:[{id:'ow4',n:'Oversized Blazer',b:'Mango',p:'$130',e:'🧥',l:'https://shop.mango.com/us/en/search?q=oversized+blazer'},{id:'ow5',n:'Classic Trench',b:'COS',p:'$175',e:'🧥',l:'https://www.cos.com/en_usd/search?q=trench+coat'}],luxury:[{id:'ow6',n:'Westminster Trench',b:'Burberry',p:'$2,190',e:'🧥',l:'https://us.burberry.com/c/trench-coats/'},{id:'ow7',n:'Cashmere Coat',b:'Max Mara',p:'$2,200',e:'🧥',l:'https://www.maxmara.com/us/women/coats/'}]},
-};
-
-const ESSENTIALS=[
-  {cat:'Luggage',name:'The Perfect Carry-On',desc:'Overhead-friendly, polished, survives any airline.',tiers:[{l:'Budget',r:'$40–80',h:amz('carry on luggage women hard shell')},{l:'Mid',r:'$150–250',h:'https://www.awaytravel.com/luggage/carry-on'},{l:'Luxury',r:'$400+',h:'https://www.rimowa.com/en-us/luggage/carry-on/'}]},
-  {cat:'Footwear',name:'Cobblestone-Proof Sandals',desc:'All-day comfort that elevates everything.',tiers:[{l:'Budget',r:'$25–60',h:amz('strappy flat leather sandals women comfortable')},{l:'Mid',r:'$100–160',h:'https://www.nordstrom.com/sr?keyword=vagabond+shoemakers+sandals'},{l:'Luxury',r:'$220+',h:'https://www.ancient-greek-sandals.com/collections/women-sandals'}]},
-  {cat:'Outerwear',name:'The Packable Trench',desc:'Rolls into your bag. Instant polish on arrival.',tiers:[{l:'Budget',r:'$35–70',h:amz('packable trench coat women lightweight')},{l:'Mid',r:'$90–180',h:'https://shop.mango.com/us/en/search?q=trench+coat'},{l:'Luxury',r:'$1,500+',h:'https://us.burberry.com/c/trench-coats/'}]},
-  {cat:'Accessories',name:'The Day-to-Night Bag',desc:'Crossbody by day, clutch by night.',tiers:[{l:'Budget',r:'$20–50',h:amz('women leather crossbody bag small')},{l:'Mid',r:'$150–350',h:'https://www.coach.com/women/handbags'},{l:'Luxury',r:'$800+',h:'https://www.celine.com/en-us/celine-shop-women/bags/'}]},
-  {cat:'Sunglasses',name:'The It-Girl Frames',desc:'UV400, statement, photographs perfectly.',tiers:[{l:'Budget',r:'$15–40',h:amz('oversized sunglasses women uv400')},{l:'Mid',r:'$50–120',h:'https://www.quayaustralia.com/collections/womens-sunglasses'},{l:'Luxury',r:'$350+',h:'https://www.celine.com/en-us/sunglasses/'}]},
-  {cat:'Swimwear',name:'The Resort One-Piece',desc:'Beach to bar with just a skirt throw.',tiers:[{l:'Budget',r:'$25–55',h:amz('women one piece swimsuit resort')},{l:'Mid',r:'$60–110',h:'https://www.aerie.com'},{l:'Luxury',r:'$250+',h:'https://ullajohnson.com/collections/swimwear'}]},
-  {cat:'Dresses',name:'The Linen Midi',desc:'Packs small, looks like you planned everything.',tiers:[{l:'Budget',r:'$30–65',h:amz('women linen midi dress summer')},{l:'Mid',r:'$100–200',h:'https://www.thereformation.com/clothing/dresses'},{l:'Luxury',r:'$400+',h:'https://www.zimmermannwear.com/collections/dresses'}]},
-  {cat:'Beauty',name:'Carry-On Beauty Kit',desc:'TSA-approved. Land looking polished.',tiers:[{l:'Budget',r:'$20–40',h:amz('travel size beauty kit women')},{l:'Mid',r:'$60–120',h:'https://www.sephora.com/travel-size-beauty'},{l:'Luxury',r:'$200+',h:'https://www.net-a-porter.com/en-us/shop/beauty'}]},
-];
-
-
-// ── UNSPLASH FASHION PHOTO ENGINE ────────────────────
-// Continuously rotates fresh trending fashion photos every hour
-const UNSPLASH_SEEDS = [
-  'paris fashion week street style editorial',
-  'milan fashion week outfit model',
-  'street style fashion week 2024',
-  'fashion editorial luxury brand',
-  'instagram outfit of the day',
-  'vogue fashion editorial couture',
-  'trendy outfit women fashion',
-  'luxury fashion brand editorial',
-];
-let _unsplashSeedIdx = Math.floor(Date.now() / 3600000) % UNSPLASH_SEEDS.length;
-
-function getUnsplashUrl(query, w, h) {
-  // Curated real fashion photos from Unsplash (rotate hourly)
-  const FASHION_PHOTOS = [
-    'photo-1515886657613-9f3515b0c78f', // Model in white dress
-    'photo-1469334031218-e382a71b716b', // Fashion week runway
-    'photo-1490481651871-ab68de25d43d', // Elegant woman
-    'photo-1483985988355-763728e1935b', // Shopping/fashion
-    'photo-1506629082955-511b1aa562c8', // Street style
-    'photo-1441984904996-e0b6ba687e04', // Fashion detail
-    'photo-1539109136881-3be0616acf4b', // Streetwear
-    'photo-1529139574466-a303027c1d8b', // Woman fashion
-    'photo-1552664730-d307ca884978', // Fashion forward
-    'photo-1434389677669-e08b4cac3105', // Editorial fashion
-    'photo-1547949003-9792a18a2601', // Chic outfit
-    'photo-1568252542512-9fe8fe9c87bb', // Luxury fashion
-    'photo-1525507119028-ed4c629a60a3', // Street fashion
-    'photo-1511118372081-41f60e1b2a3d', // Model pose
-    'photo-1487222477894-8943e31ef7b2', // Fashion magazine
-    'photo-1509631179647-0177331693ae', // Designer clothes
-  ];
-  const hourSeed = Math.floor(Date.now() / 3600000);
-  let qHash = 0;
-  for (let i = 0; i < query.length; i++) qHash = (qHash * 31 + query.charCodeAt(i)) & 0xFFFF;
-  const idx = (hourSeed + qHash) % FASHION_PHOTOS.length;
-  const photoId = FASHION_PHOTOS[idx];
-  return 'https://images.unsplash.com/' + photoId + '?auto=format&fit=crop&w=' + w + '&h=' + h + '&q=80';
+/* âââ AI PHOTO SCANNER âââââââââââââââââââââââ */
+#scanner{background:var(--cr)}
+.scanner-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
 }
-
-// Refresh all Unsplash photos every hour
-setInterval(() => {
-  _unsplashSeedIdx = Math.floor(Date.now() / 3600000) % UNSPLASH_SEEDS.length;
-  // Refresh hero tiles
-  document.querySelectorAll('.ht-art').forEach((el, i) => {
-    const tile = HERO_TILES[i % HERO_TILES.length];
-    if (tile) {
-      const seed = Math.floor(Date.now() / 3600000);
-      el.style.backgroundImage = 'url(' + getUnsplashUrl(tile.label, 400, 500) + ')';
-    }
-  });
-  // Re-render trends/celebs to get new photos
-  renderTrends();
-  renderCelebs();
-}, 3600000); // 1 hour
-
-// ── UPLOAD ────────────────────────────────────────────
-document.getElementById('upFile').addEventListener('change',e=>{
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    scanImg={base64:ev.target.result.split(',')[1],type:f.type||'image/jpeg'};
-    document.getElementById('prevImg').src=ev.target.result;
-    document.getElementById('prevBox').classList.add('on');
-    document.getElementById('upZone').style.display='none';
-    document.getElementById('scanBtn').disabled=false;
-  };r.readAsDataURL(f);
-});
-function clearUp(){scanImg=null;document.getElementById('prevBox').classList.remove('on');document.getElementById('upZone').style.display='';document.getElementById('scanBtn').disabled=true;document.getElementById('upFile').value='';}
-function setBud(b,el){budget=b;document.querySelectorAll('.bp').forEach(x=>x.classList.remove('on'));el.classList.add('on');}
-
-// ── SCAN ──────────────────────────────────────────────
-async function runScan(){
-  const c=document.getElementById('scanCity').value;
-  if(!c){alert('Please select a city first.');return;}
-  const btn=document.getElementById('scanBtn');
-  btn.disabled=true;btn.textContent='Analysing…';
-  try{
-    let res;
-    if(scanImg){try{const r=await Promise.race([fetch(`${API}/analyse`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:scanImg.base64,mediaType:scanImg.type,city:c,budget})}),new Promise((_,rej)=>setTimeout(()=>rej(new Error),25000))]);if(r.ok)res=await r.json();}catch(e){}}
-    if(!res)res=buildDemo(c);
-    showScanResult(res);
-  }finally{btn.disabled=false;btn.textContent='Analyse My Look';}
+.scanner-form{
+  background:var(--w);border:1px solid var(--border);
+  padding:48px;border-radius:4px;
 }
-function buildDemo(c){
-  const v={paris:'Quiet Luxury · Old Money',milan:'High Fashion · Editorial',santorini:'Coastal Resort',ibiza:'Boho Glam',tokyo:'Avant-Garde Street','new york':'Downtown NYC Cool'};
-  return {overall_vibe:v[c.toLowerCase()]||'Effortless Chic',trend_verdict:`Strong alignment with ${c} street style right now.`,score:Math.floor(Math.random()*12)+84,pieces:[
-    {type:'Top',identified:'Silk or linen top',alternatives:{budget:{n:'Silk Cami',p:'$28',l:amz('silk camisole women bias cut')},mid:{n:'Silk Blouse',p:'$89',l:'https://www.stories.com/en_usd/search?q=silk+blouse'},luxury:{n:'Charmeuse Blouse',p:'$890',l:'https://www.celine.com/en-us/celine-shop-women/tops/'}}},
-    {type:'Bottom',identified:'Wide-leg trousers',alternatives:{budget:{n:'Wide-Leg Linen',p:'$32',l:amz('wide leg linen trousers women')},mid:{n:'Tailored Trouser',p:'$79',l:'https://shop.mango.com/us/en/search?q=wide+leg+trousers'},luxury:{n:'Silk Trouser',p:'$890',l:'https://www.therow.com/en-us/clothing/trousers'}}},
-    {type:'Shoes',identified:'Flat leather sandals',alternatives:{budget:{n:'Strappy Flat Sandal',p:'$24',l:amz('strappy flat leather sandals women tan')},mid:{n:'Leather Sandal',p:'$130',l:'https://www.nordstrom.com/sr?keyword=vagabond+shoemakers+sandals'},luxury:{n:'Ancient Greek Sandals',p:'$245',l:'https://www.ancient-greek-sandals.com/collections/women-sandals'}}}
-  ]};
+.upload-zone{
+  border:1.5px dashed var(--border);border-radius:4px;
+  padding:40px 24px;text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s;
+  position:relative;margin-bottom:28px;
 }
-function showScanResult(r){
-  const el=document.getElementById('scanResult');
-  el.innerHTML=`<div class="sr-vibe"><strong>${r.overall_vibe||'Effortless Chic'}</strong><p>${r.trend_verdict||''}</p></div>
-  <div style="display:flex;gap:8px;margin-bottom:12px">
-    <div style="flex:1;background:var(--g5);padding:10px;text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.6rem">${r.trend_score||r.score||86}</div><div style="font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g8);margin-top:2px">Trend Score</div></div>
-    <div style="flex:1;background:var(--g5);padding:10px;text-align:center"><div style="font-family:'Playfair Display',serif;font-size:1.6rem">${r.pieces?.length||3}</div><div style="font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g8);margin-top:2px">Pieces Found</div></div>
-  </div>
-  <div class="sr-pieces">${(r.pieces||[]).slice(0,3).map(p=>`<div class="sr-piece"><strong>${p.type}: ${p.identified}</strong><div class="sr-links">${p.alternatives?.budget?`<a href="${p.alternatives.budget.l}" target="_blank" class="sr-link b">${p.alternatives.budget.p}</a>`:''}${p.alternatives?.mid?`<a href="${p.alternatives.mid.l}" target="_blank" class="sr-link m">${p.alternatives.mid.p}</a>`:''}${p.alternatives?.luxury?`<a href="${p.alternatives.luxury.l}" target="_blank" class="sr-link l">${p.alternatives.luxury.p}</a>`:''}</div></div>`).join('')}</div>`;
-  el.classList.add('on');
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:#FEFCF8}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2}
+.upload-icon{font-size:28px;margin-bottom:12px;color:var(--gold)}
+.upload-title{font-family:var(--serif);font-size:20px;font-weight:400;margin-bottom:8px}
+.upload-hint{font-size:11px;color:var(--light);line-height:1.7}
+#previewImg{
+  max-height:200px;width:auto;margin:0 auto 16px;
+  border-radius:4px;display:none;object-fit:contain;
 }
-
-// ── TREND ENGINE — 4x DAILY AUTO-REFRESH ──────────────
-async function pickCity(c,el){
-  city=c;
-  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));
-  if(el)el.classList.add('on');
-  else document.querySelectorAll('.ctab').forEach(t=>{if(t.textContent.toLowerCase().includes(c.split(' ')[0].toLowerCase()))t.classList.add('on');});
-  const title=c.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
-  document.getElementById('feedCity').innerHTML=`What's trending in <em>${title}</em>`;
-  document.getElementById('loadCity').textContent=title;
-  catFilter='all';document.querySelectorAll('.cpill').forEach(b=>{b.classList.remove('on');if(b.textContent==='All')b.classList.add('on');});
-  await loadTrends(c,false);
+.scanner-row{display:flex;gap:12px;align-items:center;margin-bottom:20px}
+.scanner-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);min-width:60px}
+select.scanner-sel{
+  flex:1;padding:10px 14px;border:1px solid var(--border);
+  background:var(--cr);font-family:var(--sans);font-size:12px;
+  border-radius:var(--r);color:var(--b);
 }
-
-async function refreshTrends(){
-  const btn=document.getElementById('refreshBtn');
-  btn.classList.add('spin');
-  delete trendCache[city];
-  await loadTrends(city,true);
-  btn.classList.remove('spin');
+.budget-tabs{display:flex;gap:0}
+.budget-tab{
+  flex:1;padding:9px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  font-weight:500;border:1px solid var(--border);color:var(--mid);
+  cursor:pointer;transition:all .2s;margin-right:-1px;text-align:center;
 }
-
-async function loadTrends(c,force=false){
-  const now=Date.now();
-  const cached=trendCache[c];
-  if(!force&&cached&&now-cached.ts<CACHE_TTL){
-    trends=cached.data;renderTrends();
-    const age=now-cached.ts;const m=Math.floor(age/60000);
-    document.getElementById('feedMeta').textContent=`Updated ${m<1?'just now':m<60?m+'m ago':Math.floor(m/60)+'h ago'} · AI sourced`;
-    return;
-  }
-  document.getElementById('loadState').classList.add('on');
-  document.getElementById('trendMasonry').innerHTML='';
-  try{
-    const resp=await Promise.race([fetch(`${API}/trends?city=${encodeURIComponent(c)}&t=${force?now:''}`),new Promise((_,r)=>setTimeout(()=>r(new Error),8000))]);
-    if(resp.ok){
-      const d=await resp.json();const t=d.trends||d||[];
-      if(t.length){
-        trends=t;trendCache[c]={data:t,ts:now,source:d.source};
-        document.getElementById('feedMeta').textContent=`Just updated · ${d.source==='ai'?'AI live':'Curated'}`;
-        document.getElementById('loadState').classList.remove('on');renderTrends();return;
-      }
-    }
-  }catch(e){}
-  trends=STATIC[c.toLowerCase()]||STATIC.paris;
-  trendCache[c]={data:trends,ts:now,source:'static'};
-  document.getElementById('feedMeta').textContent='Curated · May 2026';
-  document.getElementById('loadState').classList.remove('on');
-  renderTrends();
+.budget-tab.active{background:var(--b);color:var(--cr);border-color:var(--b)}
+.btn-scan{
+  width:100%;background:var(--b);color:var(--cr);
+  padding:15px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  border-radius:var(--r);transition:background .2s;margin-top:8px;
 }
-
-// ── OG PHOTO ENGINE ──────────────────────────────────
-// Fetches real thumbnails from Instagram/TikTok posts via our og-scraper function.
-// Cards render instantly with CSS art placeholders, then photos swap in as they load.
-// Results cached in memory for the session so city switches are instant.
-const ogCache = {}; // { url: imageUrl }
-
-async function loadOGPhotos(urls) {
-  // Only fetch URLs we haven't cached yet
-  const needed = urls.filter(u => u && u.startsWith('http') && !(u in ogCache));
-  if (!needed.length) return;
-
-  try {
-    const res = await Promise.race([
-      fetch(`${API}/og-scraper`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ urls: needed }),
-      }),
-      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 12000)),
-    ]);
-
-    if (!res.ok) return;
-    const data = await res.json();
-    const results = data.results || {};
-
-    // Store in cache and immediately inject into any visible cards
-    for (const [url, og] of Object.entries(results)) {
-      ogCache[url] = og?.image || null;
-      if (og?.image) injectPhoto(url, og.image);
-    }
-  } catch (e) {
-    // Silent fail — CSS art placeholders remain
-  }
+.btn-scan:hover{background:var(--gold)}
+#scanResults{margin-top:28px}
+.scan-result-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;border-bottom:1px solid var(--border);
 }
-
-function injectPhoto(postUrl, imgUrl) {
-  // Find all cards that reference this URL and swap the placeholder for a real photo
-  document.querySelectorAll(`[data-og-url="${CSS.escape(postUrl)}"]`).forEach(placeholder => {
-    const img = new Image();
-    img.onload = () => {
-      placeholder.style.backgroundImage = `url(${imgUrl})`;
-      placeholder.style.backgroundSize = 'cover';
-      placeholder.style.backgroundPosition = 'center';
-      placeholder.classList.add('og-loaded');
-      // Hide the CSS art text underneath
-      const art = placeholder.querySelector('.ipc-city, .ipc-trend, .cc-photo-city, .cc-photo-content');
-      if (art) art.style.opacity = '0';
-    };
-    img.src = imgUrl;
-  });
+.scan-result-name{font-size:13px;font-weight:400}
+.scan-result-links{display:flex;gap:8px}
+.scan-link{
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;
+  padding:5px 10px;border:1px solid var(--border);border-radius:var(--r);
+  color:var(--mid);transition:all .2s;
 }
+.scan-link:hover{background:var(--b);color:var(--cr);border-color:var(--b)}
 
-function renderTrends(){
-  const f=trends.filter(t=>catFilter==='all'||(t.category||t.cat)===catFilter);
-  if(!f.length){document.getElementById('trendMasonry').innerHTML='<p style="grid-column:1/-1;padding:40px;text-align:center;color:var(--g8);font-size:.7rem">No results for this filter.</p>';return;}
-
-  // Collect all post URLs for batch OG fetch
-  const allPostUrls = [];
-
-  document.getElementById('trendMasonry').innerHTML=f.map(t=>{
-    const refs=t.social_refs||[];
-    const pieces=t.pieces||[];
-    const cat=t.category||t.cat||'day';
-    const primaryRef = refs[0];
-    const postUrl = primaryRef?.post_url || '';
-
-    // Track for OG fetch
-    if (postUrl && postUrl.startsWith('http')) allPostUrls.push(postUrl);
-
-    // If we already have this photo cached, use it directly
-    const cachedImg = ogCache[postUrl];
-    const photoStyle = cachedImg
-      ? `background-image:url(${cachedImg});background-size:cover;background-position:center;`
-      : '';
-    const artOpacity = cachedImg ? 'opacity:0;' : '';
-    const unsplashKeyword = encodeURIComponent((t.name||'fashion').split(' ').slice(0,2).join(' '));
-    const realPhotoStyle = cachedImg ? photoStyle : `background-image:url(${getUnsplashUrl(t.name, 400, 500)});background-size:cover;background-position:center;`;
-    const finalArtOpacity = 'opacity:0;';
-
-    return `<div class="mcard">
-      <div class="ig-frame">
-        <div class="ig-frame-top">
-          ${primaryRef
-            ? `<div class="ig-avatar">${(primaryRef.handle||'@').charAt(1).toUpperCase()}</div>
-               <div><div class="ig-handle">${primaryRef.handle}</div><div class="ig-location">${primaryRef.geo_note||''}</div></div>`
-            : '<div class="ig-avatar">M</div><div><div class="ig-handle">@mikayla</div></div>'}
-        </div>
-        <div class="ig-frame-inner">
-          <div class="ig-img-area">
-            <div class="ig-img-placeholder ${cachedImg?'og-loaded':''}" data-og-url="${postUrl}" style="${realPhotoStyle}">
-              <div class="ig-placeholder-bg"></div>
-              <div class="ipc-city" style="${finalArtOpacity}">${city.charAt(0).toUpperCase()+city.slice(1)}</div>
-              <div class="ipc-trend" style="${finalArtOpacity}">${t.name}</div>
-            </div>
-          </div>
-        </div>
-        <div class="ig-bottom">
-          <div class="ig-tags">${refs.slice(0,2).map(r=>`<span class="ig-tag">${r.platform==='tiktok'?'TikTok':r.platform==='instagram'?'Instagram':'Vogue'}</span>`).join('<span class="ig-tag" style="color:#DDD"> · </span>')}<span class="ig-tag" style="color:#CCC;margin-left:auto">${cat.toUpperCase()}</span></div>
-          ${primaryRef?`<a href="${postUrl||'#'}" target="_blank" rel="noopener" class="ig-view-link">View on ${primaryRef.platform==='tiktok'?'TikTok':'Instagram'} ↗</a>`:''}
-        </div>
-      </div>
-      <div class="mcard-info">
-        <div class="mcard-trend-name">${t.name}</div>
-        <div class="mcard-why">${t.why_trending||t.desc||''}</div>
-        ${refs.length?`<div class="mcard-srefs">${refs.slice(0,2).map(r=>`<a href="${r.post_url||'#'}" target="_blank" rel="noopener" class="mcard-sref"><span class="ms-plat">${r.platform==='tiktok'?'TT':r.platform==='instagram'?'IG':'Vg'}</span><div class="ms-body"><strong>${r.handle}</strong><span>${r.followers||''}${r.geo_note?` · ${r.geo_note}`:''}</span></div><span class="ms-arrow">→</span></a>`).join('')}</div>`:''}
-        <div class="heat-strip"><div class="heat-fill" style="width:0" data-w="${t.heat||82}%"></div></div>
-        <div class="mcard-shop">${pieces.slice(0,2).map(p=>`
-          <div style="font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g8);padding:4px 0 2px">${p.type||''}: <em style="text-transform:none;letter-spacing:0;font-size:.6rem;color:var(--b)">${p.name||''}</em></div>
-          ${['budget','mid','luxury'].map(tier=>{const d=p[tier]||{};if(!d.item&&!d.n)return '';return `<a href="${d.link||d.l||'#'}" target="_blank" rel="noopener" class="shop-tier"><div class="st-left"><span class="st-badge ${tier==='budget'?'b':tier==='mid'?'m':'l'}">${tier==='budget'?'B':tier==='mid'?'M':'L'}</span><span class="st-name">${d.item||d.n||''}</span></div><div class="st-right"><span class="st-brand">${d.brand||d.b||''}</span><span class="st-price">${d.price||d.p||''}</span><span class="st-arrow">→</span></div></a>`;}).join('')}`).join('')}
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  setTimeout(()=>document.querySelectorAll('.heat-fill[data-w]').forEach(b=>{const w=b.getAttribute('data-w');b.style.width=w;b.removeAttribute('data-w');}),60);
-
-  // Fire OG fetch in background — cards update themselves as photos arrive
-  if (allPostUrls.length) loadOGPhotos(allPostUrls);
+.scanner-info{padding-left:20px}
+.scanner-info h2{font-family:var(--serif);font-size:clamp(32px,4vw,52px);line-height:1.08;margin-bottom:24px}
+.scanner-features{list-style:none;display:flex;flex-direction:column;gap:20px;margin-top:40px}
+.scanner-feat{display:flex;gap:16px;align-items:flex-start}
+.scanner-feat-icon{
+  width:36px;height:36px;border-radius:50%;background:var(--b);
+  color:var(--gold);display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
 }
-function filterCat(c,el){catFilter=c;document.querySelectorAll('.cpill').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderTrends();}
+.scanner-feat-text h4{font-size:13px;font-weight:500;margin-bottom:4px}
+.scanner-feat-text p{font-size:12px;color:var(--mid);line-height:1.7}
+Y\Ù\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ø[YÛZ][\ÎÙ[\ÙÛ\Ú^NL\B\ÜË]Y\[X[ØÛÛÜ\K[ZY
+NÝ^][ÙÜN\\Ø\ÙNÛ]\\ÜXÚ[Î[NÙÛ\Ú^N\B\ÜË\ÚÜÂ\Ü^NØÚÎÝÚYL	NÂXÚÙÜÝ[\KXNØÛÛÜ\KXÜNÂÛ\Ú^N\Û]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚÂY[ÎL\Ý^X[YÛÙ[\ØÜ\\Y]\Î\K\NÂ[Ú][ÛXÚÙÜÝ[ÎÂB\ÜË\ÚÜÝ\ØXÚÙÜÝ[\KYÛÛ
+_B\ÜË\Ý\ÝZ[X^ÂÛ\Ú^NÛ]\\ÜXÚ[ÎY[NØÛÛÜÌPMPNÂ^][ÙÜN\\Ø\ÙNÛX\Ú[]ÜÝ^X[YÛÙ[\ÂBÊ8¥ 8¥ 8¥ USTTHST8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 
+ÂÚ][\\^ØXÚÙÜÝ[\KXNØÛÛÜ\KXÜ_B][Z[\Ù\Ü^NÜYÙÜY][\]KXÛÛ[[ÎYYÙØ\Ø[YÛZ][\ÎÝ\B][Z[ÞÜY[Ë]ÜB][Z[ÈÙÛY[Z[N\K\Ù\YNÙÛ\Ú^NÛ[\
+Ì
+Ë
+M
+NÛ[KZZYÚKÛX\Ú[XÝÛNB][Z[ÈÙÛ\Ú^NLÜØÛÛÜ\K[YÚ
+NÛ[KZZYÚKNÛX^]ÚYÎÛX\Ú[XÝÛNÍB][YX]\\ÞÙ\Ü^N^Ù^Y\XÝ[ÛÛÛ[[ÙØ\NB][YX]Ù\Ü^N^ÙØ\MØ[YÛZ][\Î^\Ý\B][YX]YÝÂÚYÚZYÚØÜ\\Y]\ÎL	NØXÚÙÜÝ[\KYÛÛ
+NÂ^\Ú[ÎÛX\Ú[]ÜÂB][YX]ÙÛ\Ú^NLØÛÛÜ\K[YÚ
+NÛ[KZZYÚKßB][YÜ^ÂXÚÙÜÝ[ÌLLNØÜ\\ÛÛYØJMKMKMK
+NÂY[ÎØÜ\\Y]\ÎÂB][YÜHÞÂÛY[Z[N\K\Ù\YNÙÛ\Ú^NÙÛ]ÙZYÚÂX\Ú[XÝÛNØÛÛÜ\KXÜNÂBÜKYÜÝ\ÛX\Ú[XÝÛNBÜK[X[Â\Ü^NØÚÎÙÛ\Ú^N\Û]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNÂÛÛÜ\KYÛÛ
+NÛX\Ú[XÝÛNÙÛ]ÙZYÚLÂBÜKZ[]ÂÚYL	NØXÚÙÜÝ[ØJMKMKMK
+JNÂÜ\\ÛÛYØJMKMKMKLNÂÛÛÜ\KXÜNÙÛY[Z[N\K\Ø[ÊNÙÛ\Ú^NLÜÙÛ]ÙZYÚÌÂY[ÎLMØÜ\\Y]\Î\K\NÂ[Ú][ÛÜ\XÛÛÜÎÂBÜKZ[]ØÝ\ÞÛÝ][NÛNØÜ\XÛÛÜ\KYÛÛ
+_BÜKZ[]XÙZÛ\ØÛÛÜØJMKMKMKÊ_BÜK\ÝÞÙ\Ü^NÜYÙÜY][\]KXÛÛ[[ÎYYÙØ\MBÜKXÚXÚË\ÝÞÙ\Ü^N^Ù^]Ü\Ü\ÙØ\LÛX\Ú[]ÜBÜKXÚXÚÞÂ\Ü^N^Ø[YÛZ][\ÎÙ[\ÙØ\ØÝ\ÛÜÚ[\ÂÛ\Ú^NL\ØÛÛÜ\K[YÚ
+NÂBÜKXÚXÚÈ[]ØXØÙ[XÛÛÜ\KYÛÛ
+_BZ][ÂÚYL	NØXÚÙÜÝ[\KYÛÛ
+NØÛÛÜ\KXNÂÛ\Ú^NLÛ]\\ÜXÚ[ÎN[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚÌÂY[ÎM\ØÜ\\Y]\Î\K\NÝ[Ú][ÛXÚÙÜÝ[ÎÛX\Ú[]ÜÂBZ][Ý\ØXÚÙÜÝ[\KYÛÛ_BÚ][\Ý[ÞÛX\Ú[]ÜB][Y^^ÂÜ\\ÛÛYØJMKMKMKJNØÜ\\Y]\ÎÂX\Ú[XÝÛNLÛÝ\ÝÎY[ÂB][Y^KZXY\ÂY[ÎMØXÚÙÜÝ[ØJMKMKMK
+NÂ\Ü^N^Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[Ø[YÛZ][\ÎÙ[\ØÝ\ÛÜÚ[\ÂB][Y^K]]^ÙÛY[Z[N\K\Ù\YNÙÛ\Ú^NMØÛÛÜ\KXÜ_B][Y^K\ÝXÙÛ\Ú^NLØÛÛÜ\KYÛÛ
+NÛ]\\ÜXÚ[ÎY[_B][Y^KXÙ^ÜY[ÎÙ\Ü^NÛ_B][Y^KÜ[][Y^KXÙ^Ù\Ü^NØÚßBÝ]]\XÞÂ\Ü^N^ÙØ\MØ[YÛZ][\Î^\Ý\ÂY[ÎLØÜ\XÝÛN\ÛÛYØJMKMKMK
+ÊNÂBÝ]]\XÎ\ÝXÚ[ØÜ\XÝÛNÛ_BÝ]]\XËZXÛÛÂÚYÚZYÚØÜ\\Y]\ÎÂXÚÙÜÝ[ØJN
+M
+
+ÍMJNÙ\Ü^N^Ø[YÛZ][\ÎÙ[\Ú\ÝYKXÛÛ[Ù[\ÂÛ\Ú^NMÙ^\Ú[ÎÂBÝ]]\XËZ[È
+ÙÛ\Ú^NLÜØÛÛÜ\KXÜNÛX\Ú[XÝÛNBÝ]]\XËZ[ÈÙÛ\Ú^NL\ØÛÛÜ\K[YÚ
+NÛ[KZZYÚKÛX\Ú[XÝÛNBÝ]]\ÚÜ[[ÜÞÙ\Ü^N^ÙØ\Ù^]Ü\Ü\BÝ]][[ÞÂÛ\Ú^NÛ]\\ÜXÚ[ÎY[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚLÂY[ÎLØÜ\\ÛÛYØJMKMKMKNØÛÛÜ\K[YÚ
+NÂÜ\\Y]\Î\K\NÝ[Ú][Û[ÎÂBÝ]][[ÎÝ\ØXÚÙÜÝ[\KYÛÛ
+NØÛÛÜ\KXNØÜ\XÛÛÜ\KYÛÛ
+_B¥¹èÄÉÁàí­É½Õ¹éÉ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸ÀÔ¤í½ÉÈµÉ¥ÕÌèÑÁàì(½ÉÈèÅÁàÍ½±¥É ÈÔÔ°ÈÔÔ°ÈÔÔ°¸Àà¤íµ¥¸µ¡¥¡ÐèØÁÁàì)ô(¹±½½¬µÍ±½ÐµÑ¡Õµì(Ý¥Ñ èÐÑÁàí¡¥¡ÐèÐÑÁàí½ÉÈµÉ¥ÕÌèÑÁàí½ÙÉ±½Üé¡¥¸ì(­É½Õ¹éÉ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸Ä¤í±àµÍ¡É¥¹¬èÀì(¥ÍÁ±äé±àí±¥¸µ¥ÑµÌé¹ÑÈí©ÕÍÑ¥äµ½¹Ñ¹Ðé¹ÑÈí½¹ÐµÍ¥éèÄáÁàì)ô(¹±½½¬µÍ±½ÐµÑ¡Õµ¥µíÝ¥Ñ èÄÀÀí¡¥¡ÐèÄÀÀí½©Ðµ¥Ðé½ÙÉô(¹±½½¬µÍ±½Ðµ¥¹½í±àèÄíµ¥¸µÝ¥Ñ èÁô(¹±½½¬µÍ±½ÐµÑí½¹ÐµÍ¥éèáÁàí±ÑÑÈµÍÁ¥¹è¸ÄÉ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½±½ÈéÙÈ ´µ½±¤íµÉ¥¸µ½ÑÑ½´èÉÁáô(¹±½½¬µÍ±½Ðµ¹µí½¹ÐµÍ¥éèÄÉÁàí½±½ÈéÙÈ ´µÈ¤íÝ¡¥ÑµÍÁé¹½ÝÉÀí½ÙÉ±½Üé¡¥¸íÑáÐµ½ÙÉ±½Üé±±¥ÁÍ¥Íô(¹±½½¬µÍ±½ÐµÁÉ¥í½¹ÐµÍ¥éèÄÅÁàí½±½ÈéÙÈ ´µ±¥¡Ð¥ô(¹±½½¬µÍ±½ÐµÉµ½Ùí½±½ÈéÙÈ ´µ±¥¡Ð¤í½¹ÐµÍ¥éèÄÑÁàíÕÉÍ½ÈéÁ½¥¹ÑÈíÁ¥¹èÑÁàí±àµÍ¡É¥¹¬èÁô(¹±½½¬µÍ±½ÐµÉµ½Ùé¡½ÙÉí½±½ÈéÙÈ ´µÈ¥ô(¹±½½¬µÑ½Ñ±ì(¥ÍÁ±äé±àí©ÕÍÑ¥äµ½¹Ñ¹ÐéÍÁµÑÝ¸í±¥¸µ¥ÑµÌé¹ÑÈì(Á¥¹èÄÙÁàÀí½ÉÈµÑ½ÀèÅÁàÍ½±¥É ÈÔÔ°ÈÔÔ°ÈÔÔ°¸Ä¤ì(µÉ¥¸µ½ÑÑ½´èÈÁÁàì)ô(¹±½½¬µÑ½Ñ°µ±±í½¹ÐµÍ¥éèÄÁÁàí±ÑÑÈµÍÁ¥¹è¸ÄÉ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½±½ÈéÙÈ ´µ±¥¡Ð¥ô(¹±½½¬µÑ½Ñ°µÁÉ¥í½¹Ðµµ¥±äéÙÈ ´µÍÉ¥¤í½¹ÐµÍ¥éèÈÑÁàí½±½ÈéÙÈ ´µ½±¥ô(¹Ñ¸µÍ¡½Àµ±½½­ì(Ý¥Ñ èÄÀÀí­É½Õ¹éÙÈ ´µ½±¤í½±½ÈéÙÈ ´µ¤ì(½¹ÐµÍ¥éèÄÁÁàí±ÑÑÈµÍÁ¥¹è¸ÄÙ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½¹ÐµÝ¥¡ÐèÜÀÀì(Á¥¹èÄÑÁàí½ÉÈµÉ¥ÕÌéÙÈ ´µÈ¤íÑÉ¹Í¥Ñ¥½¸é­É½Õ¹¸ÉÌíµÉ¥¸µ½ÑÑ½´èÄÁÁàì)ô(¹Ñ¸µÍ¡½Àµ±½½¬é¡½ÙÉí­É½Õ¹éÙÈ ´µ½±È¥ô(¹Ñ¸µÍÙµ±½½­ì(Ý¥Ñ èÄÀÀí½ÉÈèÅÁàÍ½±¥É ÈÔÔ°ÈÔÔ°ÈÔÔ°¸È¤í½±½ÈéÙÈ ´µÈ¤ì(½¹ÐµÍ¥éèÄÁÁàí±ÑÑÈµÍÁ¥¹è¸ÄÙ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½¹ÐµÝ¥¡ÐèÔÀÀì(Á¥¹èÄÉÁàí½ÉÈµÉ¥ÕÌéÙÈ ´µÈ¤íÑÉ¹Í¥Ñ¥½¸é±°¸ÉÌì)ô(¹Ñ¸µÍÙµ±½½¬é¡½ÙÉí½ÉÈµ½±½ÈéÙÈ ´µ½±¤í½±½ÈéÙÈ ´µ½±¥ô(¹±½½¬µµÁÑåì(ÑáÐµ±¥¸é¹ÑÈíÁ¥¹èÈÁÁàÀí½±½ÈéÙÈ ´µ±¥¡Ð¤ì(½¹ÐµÍ¥éèÄÅÁàí±¥¹µ¡¥¡ÐèÄ¸àì)ô((¼¨RRR ]II=	UA1=RRRRRRRRRRRRRRRRRRRRRR ¨¼(ÝÉÉ½í­É½Õ¹éÙÈ ´µ¤í½±½ÈéÙÈ ´µÈ¤íÁ¥¹èàÁÁàÙÈ ´µÁ¥ô(¹ÝÉÉ½µ¥¹¹Éì(¥ÍÁ±äéÉ¥íÉ¥µÑµÁ±Ñµ½±Õµ¹ÌèÅÈÅÈíÀèàÁÁàí±¥¸µ¥ÑµÌé¹ÑÈì)ô(¹ÝÉÉ½µ¥¹¼ Éí½¹Ðµµ¥±äéÙÈ ´µÍÉ¥¤í½¹ÐµÍ¥éé±µÀ ÌÉÁà°ÑÙÜ°ÔÉÁà¤í±¥¹µ¡¥¡ÐèÄ¸ÀàíµÉ¥¸µ½ÑÑ½´èÈÁÁáô(¹ÝÉÉ½µ¥¹¼Áí½¹ÐµÍ¥éèÄÍÁàí½±½ÈéÙÈ ´µ±¥¡Ð¤í±¥¹µ¡¥¡ÐèÄ¸äíµÉ¥¸µ½ÑÑ½´èÌÙÁáô(¹ÝÉÉ½µÕÁ±½ì(­É½Õ¹éÉ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸ÀÐ¤í½ÉÈèÄ¸ÕÁàÍ¡É ÈÔÔ°ÈÔÔ°ÈÔÔ°¸ÄÔ¤ì(½ÉÈµÉ¥ÕÌèÑÁàíÁ¥¹èÐÁÁàíÑáÐµ±¥¸é¹ÑÈíÕÉÍ½ÈéÁ½¥¹ÑÈì(Á½Í¥Ñ¥½¸éÉ±Ñ¥ÙíÑÉ¹Í¥Ñ¥½¸é½ÉÈµ½±½È¸ÉÌ±­É½Õ¹¸ÉÌì)ô(¹ÝÉÉ½µÕÁ±½é¡½ÙÈ°¹ÝÉÉ½µÕÁ±½¹Éí½ÉÈµ½±½ÈéÙÈ ´µ½±¤í­É½Õ¹éÉ ÄàÐ°ÄÐØ°ÜÐ°¸ÀØ¥ô(¹ÝÉÉ½µÕÁ±½¥¹ÁÕÑíÁ½Í¥Ñ¥½¸éÍ½±ÕÑí¥¹ÍÐèÀí½Á¥ÑäèÀíÕÉÍ½ÈéÁ½¥¹ÑÉô(¹ÝÉÉ½µÉ¥ì(¥ÍÁ±äéÉ¥íÉ¥µÑµÁ±Ñµ½±Õµ¹ÌéÉÁÐ Ð°ÅÈ¤íÀèÄÁÁàì(µÉ¥¸µÑ½ÀèÈÑÁàì)ô(¹ÝÉÉ½µ¥Ñµì(ÍÁÐµÉÑ¥¼èÌ¼Ðí­É½Õ¹èÅÅÅí½ÉÈµÉ¥ÕÌèÑÁàí½ÙÉ±½Üé¡¥¸ì(Á½Í¥Ñ¥½¸éÉ±Ñ¥Ùì)ô(¹ÝÉÉ½µ¥Ñ´¥µí¡¥¡ÐèÄÀÀí½©Ðµ¥Ðé½ÙÉô(¹ÝÉÉ½µ¥Ñ´µ½ÙÉ±åì(Á½Í¥Ñ¥½¸éÍ½±ÕÑí¥¹ÍÐèÀí­É½Õ¹éÉ À°À°À°¸Ø¤ì(¥ÍÁ±äé±àí±¥¸µ¥ÑµÌé¹ÑÈí©ÕÍÑ¥äµ½¹Ñ¹Ðé¹ÑÈì(½Á¥ÑäèÀíÑÉ¹Í¥Ñ¥½¸é½Á¥Ñä¸ÉÌì)ô(¹ÝÉÉ½µ¥Ñ´é¡½ÙÈ¹ÝÉÉ½µ¥Ñ´µ½ÙÉ±åí½Á¥ÑäèÅô(¹ÝÉÉ½µ¥Ñ´µ±±ì(Á½Í¥Ñ¥½¸éÍ½±ÕÑí½ÑÑ½´èÙÁàí±ÐèÙÁàíÉ¥¡ÐèÙÁàì(½¹ÐµÍ¥éèáÁàí±ÑÑÈµÍÁ¥¹è¸Å´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍì(½±½ÈéÙÈ ´µÈ¤í­É½Õ¹éÉ À°À°À°¸Ü¤ì(Á¥¹èÍÁàÙÁàí½ÉÈµÉ¥ÕÌèÉÁàíÑáÐµ±¥¸é¹ÑÈì)ô(¹ÝÉÉ½µÑ½Éäµì(Á½Í¥Ñ¥½¸éÍ½±ÕÑíÑ½ÀèÙÁàí±ÐèÙÁàì(½¹ÐµÍ¥éèÝÁàí±ÑÑÈµÍÁ¥¹è¸Å´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍì(Á¥¹èÍÁàÙÁàí½ÉÈµÉ¥ÕÌéÙÈ ´µÈ¤ì(­É½Õ¹éÙÈ ´µ½±¤í½±½ÈéÙÈ ´µ¤í½¹ÐµÝ¥¡ÐèØÀÀì)ô(\Ú^NLØÛÛÜ\K[ZY
+_BÊ8¥ 8¥ 8¥ ÐRUTÕ8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 
+ÂÝØZ]\ÝØXÚÙÜÝ[\KXNØÛÛÜ\KXÜNÜY[ÎL\K\Y
+_BØZ]\ÝZ[\ÛX^]ÚYÛX\Ú[]]ÎÝ^X[YÛÙ[\BØZ]\ÝZ[\ÙÛY[Z[N\K\Ù\YNÙÛ\Ú^NÛ[\
+Î
+Ë
+Ì
+NÛ[KZZYÚK
+NÛX\Ú[XÝÛNBØZ]\ÝZ[\[^ÙÛ\Ý[N][XÎØÛÛÜ\KYÛÛ
+_BØZ]\ÝZ[\ÙÛ\Ú^NLÜØÛÛÜ\K[YÚ
+NÛ[KZZYÚKNÛX^]ÚY
+ÛX\Ú[]]È
 
-// ── CELEBS ────────────────────────────────────────────
-function renderCelebs(){
-  const data=celebFilter==='all'?CELEBS:CELEBS.filter(c=>c.city===celebFilter);
-  const celebPostUrls=[];
+BØZ]\ÝYÜ^Ù\Ü^N^ÙØ\ÛX^]ÚYÛX\Ú[]]ßBØZ]\ÝZ[]Â^NÜY[ÎMÂXÚÙÜÝ[ØJMKMKMK
+NÂÜ\\ÛÛYØJMKMKMKMJNÂÛÛÜ\KXÜNÙÛY[Z[N\K\Ø[ÊNÙÛ\Ú^NLÜÂÜ\\Y]\Î\K\H\K\NÂBØZ]\ÝZ[]ØÝ\ÞÛÝ][NÛNØÜ\XÛÛÜ\KYÛÛ
+_BØZ]\ÝZ[]XÙZÛ\ØÛÛÜØJMKMKMKÍJ_BØZ]\ÝXÂXÚÙÜÝ[\KYÛÛ
+NØÛÛÜ\KXNÂÛ\Ú^NLÛ]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚÌÂY[ÎMØÜ\\Y]\Î\K\H\K\HÂ[Ú][ÛXÚÙÜÝ[ÎÝÚ]K\ÜXÙNÝÜ\ÂBØZ]\ÝXÝ\ØXÚÙÜÝ[\KYÛÛ_BØZ]\Ý[Ý^ÙÛ\Ú^NLØÛÛÜ\K[YÚ
+NÛX\Ú[]ÜMÛ]\\ÜXÚ[Î
+Y[_BÝØZ]\Ý\ÙÞÂX\Ú[]ÜÙÛ\Ú^NLÜØÛÛÜ\KYÛÛ
+NÂ\Ü^NÛNÙÛY[Z[N\K\Ù\YNÙÛ\Ý[N][XÎÂBØZ]\ÝXÛÝ[\ÂX\Ú[]ÜÜY[Ë]ÜÌØÜ\]Ü\ÛÛYØJMKMKMKJNÂ\Ü^N^Ú\ÝYKXÛÛ[Ù[\ÙØ\ÂBØË\Ý][ÙÛY[Z[N\K\Ù\YNÙÛ\Ú^NÌØÛÛÜ\KYÛÛ
+_BØË\Ý][ÙÛ\Ú^N\Û]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNØÛÛÜ\K[YÚ
+NÛX\Ú[]ÜBÊ8¥ 8¥ 8¥ ÓÕT8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 8¥ 
+ÂÛÝ\ÂXÚÙÜÝ[Ì
+L
+L
+NØÛÛÜØJMKMKMK
+NÂY[Î\K\Y
+NÂ\Ü^N^Ø[YÛZ][\ÎÙ[\Ú\ÝYKXÛÛ[ÜXÙKX]ÙY[ÂÜ\]Ü\ÛÛYÌPLPLPNÙ^]Ü\Ü\ÙØ\MÂBÛÝ\[ÙÛÞÙÛY[Z[N\K\Ù\YNÙÛ\Ú^NMÛ]\\ÜXÚ[ÎMY[NÝ^][ÙÜN\\Ø\ÙNØÛÛÜØJMKMKMKÊ_BÛÝ\[[ÜÞÙ\Ü^N^ÙØ\BÛÝ\[[ÜÈ^ÙÛ\Ú^N\Û]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNÝ[Ú][ÛÛÛÜßBÛÝ\[[ÜÈNÝ\ØÛÛÜ\KYÛÛ
+_BÛÝ\XÛÜ^ÙÛ\Ú^NLBÜ[\Ù\Ü^N[[KXØÚÎÝÚYMÚZYÚMØÜ\ÛÛYØJMKMKMKMJNØÜ\]ÜXÛÛÜ\KYÛÛ
+NØÜ\\Y]\ÎL	NØ[[X][ÛÜ[È[X\[[]_BÜ[\Ù\Ü^N[[KXØÚÎÝÚYMÚZYÚMØÜ\ÛÛYØJMKMKMKMJNØÜ\]ÜXÛÛÜ\KYÛÛ
+NØÜ\\Y]\ÎL	NØ[[X][ÛÜ[È[X\[[]_BÙ^Y[Y\ÈÜ[ÝÞÝ[ÙÜNÝ]JÍYÊ__BØY[ËX\ÚZYÚØXÚÙÜÝ[\KXÜ\NØÜ\\Y]\Î\ÛÝ\ÝÎY[ÛX\Ú[BØY[ËX\Y[ÚZYÚL	NØXÚÙÜÝ[\KYÛÛ
+NØÜ\\Y]\Î\Ø[[X][ÛØY\KÈX\ÙH[[]_BÙ^Y[Y\ÈØY\Ì	NÝÚY	NÛX\Ú[[YML	NÝÚY	NÛX\Ú[[Y	_LL	NÝÚY	NÛX\Ú[[YL	__BÙY[Y[\ÙÛ\Ú^N\Û]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚÜY[Î\NØÜ\\ÛÛY\KXÜ\NØÛÛÜ\K[ZY
+NØÝ\ÛÜÚ[\Ý[Ú][Û[ÎÛX\Ú[\YÚL\ØXÚÙÜÝ[[Ü\[BÙY[Y[\XÝ]KÙY[Y[\Ý\ØXÚÙÜÝ[\KXNØÛÛÜ\KXÜNØÜ\XÛÛÜ\KX_BÙY[YÜYØÛÛ[[ÎØÛÛ[[YØ\LBÙY[XØ\ØXZËZ[ÚYN]ÚYÛX\Ú[XÝÛNLÜÜÚ][Û[]]NÛÝ\ÝÎY[ØÜ\\Y]\ÎØÝ\ÛÜÚ[\ØXÚÙÜÝ[ÑQMNÝ[Ú][Û[ÙÜH\ËÞ\ÚYÝÈ\ßBÙY[XØ\Ý\Ý[ÙÜN[Û]VJLÜ
+NØÞ\ÚYÝÎL
+ØJM
+_BÙY[XØ\[YÞÙ\Ü^NØÚÎÝÚYL	NÚZYÚ]]ßBÙY[XØ\[Ý\^^ÜÜÚ][ÛXÛÛ]NÚ[Ù]ØXÚÙÜÝ[[X\YÜYY[
+[Ü\[
+L	KØJLLL
+JNÛÜXÚ]NÝ[Ú][ÛÜXÚ]H\ÎÙ\Ü^N^Ù^Y\XÝ[ÛÛÛ[[Ú\ÝYKXÛÛ[^Y[ÜY[ÎMBÙY[XØ\Ý\ÙY[XØ\[Ý\^^ÛÜXÚ]N_BÙY[XØ\XÚ]^ÙÛ\Ú^NÛ]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNØÛÛÜ\KYÛÛ
+NÛX\Ú[XÝÛNBÙY[XØ\[ÛÚÞÙÛY[Z[N\K\Ù\YNÙÛ\Ú^NM\ØÛÛÜ\KXÜNÛX\Ú[XÝÛNBÙY[XØ\XÝ^ÙÛ\Ú^N\Û]\\ÜXÚ[ÎM[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚØÛÛÜ\KXÜNØXÚÙÜÝ[\KYÛÛ
+NÜY[ÎLØÜ\\Y]\ÎÙ\Ü^N[[KXØÚÎÝÚY]XÛÛ[BÙY[XØ\XYÙ^ÜÜÚ][ÛXÛÛ]NÝÜLÛYLÙÛ\Ú^NÛ]\\ÜXÚ[ÎY[NÝ^][ÙÜN\\Ø\ÙNÙÛ]ÙZYÚÜY[ÎØÜ\\Y]\ÎØXÚÙÜÝ[\KXNØÛÛÜ\KXÜ_BÙ^Y[Y\È[Ù^Ì	KL	^ÛÜXÚ]N_ML	^ÛÜXÚ]N_BYKZ[ÛÜXÚ]NÝ[ÙÜN[Û]VJ
+NÝ[Ú][ÛÜXÚ]HÈX\ÙK[ÙÜHÈX\Ù_BYKZ[\ÚX^ÛÜXÚ]NNÝ[ÙÜN[Û]VJ
+_BYYXJX^]ÚYL
+^ÈÙ\ÜÙ[X[ÞØXÚÙÜÝ[ÑQQHÚ\ÞÙÜY][\]KXÛÛ[[ÎYK\Ë\YÚÛZ[ZZYÚKØØ[\Z[\][Z[\Ø\ØKZ[\ÂÜY][\]KXÛÛ[[ÎYÙØ\K[ËYÜY\ÜËYÜYÙÜY][\]KXÛÛ[[Î\X]
+Y_KZ^\]Ü\ÙÜY][\]KXÛÛ[[ÎYKÛÚË\[[ÜÜÚ][ÛÝ]Xß_BYYXJX^]ÚY
+^Ë[ËYÜY\ÜËYÜYÙÜY][\]KXÛÛ[[ÎYK][[ÜÞÙ\Ü^NÛ_K\Ë\Ý]ÞÙØ\KØZ]\ÝYÜ^Ù^Y\XÝ[ÛÛÛ[[KØZ]\ÝZ[]ØZ]\ÝXØÜ\\Y]\Î\K\_KÙY[YÜYØÛÛ[[Î_BÜÝ[OÚXYñ½äø(ñ¹Øø(ñ¥Ø±ÍÌô¹Øµ±½¼ù5%-e1ð½¥Øø(ñ¥Ø±ÍÌô¹Øµ±¥¹­Ìø(ñ¡ÉôÑÉ¹ÌùQÉ¹¥¹ð½ø(ñ¡ÉôÍ¸µ½¸ùM¸=¸ð½ø(ñ¡Éô±½ÍÐù
+±½ÍÐð½ø(ñ¡Éô¥Ñ¥¹ÉÉäù%Ñ¥¹ÉÉäð½ø(ñ¡ÉôÝ¥Ñ±¥ÍÐùÉ±äÍÌð½ø(ð½¥Øø(ñ¡ÉôÝ¥Ñ±¥ÍÐ±ÍÌô¹ØµÑùÉ±äÍÌð½ø(ð½¹Øø((ñ¥Ø±ÍÌôÑ¥­ÈµÝÉÀø(ñ¥Ø±ÍÌôÑ¥­ÈµÑÉ¬¥ôÑ¥­Èøð½¥Øø(ð½¥Øø((ñÍÑ¥½¸¥ô¡É¼ø(ñ¥Ø±ÍÌô¡É¼µ±Ðø(ñ¥Ø±ÍÌô¡É¼µ½±µÈøð½¥Øø(ñÍÁ¸±ÍÌô¡É¼µåÉ½Üù$QÉÙ°Í¡¥½¸%¹Ñ±±¥¹ð½ÍÁ¸ø(ñ Ä±ÍÌô¡É¼µÑ¥Ñ±ùÙÉä¥Ñä¡ÌñÈù¥ÑÌ½Ý¸ñ´ùÉÍÌ½¸ð½´øð½ Äø(ñÀ±ÍÌô¡É¼µÍÕù]¼Ñ¡Ý½É¬¸A¥¬å½ÕÈÍÑ¥¹Ñ¥½¸¹5%-e1ÍÕÉÌÝ¡ÐÌÑÕ±±äÑÉ¹¥¹PÍ½ÕÉÉ½´Q¥­Q½¬°%¹ÍÑÉ´°¹ÍÑÉÐÍÑå±PÝ¥Ñ ÙÉä½ÕÑ¥Ð±¥¹­Ñ¼Í¡½ÀÉ¥¡Ð¹½Ü¸ð½Àø(ñ¥Ø±ÍÌô¡É¼µÑ¹Ìø(ñ¡ÉôÑÉ¹Ì±ÍÌôÑ¸µÁÉ¥µÉäùáÁ±½ÉQÉ¹ÌHð½ø(ñ¡Éô±½ÍÐ±ÍÌôÑ¸µ½ÕÑ±¥¹ù	Õ¥±5ä1½½¬ð½ø(ð½¥Øø(ñ¥Ø±ÍÌô¡É¼µÍÑÑÌø(ñ¥Øøñ¥Ø±ÍÌô¡É¼µÍÑÐµ¸øÐÜ¬ð½¥Øøñ¥Ø±ÍÌô¡É¼µÍÑÐµ°ù
+¥Ñ¥ÌQÉ­ð½¥Øøð½¥Øø(ñ¥Øøñ¥Ø±ÍÌô¡É¼µÍÑÐµ¸øÄÉ,ð½¥Øøñ¥Ø±ÍÌô¡É¼µÍÑÐµ°ù=ÕÑ¥ÑÌ
+ÕÉÑð½¥Øøð½¥Øø(ñ¥Øøñ¥Ø±ÍÌô¡É¼µÍÑÐµ¸øØð½¥Øøñ¥Ø±ÍÌô¡É¼µÍÑÐµ°ùIÑ¥±ÉÌ1¥¹­ð½¥Øøð½¥Øø(ð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌô¡É¼µÉ¥¡Ðø(ñ¥Ø±ÍÌô¡É¼µ¥µøñ¥µÍÉô¡ÑÑÁÌè¼½¥µÌ¹Õ¹ÍÁ±Í ¹½´½Á¡½Ñ¼´ÄÔÄÔààØØÔÜØÄÌ´åÌÔÄÕÁÜáýÜôØÀÀÄôàÔ¥ÐõÉ½À±ÐôAÉ¥Ì¼øñ¥Ø±ÍÌô¡É¼µ¥µµ±°ùAÉ¥Ì
+ÜMÁÉ¥¹ð½¥Øøð½¥Øø(ñ¥Ø±ÍÌô¡É¼µ¥µøñ¥µÍÉô¡ÑÑÁÌè¼½¥µÌ¹Õ¹ÍÁ±Í ¹½´½Á¡½Ñ¼´ÄÔÈäÄÌäÔÜÐÐØØµÌÀÌÀÈÝÅáýÜôØÀÀÄôàÔ¥ÐõÉ½À±Ðô5¥±¸¼øñ¥Ø±ÍÌô¡É¼µ¥µµ±°ù5¥±¸
+Ü¥Ñ½É¥°ð½¥Øøð½¥Øø(ñ¥Ø±ÍÌô¡É¼µ¥µøñ¥µÍÉô¡ÑÑÁÌè¼½¥µÌ¹Õ¹ÍÁ±Í ¹½´½Á¡½Ñ¼´ÄÐØäÌÌÐÀÌÄÈÄàµÌàÉÜÅÜÄÙýÜôØÀÀÔôàÔ¥ÐõÉ½À±ÐôQ½­å¼¼øñ¥Ø±ÍÌô¡É¼µ¥µµ±°ùQ½­å¼
+ÜMÑÉÐð½¥Øøð½¥Øø(ñ¥Ø±ÍÌô¡É¼µ¥µøñ¥µÍÉô¡ÑÑÁÌè¼½¥µÌ¹Õ¹ÍÁ±Í ¹½´½Á¡½Ñ¼´ÄÔàÄÀÐÐÜÜÜÔÔÀ´ÑØÀÜÀÝÀÌýÜôØÀÀÄôàÔ¥ÐõÉ½À±Ðô9e¼øñ¥Ø±ÍÌô¡É¼µ¥µµ±°ù9e
+ÜM=!<ð½¥Øøð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÑÉ¹Ì±ÍÌôÍø(ñ¥Ø±ÍÌôÑÉ¹Ìµ¡Èµ¥¸ø(ñ¥ØøñÍÁ¸±ÍÌôÍµåù1¥Ù
+ÜUÁÑ¥±äð½ÍÁ¸øñÐÈ±ÍÌôÍµÑ¥Ñ±ÍÑå±ô½±½ÈéÙÈ ´µÈ¤ù]¡ÐÌñ´ùÑÉ¹¥¹ð½´øñÈùÉ¥¡Ð¹½Ü¸ð½ÐÈøð½¥Øø(ñ¥Øøñ¥Ø±ÍÌô¥ÑäµÑÌ¥ô¥ÑåQÌø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑ¥ÙÑµ¥ÑäôAÉ¥ÌùAÉ¥Ìð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥ÑäôM¹Ñ½É¥¹¤ùM¹Ñ½É¥¹¤ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥Ñäô5¥±¸ù5¥±¸ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥ÑäôQ½­å¼ùQ½­å¼ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥Ñäô9eù9Üe½É¬ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥ÑäôA½Í¥Ñ¹¼ùA½Í¥Ñ¹¼ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥Ñäô1½¹½¸ù1½¹½¸ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥ÑäôÕ¤ùÕ¤ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌô¥ÑäµÑÑµ¥Ñäô	É±½¹ù	É±½¹ð½ÕÑÑ½¸ø(ð½¥Øøð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌôÑÉ¹ÌµÉ¥µ¥¸¥ôÑÉ¹ÍÉ¥øñ¥Ø±ÍÌôÑÉ¹Ìµ±½¥¹øñ¥Ø±ÍÌô±½¥¹µÈøñ¥Ø±ÍÌô±½¥¹µÈµ¥±°øð½¥Øøð½¥Øù1½¥¹ÑÉ¹Ïð½¥Øøð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÍ¹¹È±ÍÌôÍø(ñ¥Ø±ÍÌôÍ¹¹Èµ¥¹¹Èø(ñ¥Ø±ÍÌôÍ¹¹Èµ½É´µ¥¸ø(ñ¥Ø±ÍÌôÕÁ±½µé½¹¥ôÕÁ±½i½¹ø(ñ¥¹ÁÕÐÑåÁô¥±ÁÐô¥µ¼¨¥ôÁ¡½Ñ½%¹ÁÕÐ½¹¡¹ô¡¹±A¡½Ñ¼¡Ñ¡¥Ì¤¼ø(ñ¥Ø±ÍÌôÕÁ±½µ¥½¸ûÂ~NÜð½¥Øø(ñ Ì±ÍÌôÕÁ±½µÑ¥Ñ±ùUÁ±½¹äÁ¡½Ñ¼ð½ Ìø(ñÀ±ÍÌôÕÁ±½µ¡¥¹ÐùMÉ¹Í¡½ÐÉ½´Q¥­Q½¬°%¹ÍÑÉ´°µé¥¹P5%-e1¥¹Ñ¥¥ÌÙÉäÁ¥¹¥¹ÌÍ¡½ÁÁ±±ÑÉ¹Ñ¥ÙÌ¸ð½Àø(ñ¥µ¥ôÁÉÙ¥Ý%µ±ÐôAÉÙ¥Ü¼ø(ð½¥Øø(ñ¥Ø±ÍÌôÍ¹¹ÈµÉ½ÜøñÍÁ¸±ÍÌôÍ¹¹Èµ±°ù
+¥Ñäð½ÍÁ¸ø(ñÍ±Ð±ÍÌôÍ¹¹ÈµÍ°¥ôÍ¹
+¥Ñäøñ½ÁÑ¥½¸Ù±ÕôùM±ÐÍÑ¥¹Ñ¥½»ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùAÉ¥Ìð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù5¥±¸ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùQ½­å¼ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù9Üe½É¬ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù1½¹½¸ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùM¹Ñ½É¥¹¤ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùA½Í¥Ñ¹¼ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùÕ¤ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù	É±½¹ð½½ÁÑ¥½¸øð½Í±Ðøð½¥Øø(ñ¥Ø±ÍÌôÍ¹¹ÈµÉ½ÜøñÍÁ¸±ÍÌôÍ¹¹Èµ±°ù	ÕÐð½ÍÁ¸ø(ñ¥Ø±ÍÌôÕÐµÑÌøñÕÑÑ½¸±ÍÌôÕÐµÑÑµôÕÐ½¹±¥¬ôÍÑ	ÕÐ¡Ñ¡¥Ì¤ù	ÕÐð½ÕÑÑ½¸øñÕÑÑ½¸±ÍÌôÕÐµÑÑ¥ÙÑµôµ¥½¹±¥¬ôÍÑ	ÕÐ¡Ñ¡¥Ì¤ù5¥ð½ÕÑÑ½¸øñÕÑÑ½¸±ÍÌôÕÐµÑÑµô±ÕáÕÉä½¹±¥¬ôÍÑ	ÕÐ¡Ñ¡¥Ì¤ù1ÕáÕÉäð½ÕÑÑ½¸øð½¥Øøð½¥Øø(ñÕÑÑ½¸±ÍÌôÑ¸µÍ¸½¹±¥¬ô¹±åÍA¡½Ñ¼ ¤ûr¹±åÍ5ä1½½¬ð½ÕÑÑ½¸ø(ñ¥Ø¥ôÍ¹IÍÕ±ÑÌøð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌôÍ¹¹Èµ¥¹¼µ¥¸ø(ñÍÁ¸±ÍÌôÍµåù=ÁÑ¥½¹°
+Ü$¹±åÍ¥Ìð½ÍÁ¸ø(ñ ÈùM¸ñÈùå½ÕÈ±½½¬¸ð½ Èø(ñÀÍÑå±ô½¹ÐµÍ¥éèÄÍÁàí½±½ÈéÙÈ ´µµ¥¤í±¥¹µ¡¥¡ÐèÄ¸àÔíµÉ¥¸èÈÁÁàÀùUÁ±½¹äÁ¡½Ñ¼¹Ý±°Í½É¥Ð¥¹ÍÐ±¥Ù¥ÑäÑÉ¹ÌÑ¡¸¥¹Í¡½ÁÁ±±ÑÉ¹Ñ¥ÙÌ¸ð½Àø(ñÕ°±ÍÌôÍ¹¹ÈµÑÕÉÌøñ±¤±ÍÌôÍ¹¹ÈµÐøñ¥Ø±ÍÌôÍ¹¹ÈµÐµ¥½¸ûÂ~R4ð½¥Øøñ¥Ø±ÍÌôÍ¹¹ÈµÐµÑáÐøñ Ðù%¹ÍÑ¹ÐA¥%ð½ ÐøñÀÌù
+±ÕY¥Í¥½¸¥¹Ñ¥¥ÌÑ½ÁÌ°½ÑÑ½µÌ°Í¡½Ì°Ì¥¸¹äÁ¡½Ñ¼¥¸Í½¹Ì¸ð½Àøð½¥Øøð½±¤øñ±¤±ÍÌôÍ¹¹ÈµÐøñ¥Ø±ÍÌôÍ¹¹ÈµÐµ¥½¸ûÂ~n4ð½¥Øøñ¥Ø±ÍÌôÍ¹¹ÈµÐµÑáÐøñ Ðù5Õ±Ñ¤µIÑ¥±È1¥¹­Ìð½ ÐøñÀÌùÙÉäÁ¥±¥¹­ÌÑ¼µé½¸°M=L°iÉ° 4°IÙ½±Ù°Á½À°¹Q¡ÉUÀ¸ð½Àøð½¥Øøð½±¤øñ±¤±ÍÌôÍ¹¹ÈµÐøñ¥Ø±ÍÌôÍ¹¹ÈµÐµ¥½¸ûfìð½¥Øøñ¥Ø±ÍÌôÍ¹¹ÈµÐµÑáÐøñ ÐùM½¹¡¹¥ÉÍÐð½ ÐøñÀÌùÙÉäÉ½µµ¹Ñ¥½¸¥¹±ÕÌÍÕÍÑ¥¹±½ÁÑ¥½¸É½´Á½À½ÈQ¡ÉUÀ±ÝåÌ¸ð½Àøð½¥Øøð½±¤øð½Õ°ø(ð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÍÍ¹Ñ¥±Ì±ÍÌôÍø(ñ¥Ø±ÍÌôÍÌµ¡Èµ¥¸ø(ñ¥ØøñÍÁ¸±ÍÌôÍµåù
+ÕÉÑ½ÈÙÉäQÉ¥Àð½ÍÁ¸øñ È±ÍÌôÍµÑ¥Ñ±ùQÉÙ°ñ´ùÍÍ¹Ñ¥±Ì¸ð½´øð½ Èøð½¥Øø(ñ¥Øøñ¥Ø±ÍÌôÍÌµ¥±ÑÈøñÕÑÑ½¸±ÍÌôÍÌµ¥±ÑÈµÑ¸Ñ¥Ù½¹±¥¬ô¥±ÑÉÍÌ¡Ñ¡¥Ì°±°¤ù±°ð½ÕÑÑ½¸øñÕÑÑ½¸±ÍÌôÍÌµ¥±ÑÈµÑ¸½¹±¥¬ô¥±ÑÉÍÌ¡Ñ¡¥Ì°ÕÐ¤ù	ÕÐð½ÕÑÑ½¸øñÕÑÑ½¸±ÍÌôÍÌµ¥±ÑÈµÑ¸½¹±¥¬ô¥±ÑÉÍÌ¡Ñ¡¥Ì°µ¥¤ù5¥ð½ÕÑÑ½¸øñÕÑÑ½¸±ÍÌôÍÌµ¥±ÑÈµÑ¸½¹±¥¬ô¥±ÑÉÍÌ¡Ñ¡¥Ì°±ÕáÕÉä¤ù1ÕáÕÉäð½ÕÑÑ½¸øð½¥Øøð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌôÍÌµÉ¥µ¥¸¥ôÍÍÉ¥øð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ô¥Ñ¥¹ÉÉä±ÍÌôÍø(ñ¥Ø±ÍÌô¥Ñ¥¸µ¥¹¹Èø(ñ¥Ø±ÍÌô¥Ñ¥¸µ¥¹¼µ¥¸ø(ñÍÁ¸±ÍÌôÍµåù$
+ÜMµÉÐA±¹¹Èð½ÍÁ¸ø(ñ Èùe½ÕÈÑÉ¥À¸ñÈùe½ÕÈñ´ùÁÉÐ½ÕÑ¥ÑÌ¸ð½´øð½ Èø(ñÀùQ±°ÕÌÝ¡Éå½ÔÉ½¥¹°Ý¡Ðå½ÔÉ½¥¹°¹å½ÕÈÕÐ¸]¹ÉÑäµäµä½ÕÑ¥ÐÕ¥Ý¥Ñ Í¡½ÁÁ±±¥¹­Ì¸ð½Àø(ñ¥Ø±ÍÌô¥Ñ¥¸µÑÕÉÌø(ñ¥Ø±ÍÌô¥Ñ¥¸µÐøñ¥Ø±ÍÌô¥Ñ¥¸µÐµ½Ðøð½¥ØøñÀùÑ¥Ù¥Ñ¥ÌµÍÉ½µµ¹Ñ¥½¹Ì¥¹¹ÈÙÌ¡¥­¥¹ÙÌÉ½½Ñ½Àð½Àøð½¥Øø(ñ¥Ø±ÍÌô¥Ñ¥¸µÐøñ¥Ø±ÍÌô¥Ñ¥¸µÐµ½Ðøð½¥ØøñÀù]Ñ¡È¹ÍÍ½¸ÝÉÍÕÍÑ¥½¹ÌÁÈÍÑ¥¹Ñ¥½¸ð½Àøð½¥Øø(ñ¥Ø±ÍÌô¥Ñ¥¸µÐøñ¥Ø±ÍÌô¥Ñ¥¸µÐµ½Ðøð½¥ØøñÀùÙÉä½ÕÑ¥Ð±¥¹­ÌÑ¼µé½¸M=LiÉIÙ½±Ù¹Í½¹¡¹ð½Àøð½¥Øø(ñ¥Ø±ÍÌô¥Ñ¥¸µÐøñ¥Ø±ÍÌô¥Ñ¥¸µÐµ½Ðøð½¥ØøñÀùMÙ±½½­ÌÑ¼ÍÁ¥¥åÌ¹áÁ½ÉÐå½ÕÈÕ±°Á±¸ð½Àøð½¥Øø(ð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌô¥Ñ¥¸µ½É´µ¥¸ø(ñ ÌùA±¸5äQÉÙ°]ÉÉ½ð½ Ìø(ñ¥Ø±ÍÌô½É´µÉ½Üø(ñ¥Ø±ÍÌô½É´µÉ½ÕÀøñ±°±ÍÌô½É´µ±°ùÍÑ¥¹Ñ¥½¸ð½±°øñ¥¹ÁÕÐ±ÍÌô½É´µ¥¹ÁÕÐ¥ô¥Ñ¥¹
+¥ÑäÁ±¡½±Èô¹¸M¹Ñ½É¥¹¤ÑåÁôÑáÐ¼øð½¥Øø(ñ¥Ø±ÍÌô½É´µÉ½ÕÀøñ±°±ÍÌô½É´µ±°ùQÉ¥ÀÕÉÑ¥½¸ð½±°øñÍ±Ð±ÍÌô½É´µ¥¹ÁÕÐ¥ô¥Ñ¥¹åÌøñ½ÁÑ¥½¸Ù±ÕôÌøÌåÌð½½ÁÑ¥½¸øñ½ÁÑ¥½¸Ù±ÕôÔÍ±ÑøÔåÌð½½ÁÑ¥½¸øñ½ÁÑ¥½¸Ù±ÕôÜøÜåÌð½½ÁÑ¥½¸øñ½ÁÑ¥½¸Ù±ÕôÄÀøÄÀåÌð½½ÁÑ¥½¸øñ½ÁÑ¥½¸Ù±ÕôÄÐøÈÝ­Ìð½½ÁÑ¥½¸øð½Í±Ðøð½¥Øø(ð½¥Øø(ñ¥Ø±ÍÌô½É´µÉ½ÕÀøñ±°±ÍÌô½É´µ±°ùÑ¥Ù¥Ñ¥Ìð½±°ø(ñ¥Ø±ÍÌô½É´µ¡¬µÉ½Ü¥ôÑ
+¡­Ìø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±Õô ¡­¼ø	 ð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±Õô¥¹¥¹¡­¼ø¥¹¥¹¥¹ð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±ÕôÍ¥¡ÑÍ¥¹¡­¼øM¥¡ÑÍ¥¹ð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±Õô¹¥¡Ñ±¥¼ø9¥¡Ñ±¥ð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±Õô¡¥­¥¹¼ø!¥­¥¹ð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±ÕôÍ¡½ÁÁ¥¹¼øM¡½ÁÁ¥¹ð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±ÕôÉ½½Ñ½À¼øI½½Ñ½Àð½±°ø(ñ±°±ÍÌô½É´µ¡¬øñ¥¹ÁÕÐÑåÁô¡­½àÙ±Õôå¡Ð¼øe¡Ðð½±°ø(ð½¥Øøð½¥Øø(ñ¥Ø±ÍÌô½É´µÉ½Üø(ñ¥Ø±ÍÌô½É´µÉ½ÕÀøñ±°±ÍÌô½É´µ±°ù	ÕÐð½±°øñÍ±Ð±ÍÌô½É´µ¥¹ÁÕÐ¥ô¥Ñ¥¹	ÕÐøñ½ÁÑ¥½¸Ù±ÕôÕÐù	ÕÐð½½ÁÑ¥½¸øñ½ÁÑ¥½¸Ù±Õôµ¥Í±Ñù5¥ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸Ù±Õô±ÕáÕÉäù1ÕáÕÉäð½½ÁÑ¥½¸øð½Í±Ðøð½¥Øø(ñ¥Ø±ÍÌô½É´µÉ½ÕÀøñ±°±ÍÌô½É´µ±°ùMÑå±Y¥ð½±°øñÍ±Ð±ÍÌô½É´µ¥¹ÁÕÐ¥ô¥Ñ¥¹MÑå±øñ½ÁÑ¥½¸ù
+¡¥µÀìA½±¥Í¡ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù
+ÍÕ°I±áð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù	½¡¼µÀìÉð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùäµÀì	½±ð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ù
+±ÍÍ¥µÀìQ¥µ±ÍÌð½½ÁÑ¥½¸øñ½ÁÑ¥½¸ùIÍ½ÉÐ1Õáð½½ÁÑ¥½¸øð½Í±Ðøð½¥Øø(ð½¥Øø(ñÕÑÑ½¸±ÍÌôÑ¸µ¥Ñ¥¸½¹±¥¬ôÁ±¹%Ñ¥¹ÉÉä ¤ûr¹ÉÑ5ä=ÕÑ¥ÐA±¸ð½ÕÑÑ½¸ø(ñ¥Ø¥ô¥Ñ¥¹IÍÕ±ÑÌøð½¥Øø(ð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ô±½ÍÐ±ÍÌôÍø(ñ¥Ø±ÍÌô±½ÍÐµ¡Èµ¥¸øñÍÁ¸±ÍÌôÍµåù5¥àµÀì5Ñ 
+Ü
+±Õ±ÍÌµMÑå±ð½ÍÁ¸øñ È±ÍÌôÍµÑ¥Ñ±ù
+±½ÍÐñ´ù	Õ¥±È¸ð½´øð½ ÈøñÀù1åÈÉ½´½ÕÑÉÝÈÑ¼Í¡½Ì¸	É½ÝÍÙÉäÕÐÑ¥È¸Må½ÕÈÕ±°±½½¬Ñ¡¸Í¡½À Á¥¥¸½¹ÑÀ¸ð½Àøð½¥Øø(ñ¥Ø±ÍÌôµ¥áÈµÝÉÀµ¥¸øñ¥Ø±ÍÌôµ¥áÈµÉ½ÝÌ¥ôµ¥áÉI½ÝÌøð½¥Øøð½¥Øø(ñ¥Ø±ÍÌôµ¥áÈµÝÉÀÍÑå±ôµÉ¥¸µÑ½ÀèÌÉÁà¥ô±½½­A¹±]ÉÀøñ¥Øøð½¥Øøñ¥Ø±ÍÌô±½½¬µÁ¹°¥ô±½½­A¹°øñ¥Ø±ÍÌô±½½¬µÁ¹°µÑ¥Ñ±ùe½ÕÈ1½½¬ð½¥Øøñ¥Ø±ÍÌô±½½¬µÍ±½ÑÌ¥ô±½½­M±½ÑÌøñ¥Ø±ÍÌô±½½¬µµÁÑäùM±ÐÁ¥ÌÉ½´Ñ¡É½ÝÌ½ÙÑ¼Õ¥±å½ÕÈ±½½¬¸ð½¥Øøð½¥Øøñ¥Ø±ÍÌô±½½¬µÑ½Ñ°¥ô±½½­Q½Ñ±I½ÜÍÑå±ô¥ÍÁ±äé¹½¹øñÍÁ¸±ÍÌô±½½¬µÑ½Ñ°µ±°ù1½½¬Q½Ñ°ð½ÍÁ¸øñÍÁ¸±ÍÌô±½½¬µÑ½Ñ°µÁÉ¥¥ô±½½­Q½Ñ±AÉ¥øÀð½ÍÁ¸øð½¥ØøñÕÑÑ½¸±ÍÌôÑ¸µÍ¡½Àµ±½½¬¥ôÑ¹M¡½Á1½½¬½¹±¥¬ôÍ¡½Á1½½¬ ¤ÍÑå±ô¥ÍÁ±äé¹½¹ùM¡½ÀQ¡¥Ì1½½¬Hð½ÕÑÑ½¸øñÕÑÑ½¸±ÍÌôÑ¸µÍÙµ±½½¬¥ôÑ¹MÙ1½½¬½¹±¥¬ôÍÙ1½½¬ ¤ÍÑå±ô¥ÍÁ±äé¹½¹ûrMÙÑ¼%Ñ¥¹ÉÉäð½ÕÑÑ½¸øð½¥Øøð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÝÉÉ½ø(ñ¥Ø±ÍÌôÝÉÉ½µ¥¹¹Èø(ñ¥Ø±ÍÌôÝÉÉ½µ¥¹¼µ¥¸øñÍÁ¸±ÍÌôÍµåÍÑå±ô½±½ÈéÙÈ ´µ½±¤ù5ä
+±½ÍÐ
+ÜUÁ±½ð½ÍÁ¸øñ Èùe½ÕÈÝÉÉ½¸ñÈøñ´ù9¼ÕÁ±¥ÑÌ¸ð½´øð½ ÈøñÀùUÁ±½±Ð±åÌ°¡¹ÈÍ¡½ÑÌ°½È½¸µ½äÁ¡½Ñ½Ì½±½Ñ¡Ìå½Ô±Éä½Ý¸¸5%-e1¥¹Ñ¥¥Ì Á¥Í¼Ý¹ÙÈÉ½µµ¹Í½µÑ¡¥¹å½Ô±Éä¡Ù¸ð½ÀøñÀÍÑå±ô½¹ÐµÍ¥éèÄÁÁàí½±½ÈéÉ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸Ì¤í±¥¹µ¡¥¡ÐèÄ¸ÜùA¡½Ñ½ÌÁÉ½ÍÍ±½±±ä¥¸å½ÕÈÉ½ÝÍÈ¹½Ñ¡¥¹¥ÌÍ¹ÐÑ¼½ÕÈÍÉÙÉÌ¸ð½Àøð½¥Øø(ñ¥Ø±ÍÌôµ¥¸ø(ñ¥Ø±ÍÌôÝÉÉ½µÕÁ±½¥ôÝÉÉ½UÁ±½ø(ñ¥¹ÁÕÐÑåÁô¥±ÁÐô¥µ¼¨µÕ±Ñ¥Á±¥ôÝÉÉ½%¹ÁÕÐ½¹¡¹ô¡¹±]ÉÉ½¡Ñ¡¥Ì¤¼ø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèÌÙÁàíµÉ¥¸µ½ÑÑ½´èÄÉÁàûÂ~Nð½¥Øø(ñ ÌÍÑå±ô½¹Ðµµ¥±äéÙÈ ´µÍÉ¥¤í½¹ÐµÍ¥éèÈÁÁàí½¹ÐµÝ¥¡ÐèÐÀÀíµÉ¥¸µ½ÑÑ½´èáÁàí½±½ÈéÙÈ ´µÈ¤ùÉ½Àå½ÕÈÝÉÉ½Á¡½Ñ½Ìð½ Ìø(ñÀÍÑå±ô½¹ÐµÍ¥éèÄÅÁàí½±½ÈéÉ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸Ð¤í±¥¹µ¡¥¡ÐèÄ¸Üù±Ð±åÌ
+Ü!¹ÈÍ¡½ÑÌ
+Ü=¸µ½äÁ¡½Ñ½Ìð½Àø(ð½¥Øø(ñ¥Ø±ÍÌôÝÉÉ½µÉ¥¥ôÝÉÉ½É¥øð½¥Øø(ð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÍ¸µ½¸ÍÑå±ô­É½Õ¹èáÕíÁ¥¹èÄÀÁÁàÙÈ ´µÁ¤ø(ñ¥Ø±ÍÌôµ¥¸ÍÑå±ôÑáÐµ±¥¸é¹ÑÈíµÉ¥¸µ½ÑÑ½´èØÑÁàøñÍÁ¸±ÍÌôÍµåùM¸=¸
+ÜM¡½ÁÁ±ð½ÍÁ¸øñ È±ÍÌôÍµÑ¥Ñ±ùQ¡±½½¬¸ñÈøñ´ùQ¡±¥¹­Ì¸ð½´øð½ ÈøñÀÍÑå±ô½¹ÐµÍ¥éèÄÍÁàí½±½ÈéÙÈ ´µµ¥¤íµàµÝ¥Ñ èÔÀÁÁàíµÉ¥¸èÄÙÁàÕÑ¼Àí±¥¹µ¡¥¡ÐèÄ¸àÔùÍ¡¥½¸¥Ñ½É¥°¹ÍÑÉÐÍÑå±ÙÉäÁ¥¥¹Ñ¥¥¹±¥¹­É½ÍÌµé½¸M=LiÉIÙ½±Ù¹Í½¹¡¹¸ð½Àøð½¥Øø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àíÀèÀí©ÕÍÑ¥äµ½¹Ñ¹Ðé¹ÑÈíµÉ¥¸µ½ÑÑ½´èÐáÁàí±àµÝÉÀéÝÉÀ¥ôÍ¹¥±ÑÉÌø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑ¥ÙÑµ¥Ñäô±°½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ù±°
+¥Ñ¥Ìð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑµ¥ÑäôAÉ¥Ì½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ùAÉ¥Ìð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑµ¥ÑäôM¹Ñ½É¥¹¤½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ùM¹Ñ½É¥¹¤ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑµ¥Ñäô5¥±¸½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ù5¥±¸ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑµ¥ÑäôQ½­å¼½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ùQ½­å¼ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑµ¥Ñäô9e½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ù9Üe½É¬ð½ÕÑÑ½¸ø(ñÕÑÑ½¸±ÍÌôÍ¸µ¥±ÑÈÑµ¥Ñäôµ±¤½¹±¥¬ô¥±ÑÉM¸¡Ñ¡¥Ì¤ùµ±¤ð½ÕÑÑ½¸ø(ð½¥Øø(ñ¥Ø±ÍÌôÍ¸µÉ¥µ¥¸¥ôÍ¹É¥øð½¥Øø(ñ¥Ø¥ôÍ¹A¹°ÍÑå±ô¥ÍÁ±äé¹½¹íÁ½Í¥Ñ¥½¸é¥áí½ÑÑ½´èÀí±ÐèÀíÉ¥¡ÐèÀíèµ¥¹àèÔÀÀí­É½Õ¹éÙÈ ´µÈ¤í½ÉÈµÑ½ÀèÅÁàÍ½±¥ÙÈ ´µ½ÉÈ¤íÁ¥¹èÈáÁàÙÈ ´µÁ¤í½àµÍ¡½ÜèÀ´áÁàÐÁÁàÉ À°À°À°¸ÄÈ¤ø(ñ¥ØÍÑå±ôµàµÝ¥Ñ èäÀÁÁàíµÉ¥¸èÀÕÑ¼ø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àí©ÕÍÑ¥äµ½¹Ñ¹ÐéÍÁµÑÝ¸ìí±¥¸µ¥ÑµÌé±àµÍÑÉÐíµÉ¥¸µ½ÑÑ½´èÈÁÁàø(ñ¥Øøñ¥Ø¥ôÍ¹A¹±
+¥ÑäÍÑå±ô½¹ÐµÍ¥éèåÁàí±ÑÑÈµÍÁ¥¹è¸Äá´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½±½ÈéÙÈ ´µ½±¤íµÉ¥¸µ½ÑÑ½´èÑÁàøð½¥Øøñ¥Ø¥ôÍ¹A¹±Q¥Ñ±ÍÑå±ô½¹Ðµµ¥±äéÙÈ ´µÍÉ¥¤í½¹ÐµÍ¥éèÈÉÁàøð½¥Øøð½¥Øø(ñÕÑÑ½¸½¹±¥¬ô±½ÍM¹A¹° ¤ÍÑå±ô½¹ÐµÍ¥éèÈÉÁàí½±½ÈéÙÈ ´µµ¥¤íÁ¥¹èÑÁàáÁàûrTð½ÕÑÑ½¸ø(ð½¥Øø(ñ¥Ø¥ôÍ¹A¹±%ÑµÌÍÑå±ô¥ÍÁ±äé±àíÀèÄÑÁàí±àµÝÉÀéÝÉÀøð½¥Øø(ð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÁ¥¹ÑÉÍÐÍÑå±ô­É½Õ¹éÙÈ ´µ¤íÁ¥¹èÄÀÁÁàÙÈ ´µÁ¤ø(ñ¥ØÍÑå±ôµàµÝ¥Ñ èÄÄÀÁÁàíµÉ¥¸èÀÕÑ¼ø(ñ¥Ø±ÍÌôµ¥¸ÍÑå±ô¥ÍÁ±äéÉ¥íÉ¥µÑµÁ±Ñµ½±Õµ¹ÌèÅÈÅÈíÀèàÁÁàí±¥¸µ¥ÑµÌéÍÑÉÐø(ñ¥Øø(ñÍÁ¸±ÍÌôÍµåÍÑå±ô½±½ÈéÙÈ ´µ½±¤ù1¥Ù
+ÜÉ½´A¥¹ÑÉÍÐð½ÍÁ¸ø(ñ ÈÍÑå±ô½¹Ðµµ¥±äéÙÈ ´µÍÉ¥¤í½¹ÐµÍ¥éé±µÀ ÌÉÁà°ÑÙÜ°ÔÉÁà¤í±¥¹µ¡¥¡ÐèÄ¸ÀàíµÉ¥¸µ½ÑÑ½´èÈÁÁàí½±½ÈéÙÈ ´µÈ¤ù=ÕÈÍÑå±½ÉÌ¸ñÈøñ´ÍÑå±ô½±½ÈéÙÈ ´µ½±¤ù5Í¡½ÁÁ±¸ð½´øð½ Èø(ñÀÍÑå±ô½¹ÐµÍ¥éèÄÍÁàí½±½ÈéÙÈ ´µ±¥¡Ð¤í±¥¹µ¡¥¡ÐèÄ¸äíµÉ¥¸µ½ÑÑ½´ÌÉÁàùÙÉä½É¥ÌÕÉÑäÍÑ¥¹Ñ¥½¸Á¥¹Ì±¥¹¬¥ÉÑ±äÑ¼Í¡½ÁÁ±¥ÑµÌÉ½ÍÌÙÉäÕÐÑ¥È¸ð½Àø(ñ¥Ø¥ôÁ¥¹Ñ]¥Ñ]ÉÀø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèåÁàí±ÑÑÈµÍÁ¥¹è¸ÄÑ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½±½ÈéÙÈ ´µ½±¤íµÉ¥¸µ½ÑÑ½´èÄÙÁàûL1¥ÙÉ½´µ¥­å±¼½¸A¥¹ÑÉÍÐð½¥Øø(ñÑµÁ¥¸µ¼ôµ	½ÉÑµÁ¥¸µ½ÉµÝ¥Ñ ôÌàÀÑµÁ¥¸µÍ±µ¡¥¡ÐôÐÀÀÑµÁ¥¸µÍ±µÝ¥Ñ ôàÀ¡Éô¡ÑÑÁÌè¼½ÝÝÜ¹Á¥¹ÑÉÍÐ¹½´½µ¥­å±¼¼øð½ø(ñÍÉ¥ÁÐÍå¹ÈÍÉô¼½ÍÍÑÌ¹Á¥¹ÑÉÍÐ¹½´½©Ì½Á¥¹¥Ð¹©Ìøð½ÍÉ¥ÁÐø(ð½¥Øø(ð½¥Øø(ñ¥Øø(ñ¥ØÍÑå±ô­É½Õ¹éÉ ÈÔÔ°ÈÔÔ°ÈÔÔ°¸ÀÐ¤í½ÉÈèÅÁàÍ½±¥É ÈÔÔ°ÈÔÔ°ÈÔÔ°¸Àà¤í½ÉÈµÉ¥ÕÌèÑÁàíÁ¥¹èÌÙÁàíµÉ¥¸µ½ÑÑ½´ÈÑÁàø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àí±¥¸µ¥ÑµÌé¹ÑÈíÀèÄÁÁàíµÉ¥¸µ½ÑÑ½´èÈÁÁàøñ¥ØÍÑå±ôÝ¥Ñ èáÁàí¡¥¡ÐèáÁàí½ÉÈµÉ¥ÕÌèÔÀí­É½Õ¹èÕØÈÌí¹¥µÑ¥½¸éÁÕ±ÍÉÌÍ¥¹¥¹¥Ñøð½¥ØøñÍÁ¸ÍÑå±ô½¹ÐµÍ¥éèÄÁÁàí±ÑÑÈµÍÁ¥¹è¸ÄÑ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½±½ÈèÕØÈÌùA¥¹ÑÉÍÐA$A¹¥¹ð½ÍÁ¸øð½¥Øø(ñ ÌÍÑå±ô½¹Ðµµ¥±äéÙÈ ´µÍÉ¥¤í½¹ÐµÍ¥éèÈÁÁàí½±½ÈéÙÈ ´µÈ¤íµÉ¥¸µ½ÑÑ½´ÄÙÁàùÕ±°¥¹ÑÉÑ¥½¸½µ¥¹Í½½¸ð½ Ìø(ñÀÍÑå±ô½¹ÐµÍ¥éèÄÉÁàí½±½ÈéÙÈ ´µ±¥¡Ð¤í±¥¹µ¡¥¡ÐèÄ¸ÜÔíµÉ¥¸µ½ÑÑ½´ÈÑÁàù=¹½ÕÈA¥¹ÑÉÍÐA$Ý¥±°±½½ÉÌ¥ÉÑ±ä¥¹Í¥5%-e1ð½Àø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àí±àµ¥ÉÑ¥½¸é½±Õµ¸íÀèÄÑÁàø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àíÀèÄÉÁàí½±½ÈéÙÈ ´µ±¥¡Ð¤í½¹ÐµÍ¥éèÄÉÁàøñÍÁ¸ÍÑå±ô½±½ÈéÙÈ ´µ½±¤ûrLð½ÍÁ¸øñÀùAÕ±°Á¥¹ÌÉ½´¹ä½å½ÕÈ½ÉÌäÍÑ¥¹Ñ¥½¸ð½Àøð½¥Øø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àíÀèÄÉÁàí½±½ÈéÙÈ ´µ±¥¡Ð¤í½¹ÐµÍ¥éèÄÉÁàøñÍÁ¸ÍÑå±ô½±½ÈéÙÈ ´µ½±¤ûrLð½ÍÁ¸øñÀù$¥¹Ñ¥¥ÌÙÉä±½Ñ¡¥¹Á¥¥¸ÙÉäÁ¥¸ð½Àøð½¥Øø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àíÀèÄÉÁàí½±½ÈéÙÈ ´µ±¥¡Ð¤í½¹ÐµÍ¥éèÄÉÁàøñÍÁ¸ÍÑå±ô½±½ÈéÙÈ ´µ½±¤ûrLð½ÍÁ¸øñÀùM¡½À±¥¹­ÌÁÁÈ¥¹ÍÑ¹Ñ±äÕÐµ¥±ÕáÕÉäÍ½¹¡¹ð½Àøð½¥Øø(ð½¥Øø(ð½¥Øø(ñ¥ØÍÑå±ô½¹ÐµÍ¥éèåÁàí±ÑÑÈµÍÁ¥¹è¸ÄÑ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½±½ÈéÙÈ ´µ½±¤íµÉ¥¸µ½ÑÑ½´èÄÑÁàíµÉ¥¸µÑ½ÀèÈÑÁàùY¥Üµ½ÕÈ½ÉÌ½¸A¥¹ÑÉÍÐð½¥Øø(ñ¥ØÍÑå±ô¥ÍÁ±äé±àí±àµ¥ÉÑ¥½¸é½±Õµ¸íÀèÄÁÁà¥ôÁ¥¹Ñ	½É1¥¹­Ìøð½¥Øø(ñ¡Éô¡ÑÑÁÌè¼½ÝÝÜ¹Á¥¹ÑÉÍÐ¹½´½µ¥­å±¼¼ÑÉÐô}±¹¬ÍÑå±ô¥ÍÁ±äé¥¹±¥¹µ±àí±¥¸µ¥ÑµÌé¹ÑÈíÀèáÁàíµÉ¥¸µÑ½ÀèÈÁÁàí­É½Õ¹èØÀÀÈÌí½±½ÈéÝ¡¥Ñí½¹ÐµÍ¥éèÄÁÁàí±ÑÑÈµÍÁ¥¹è¸ÄÑ´íÑáÐµÑÉ¹Í½É´éÕÁÁÉÍí½¹ÐµÝ¥¡ÐèØÀÀíÁ¥¹èÄÉÁàÈÑÁàí½ÉÈµÉ¥ÕÌèÉÁàøñÍÁ¸ÍÑå±ô½¹ÐµÍ¥éèÄÙÁàí½¹ÐµÝ¥¡ÐèÜÀÀù@ð½ÍÁ¸ù½±±½Ü5%-e1½¸A¥¹ÑÉÍÐð½ø(ð½¥Øø(ð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñÍÑ¥½¸¥ôÝ¥Ñ±¥ÍÐø(ñ¥Ø±ÍÌôÝ¥Ñ±¥ÍÐµ¥¹¹Èµ¥¸ø(ñÍÁ¸±ÍÌôÍµåùÉ±äÍÌð½ÍÁ¸ø(ñ ÈùÉÍÌÝ±°°ñÈøñ´ùÙÉåÝ¡É¸ð½´øð½ Èø(ñÀù)½¥¸Ñ¡Ý¥Ñ±¥ÍÐ½ÈÉ±äÍÌÑ¼Ñ¡Õ±°5%-e1Á±Ñ½É´¥ÑäÑÉ¹¥¹Ñ±±¥¹½ÕÑ¥ÐÍ¹¹È¥Ñ¥¹ÉÉäÁ±¹¹È¹å½ÕÈ¥¥Ñ°ÝÉÉ½¸ð½Àø(ñ¥Ø±ÍÌôÝ¥Ñ±¥ÍÐµ½É´øñ¥¹ÁÕÐ±ÍÌôÝ¥Ñ±¥ÍÐµ¥¹ÁÕÐ¥ôÝ¥Ñ±¥ÍÑµ¥°Á±¡½±Èôe½ÕÈµ¥°ÉÍÌÑåÁôµ¥°¼øñÕÑÑ½¸±ÍÌôÝ¥Ñ±¥ÍÐµÑ¸½¹±¥¬ô©½¥¹]¥Ñ±¥ÍÐ ¤ù)½¥¸Hð½ÕÑÑ½¸øð½¥Øø(ñ¥Ø±ÍÌôÝ¥Ñ±¥ÍÐµ¹½Ñù9¼ÍÁ´¸U¹ÍÕÍÉ¥¹åÑ¥µ¸É±äµµÉÌÐ½Õ¹¥¹µµÈÁÉ¥¥¹¸ð½¥Øø(ñ¥Ø¥ôÝ¥Ñ±¥ÍÑ5Íøð½¥Øø(ñ¥Ø±ÍÌôÝ¥Ñ±¥ÍÐµ½Õ¹ÑÈøñ¥Øøñ¥Ø±ÍÌôÝµÍÑÐµ¸¥ôÝ¥Ñ
+½Õ¹ÐøÈ°àÐÜð½¥Øøñ¥Ø±ÍÌôÝµÍÑÐµ°ù=¸Ñ¡Ý¥Ñ±¥ÍÐð½¥Øøð½¥Øøñ¥Øøñ¥Ø±ÍÌôÝµÍÑÐµ¸øÐÜ¬ð½¥Øøñ¥Ø±ÍÌôÝµÍÑÐµ°ù
+¥Ñ¥Ì
+½ÙÉð½¥Øøð½¥Øøñ¥Øøñ¥Ø±ÍÌôÝµÍÑÐµ¸ùÉð½¥Øøñ¥Ø±ÍÌôÝµÍÑÐµ°ùQ¼)½¥¸ð½¥Øøð½¥Øøð½¥Øø(ð½¥Øø(ð½ÍÑ¥½¸ø((ñ½½ÑÈøñ¥Ø±ÍÌô½½ÑÈµ±½¼ù5%-e1ð½¥Øøñ¥Ø±ÍÌô½½ÑÈµ±¥¹­Ìøñ¡ÉôÑÉ¹ÌùQÉ¹¥¹ð½øñ¡ÉôÍ¹¹ÈùM¸=¸ð½øñ¡Éô±½ÍÐù
+±½ÍÐð½øñ¡Éô¥Ñ¥¹ÉÉäù%Ñ¥¹ÉÉäð½øñ¡ÉôÁÉ¥Ùä¹¡Ñµ°ùAÉ¥Ùäð½øð½¥Øøñ¥Ø±ÍÌô½½ÑÈµ½Áäû
+¤ÈÀÈÔ5%-e1
+Üµ¥­å±¼¹½´ð½¥Øøð½½½ÑÈø(ñÍÉ¥ÁÐø(const AFFILIATE_US = 'mikaylaco20-20';const AFFILIATE_CA = 'mikaylaco-20';const aff = (typeof navigator !== 'undefined' && navigator.language?.startsWith('fr')) ? AFFILIATE_CA : AFFILIATE_US;
+const TICKER_CITIES = ['Paris','Santorini','Milan','Tokyo','New York','Positano','London','Dubai','Barcelona','Ibiza','Mykonos','Amalfi Coast'];
+function buildTicker(){const items = [...TICKER_CITIES,...TICKER_CITIES].map(c=>`<span class="ticker-item"><span class="ticker-dot"></span>${c} Trends Live</span>`).join('');const t = document.getElementById('ticker');if(t) t.innerHTML = items + items;}
+const io = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});},{threshold:.12});
+document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+document.querySelectorAll('.city-tab').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.city-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');loadTrends(btn.dataset.city);});});
+const TRENDS_DATA = {Paris:[{name:'Sheer Overlay Dress',heat:94,tags:['Feminine','Day-to-Night'],img:'photo-1515886657613-9f3515b0c78f',retailers:['Zara','ASOS']},{name:'Ballet Flat + Midi Skirt',heat:89,tags:['Parisian','Classic'],img:'photo-1529139574466-a303027c1d8b',retailers:['H&M','Revolve']},{name:'Trench Coat Layering',heat:82,tags:['Elevated','Timeless'],img:'photo-1469334031218-e382a71b716b',retailers:['Zara','ASOS']},{name:'Barrel-Leg Denim',heat:78,tags:['Street','Relaxed'],img:'photo-1581044777550-4cfa60707c03',retailers:['ASOS','Depop']}],Santorini:[{name:'White Linen Dress',heat:97,tags:['Resort','Effortless'],img:'photo-1502716119720-b23a93e5fe0b',retailers:['Zara','Amazon']},{name:'Straw Hat + Sundress',heat:91,tags:['Beach','Summery'],img:'photo-1506629082955-511b1aa562c8',retailers:['H&M','ASOS']},{name:'Backless Halter',heat:86,tags:['Sunset','Romantic'],img:'photo-1529139574466-a303027c1d8b',retailers:['Revolve','Depop']},{name:'Linen Co-ord Set',heat:80,tags:['Coastal','Minimal'],img:'photo-1581044777550-4cfa60707c03',retailers:['Zara','ThredUp']}],Milan:[{name:'Structured Blazer',tags:['Editorial','Power'],heat:93,img:'photo-1529139574466-a303027c1d8b',retailers:['Zara','ASOS']},{name:'Leather Trousers',heat:88,tags:['Bold','After Dark'],img:'photo-1469334031218-e382a71b716b',retailers:['Revolve','Depop']},{name:'Silk Slip Dress',heat:85,tags:['Evening','Luxe'],img:'photo-1515886657613-9f3515b0c78f',retailers:['ASOS','Revolve']},{name:'Monochrome Outfit',heat:79,styles:['Minimal','Chic'],img:'photo-1581044777550-4cfa60707c03',retailers:['Zara','H&M']}],Tokyo:[{name:'Kawaii Layers',heat:96,tags:['Playful','Unique'],img:'photo-1469334031218-e382a71b716b',retailers:['ASOS','Depop']},{name:'Vintage Streetwear',tags:['Harajuku','Bold'],heat:90,img:'photo-1515886657613-9f3515b0c78f',retailers:['Depop','ThredUp']},{name:'Oversized Blazer',heat:84,tags:['Office Core','Polished'],img:'photo-1529139574466-a303027c1d8b',retailers:['Zara','ASOS']},{name:'Platform Sneakers',heat:81styles:['Street','Elevated'],img:'photo-1581044777550-4cfa60707c03',retailers:['Amazon','ASOS']}],NYC:[{name:'Power Shoulder Blazer',heat:92,tags:['Corporate','Chic'],img:'photo-1515886657613-9f3515b0c78f',retailers:['Zara','Revolve']},{name:'Cargo + Crop Top',heat:87,tags:['SOHO','Casual'],img:'photo-1469334031218-e382a71b716b',retailers:['ASOS','H&M']},{name:'Mini Dress + Boots',heat:83,tags:['Night Out','Bold'],img:'photo-1529139574466-a303027c1d8b',retailers:['Revolve','Depop']},{name:'Quiet Luxury Basics',tags:['Minimal','Investment'],heat:88,img:'photo-1581044777550-4cfa60707c03',retailers:['Zara','ASOS']}]};
+function loadTrends(city){const grid = document.getElementById('trendsGrid');const data = TRENDS_DATA[city]||TREMDST_DATAYÐarO];grid.innerHTML = data.map(t=>`<div class="trend-card"><img src="https://images.unsplash.com/${t.img}?w=400&h=530&fit=crop&q=85" alt="${t.name}" loading="lazy"/><div class="trend-card-info"><div class="trend-card-city">${city}</div><div class="trend-card-name">${t.name}</div><div class="trend-heat"><div class="trend-heat-bar"><div class="trend-heat-fill" style="width:${t.heat}%"></div></div><span class="trend-heat-pct">${t.heat}%</span></div><div class="trend-tags">${(t.tags||[]).map(tg=>`<span class="trend-tag">${tg}</span>`).join('')}${(t.retailers||[]).map(r=>`<span class="trend-tag" style="color:var(--gold2);border-color:var(--gold)">${r}</span>`).join('')}</div></div></div>`).join('');fetch('/.netlify/functions/trends?city='+encodeURIComponent(city)).then(r=>r.ok?r.json():null).then(data=>{if(data?.trends?.length){grid.innerHTML = data.trends.slice(0,4).map(t=>`<div class="trend-card"><img src="https://images.unsplash.com/${t.img}?w=400&h=530&fit=crop&q=85" alt="${t.name}" loading="lazy"/><div class="trend-card-info"><div class="trend-card-city">${city}</div><div class="trend-card-name">${t.name}</div><div class="trend-heat"><div class="trend-heat-bar"><div class="trend-heat-fill" style="width:${t.heat||80}%"></div></div><span class="trend-heat-pct">${t.heat||80}%</span></div><div class="trend-tags">${t.tags||[].map(tg=>`<span class="trend-tag">${tg}</span>`).join('')}</div></div></div>`).join('');}}).catch(()=>{});}
+let activeBudget = 'mid';
+function setBudget(btn){document.querySelectorAll('.budget-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeBudget = btn.dataset.b;}
+function handlePhoto(input){const file = input.files[0];if(!file) return;reader.onload = e=>{const img = document.getElementById('previewImg');img.src = e.target.result;img.style.display = 'block';};reader.readAsDataURL.file);}
+async function analysePhoto(){const results = document.getElementById('scanResults');const city = document.getElementById('scanCity').value;const photo = document.getElementById('photoInput').files[0];if(!photo){results.innerHTML = '<p style="color:#E60023;font-size:12px;margin-top:12px">Please upload a photo first.</p>';return;}results.innerHTML = `<div style="text-align:center;padding:20px;color:var(--mid)"><div class="spinner"></div><br>Analysing your lookâ¦</div>`;try{const fd = new FormData();fd.append('photo',photo);fd.append('city',city||'Paris');fd.append('budget',activeBudget);const resp = await fetch('/.netlify/functions/analyse',{method:'POST',body:fd});if(resp.ok){const data = await resp.json();renderScanResults(data.items||[]);return;}}catch(e){}await new Promise(r=>setTimeout(r,1800));renderScanResults([{name:'Silk Cami Top',budget:{name:'Similar',price:'$28',url:'https://www.amazon.com/s?k=silk+cami&tag='+aff},mid:{name:'ASOS Silk Cami',price:'$65',url:'https://www.asos.com/search/?q=silk+cami'},luxury:{name:'Reformation Linen',price:'$148',url:'https://www.thereformation.com'},secondhand:{name:'Depop: Vintage Cami',price:'$22',url:'https://www.depop.com/search/?q=silk+cami'}},{name:'Wide-Leg Trousers',options:[{store:'H&M',price:'$35',url:'https://www.hm.com/en_us/search-results.html?q=wide+leg+trousers'}],budget:{name:'H&M Wide Leg',price:'$35',url:'https://www.hm.com/en_us/search-results.html?q=wide+leg+trousers'},mid:{name:'Zara Fluid Trousers',price:'$80',url:'https://www.zara.com/us/en/search?searchTerm=wide+leg'},luxury:{name:'Revolve Joie',price:'$210',url:'https://www.revolve.com/search/?q=wide+leg+trousers'},secondhand:{name:'ThredUp Wide Leg',price:'$18',url:'https://www.thredup.com/search#searchText=wide+leg+trousers'}}]);}
+function renderScanResults(items){const r = document.getElementById('scanResults');if(!items.length){r.innerHTML='<p style="color:var(--mid);font-size:12px;margin-top:12px">No items detected. Try a clearer photo.</p>';return;}r.innerHTML = items.map(item=>`<div class="scan-result-item"><div><div class="scan-result-name">${item.name}</div></div><div class="scan-result-links">${item[activeBudget]?`<a href="${item[activeBudget].url}" target="_blank" class="scan-link">${item[activeBudget].price}</a>`:''}${item.secondhand?`<a href="${item.secondhand.url}" target="_blank" class="scan-link" style="color:#1B8A5A">â» ${item.secondhand.price}</a>`:''}</div></div>`).join('');} ¦6öç7BU54TåDÅ2Ò·¶C¢vSrÇFW#¢v'VFvWBrÇ&WFÆW#¢tÖ¦öârÆ&FvS¢v&FvRÖÖ¦öârÆæÖS¢u6¶&ÆR7VâBrÆFW63¢tföÆG2fÆBâ÷W"6''Ööâ7&æw2&6²W&fV7FÇWfW'FÖRârÇ&6S¢rC#BrÆÖs¢w÷FòÓSc3scCrÓss33c6RrÇW&Ã¢vGG3¢ò÷wwræÖ¦öâæ6öÒ÷3ö³×6¶&ÆR·7Vâ¶B·vöÖVâgFsÒr¶fbÇ7W7Fæ&ÆS¢uF&VEWÇC¢CwÒÇ¶C¢vS"rÇFW#¢vÖBrÇ&WFÆW#¢t4õ2rÆ&FvS¢v&FvRÖ6÷2rÆæÖS¢tÆæVâvFRÔÆVrG&÷W6W'2rÆFW63¢t'&VF&ÆRÂw&æ¶ÆR×&W67FçBÂG&ç6Föç2g&öÒ&V6FòFææW"ârÇ&6S¢rCs"rÆÖs¢w÷FòÓCc33C3#ÖS3&s#sf"rÇW&Ã¢vGG3¢ò÷wwræ6÷2æ6öÒ÷6V&6ó÷ÖÆæVâ·vFR¶ÆVr·G&÷W6W'2wÒÇ¶C¢vS2rÇFW#¢vÖBrÇ&WFÆW#¢u¦&rÆ&FvS¢v&FvR×¦&rÆæÖS¢t&6¶ÆW72ÇFW"G&W72rÆFW63¢uFRG&W72FBv÷&·2f÷"WfW'ö666öâWfW'vW&RârÇ&6S¢rCrÆÖs¢w÷FòÓSSccSsc2Óc3SV#3sbrÅÒÇW&Ã¢vGG3¢ò÷wwrç¦&æ6öÒ÷W2öVâ÷6V&6÷6V&6FW&ÓÖÇFW"¶G&W72wÒÇ¶C¢vSBrÇFW#¢vÇWW'rÇ&WFÆW#¢u&WföÇfRrÆ&FvS¢v&FvR×&WföÇfRrÆæÖS¢u6Æ²6ÆÖFG&W72rÆFW63¢tçfW7FÖVçBV6R÷R&RvöærFòvV"WfW'G&f÷"FRæWBFV6FRârÇ&6S¢rC#RrÆÖs¢w÷FòÓS#3SsCCcbÖ33#v3C"rÇW&Ã¢vGG3¢ò÷wwrç&WföÇfRæ6öÒ÷6V&6ó÷×6Æ²·6Æ¶ÖF¶G&W72wÒÇ¶C¢vSRrÇFW#¢v'VFvWBrÇ&WFÆW#¢tdÒrÆ&FvS¢v&FvRÖÒrÆæÖS¢t6÷GFöâ6Ö6WBrÆFW63¢tÖF6ærF÷æB6÷'G2vV"26W&FW2÷"FövWFW"ârÇ&6S¢rC3rÆÖs¢w÷FòÓSCCsssSSÓF6fcsv32rÇW&Ã¢vGG3¢ò÷wwræÒæ6öÒöVå÷W2÷6V&6×&W7VÇG2æFÖÃ÷Ö6Ö·6WBwÒÇ¶C¢vSbrÇFW#¢v'VFvWBrÇ&WFÆW#¢tÖ¦öârÆ&FvS¢v&FvRÖÖ¦öârÆæÖS¢u&ffF÷FR&rrÆFW63¢t÷fW'6¦VB&V6&rF÷V&ÆW226''ÖöâW'6öæÂFVÒârÇ&6S¢rC3"rÆÖs¢w÷FòÓScc##SRÓS#Sc&3rÇW&Ã¢vGG3¢ò÷wwræÖ¦öâæ6öÒ÷3ö³×&ff·F÷FR¶&rgFsÒr¶fbÇ7W7Fæ&ÆS¢tFW÷ÇC¢C"wÒÇ¶C¢vSrrÇFW#¢vÖBrÇ&WFÆW#¢t4õ2rÆ&FvS¢v&FvRÖ6÷2rÆæÖS¢u7G&ÆVFW"6æFÂrÆFW63¢tVVÂVvBFBv÷&·2öâ6ö&&ÆW7FöæRæB&öögF÷2ârÇ&6S¢rCcrÆÖs¢w÷FòÓS#scs#Ö##66SVfS"rÇW&Ã¢vGG3¢ò÷wwræ6÷2æ6öÒ÷6V&6ó÷×7G&¶ÆVFW"·6æFÂwÒÇ¶C¢vSrÇFW#¢vÇWW'rÇ&WFÆW#¢u&WföÇfRrÆ&FvS¢v&FvR×&WföÇfRrÆæÖS¢tÆæVâ&W6÷'B&Æ¦W"rÆFW63¢uFRV6RFBVÆWfFW2WfW'6ævÆR÷WFfB÷R÷vâârÇ&6S¢rC#CRrÆÖs¢w÷FòÓS#3SsCCcbÖ33#v3C"rÇW&Ã¢vGG3¢ò÷wwrç&WföÇfRæ6öÒ÷6V&6ó÷ÖÆæVâ¶&Æ¦W"wÕÓ°¦ÆWBW74fÇFW"ÒvÆÂs°¦gVæ7FöâfÇFW$W72'FâÂFW"¶Fö7VÖVçBçVW'6VÆV7F÷$ÆÂræW72ÖfÇFW"Ö'Fâræf÷$V6#Óæ"æ6Æ74Æ7Bç&VÖ÷fRv7FfRr¶'Fâæ6Æ74Æ7BæFBv7FfRr¶W74fÇFW"ÒFW#·&VæFW$W76VçFÇ2·Ð¦gVæ7Föâ&VæFW$W76VçFÇ2¶6öç7Bw&BÒFö7VÖVçBævWDVÆVÖVçD'BvW74w&Br¶bw&B&WGW&ã¶6öç7BFV×2ÒW74fÇFW#ÓÓÒvÆÂròU54TåDÅ2¢U54TåDÅ2æfÇFW"SÓæRçFW#ÓÓÖW74fÇFW"¶w&BæææW$DÔÂÒFV×2æÖSÓæÆFb6Æ73Ò&W72Ö6&B#ãÆFb6Æ73Ò&W72ÖÖr#ãÆÖr7&3Ò&GG3¢òöÖvW2çVç7Æ6æ6öÒòG¶RæÖwÓ÷sÓCfÓ3ffCÖ7&÷gÓR"ÇCÒ"G¶RææÖWÒ"ÆöFæsÒ&Æ§"óãÇ7â6Æ73Ò&W72Ö&FvRG¶Ræ&FvWÒ#âG¶Rç&WFÆW'ÓÂ÷7ããÂöFcãÆFb6Æ73Ò&W72Ö&öG#ãÆFb6Æ73Ò&W72×&WFÆW"#âG¶Rç&WFÆW'ÓÂöFcãÆFb6Æ73Ò&W72ÖæÖR#âG¶RææÖWÓÂöFcãÆFb6Æ73Ò&W72ÖFW62#âG¶RæFW67ÓÂöFcãÆFb6Æ73Ò&W72×&6R×&÷r#ãÇ7â6Æ73Ò&W72×&6R#âG¶Rç&6WÓÂ÷7ããÂöFcãÆ&VcÒ"G¶RçW&ÇÒ"F&vWCÒ%ö&Ææ²"6Æ73Ò&W72×6÷#å6÷æ÷r(i#ÂöâG¶Rç7W7Fæ&ÆSöÆFb6Æ73Ò&W72×7W7Fæ&ÆR#î)²G¶Rç7W7Fæ&ÆWÓÂöFcæ¢rwÓÂöFcãÂöFcææ¦öârr·Ð 
+async function planItinerary(){const city=document.getElementById('itinCity').value.trim();const days=document.getElementById('itinDays').value;const budget=document.getElementById('itinBudget').value;const style=document.getElementById('itinStyle').value;const acts=Array.from(document.querySelectorAll('#actChecks input:checked')).map(i=>i.value);const results=document.getElementById('itinResults');if(!city){results.innerHTML='<p style="color:#E60023;font-size:12px;margin-top:12px">Please enter your destination.</p>';return;}results.innerHTML='<div style="text-align:center;padding:30px;color:rgba(255,255,255,.4)"><div class="spinner" style="border-top-color:var(--gold)"></div><p style="margin-top:16px;font-size:12px">Building your '+days+'-day wardrobe plan for '+city+'...</p></div>';try{const resp=await fetch('/.netlify/functions/itinerary',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({city,days:parseInt(days),budget,style,activities:acts})});if(resp.ok){const data=await resp.json();renderItinResults(data.days||[],city);return;}}catch(e){}await new Promise(r=>setTimeout(r,2000));const demoDays=[];const outfitsByAct={beach:{icon:'ð',name:'Beach Look',desc:'Light cover-up over a swimsuit, effortless and resort-ready.',links:[{store:'Amazon',url:'https://www.amazon.com/s?k=beach+cover+up&tag='+aff,price:'$28'},{store:'ASOS',url:'https://www.asos.com/search/?q=beach+coverup',price:'$45'},{store:'â» Depop',url:'https://www.depop.com/search/?q=beach+cover+up',price:'$15'}]},dining:{icon:'ð½',name:'Dinner Outfit',desc:'A polished dress or co-ord perfect for a nice dinner out.',links:[{store:'Zara',url:'https://www.zara.com/us/en/search?searchTerm=dinner+dress',price:'$79'},{store:'Revolve',url:'https://www.revolve.com/search/?q=dinner+dress',price:'$158'},{store:'â» ThredUp',url:'https://www.thredup.com/search#searchText=dress',price:'$25'}]},sightseeing:{icon:'ð',name:'Day Explorer Look',desc:'Comfortable yet stylish, walkable shoes, great bag, layerable outfit.',links:[{store:'H&M',url:'https://www.hm.com/en_us/search-results.html?q=casual+outfit',price:'$48'},{store:'ASOS',url:'https://www.asos.com/search/?q=casual+chic',price:'$75'},{store:'â» ThredUp',url:'https://www.thredup.com',price:'$20'}]},nightlife:{icon:'ð',name:'Night Out',desc:'Bold, confident, and city-appropriate.',links:[{store:'ASOS',url:'https://www.asos.com/search/?q=going+out',price:'$65'},{store:'Revolve',url:'https://www.revolve.com/search/?q=night+out',price:'$145'},{store:'â» Depop',url:'https://www.depop.com/search/?q=going+out+dress',price:'$30'}]},hiking:{icon:'ð¥¾',name:'Hike-Ready',desc:'Functional but fashionable, looks great in photos too.',links:[{store:'Amazon',url:'https://www.amazon.com/s?k=women+hiking+outfit&tag='+aff,price:'$55'},{store:'ASOS',url:'https://www.asos.com/search/?q=outdoor+fashion',price:'$80'},{store:'â» ThredUp',url:'https://www.thredup.com/search#searchText=athletic',price:'$18'}]},shopping:{icon:'ð',name:'Street Style Day',desc:'Casual chic, looks good in pictures, comfortable for a full day out.',links:[{store:'Zara',url:'https://www.zara.com/us/en/search?searchTerm=casual',price:'$60'},{store:'H&M',url:'https://www.hm.com/en_us/search-results.html?q=street+style',price:'$40'},{store:'â» Depop',url:'https://www.depop.com',price:'$22'}]},rooftop:{icon:'ð¥',name:'Rooftop Cocktail Look',desc:'Elevated but relaxed, the golden hour photo will be stunning.',links:[{store:'Revolve',url:'https://www.revolve.com/search/?q=cocktail',price:'$135'},{store:'ASOS',url:'https://www.asos.com/search/?q=cocktail+dress',price:'$75'},{store:'â» ThredUp',url:'https://www.thredup.com/search#searchText=cocktail',price:'$35'}]},yacht:{icon:'âµ',name:'Yacht Look',desc:'Resort luxe: silk, white, and gold accessories.',links:[{store:'Revolve',url:'https://www.revolve.com/search/?q=resort+wear',price:'$185'},{store:'Zara',url:'https://www.zara.com/us/en/search?searchTerm=resort',price:'$95'},{store:'â» Depop',url:'https://www.depop.com/search/?q=resort+wear',price:'$40'}]}};for(let d=1;d<=parseInt(days);d++){const dayActs=acts.length?[acts[(d-1)%acts.length],acts[d%acts.length]||acts[0]]:['sightseeing','dining'];demoDays.push({day:d,label:'Day '+d+' â '+city,subtitle:dayActs.map(a=>a).join(' Â· '),outfits:dayActs.map(a=>outfitsByAct[a]||outfitsByAct.sightseeing)});}renderItinResults(demoDays,city);}
+function renderItinResults(days,city){const r=document.getElementById('itinResults');r.innerHTML='<div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;margin-top:8px">'+city+' Â· '+days.length+'-Day Wardrobe Plan</div>'+days.map(day=>'<div class="itin-day"><div class="itin-day-header" onclick="toggleDay(this)"><div><div class="itin-day-title">'+day.label+'</div><div class="itin-day-sub">'+(day.subtitle||'')+'</div></div><span style="color:var(--gold);font-size:18px">+</span></div><div class="itin-day-body">'+((day.outfits||[]).map(o=>'<div class="outfit-rec"><div class="outfit-rec-icon">'+(o.icon||'â¦')+'</div><div class="outfit-rec-info"><h4>'+o.name+'</h4><p>'+(o.desc||'')+'</p><div class="outfit-shop-links">'+((o.links||[]).map(l=>'<a href="'+l.url+'" target="_blank" class="outfit-link">'+l.store+' Â· '+l.price+'</a>').join(''))+'</div></div></div>').join(''))+'</div></div>').join('');}
+function toggleDay(header){const day=header.closest('.itin-day');const wasOpen=day.classList.contains('open');document.querySelectorAll('.itin-day').forEach(d=>d.classList.remove('open'));if(!wasOpen)day.classList.add('open');header.querySelector('span').textContent=day.classList.contains('open')?'â':'+';}
+const MIXER_CATEGORIES=[{id:'tops',label:'Tops',icon:'ð',items:[{id:'t1',name:'Silk Cami',price:'$65',store:'ASOS',img:'photo-1515886657613-9f3515b0c78f',url:'https://www.asos.com/search/?q=silk+cami'},{id:'t2',name:'Cotton Tee',price:'$22',store:'H&M',img:'photo-1529139574466-a303027c1d8b',url:'https://www.hm.com/en_us/search-results.html?q=cotton+tee'},{id:'t3',name:'Linen Shirt',price:'$49',store:'Zara',img:'photo-1469334031218-e382a71b716b',url:'https://www.zara.com/us/en/search?searchTerm=linen+shirt'},{id:'t4',name:'Crop Blazer',price:'$145',store:'Revolve',img:'photo-1581044777550-4cfa60707c03',url:'https://www.revolve.com/search/?q=crop+blazer'},{id:'t5',name:'Halter Top',price:'$28',store:'Amazon',img:'photo-1506629082955-511b1aa562c8',url:'https://www.amazon.com/s?k=halter+top+women&tag='+aff},{id:'t6',name:'Vintage Tee',price:'$18',store:'Depop',img:'photo-1509631179647-0177331693ae',url:'https://www.depop.com/search/?q=vintage+tee'}]},{id:'bottoms',label:'Bottoms',icon:'ð',items:[{id:'b1',name:'Linen Trousers',price:'$72',store:'ASOS',img:'photo-1469334031218-e382a71b716b',url:'https://www.asos.com/search/?q=linen+trousers'},{id:'b2',name:'Mini Skirt',price:'$34',store:'H&M',img:'photo-1529139574466-a303027c1d8b',url:'https://www.hm.com/en_us/search-results.html?q=mini+skirt'},{id:'b3',name:'Midi Skirt',price:'$65',store:'Zara',img:'photo-1581044777550-4cfa60707c03',url:'https://www.zara.com/us/en/search?searchTerm=midi+skirt'},{id:'b4',name:'Wide-Leg Jeans',price:'$45',store:'H&M',img:'photo-1502716119720-b23a93e5fe0b',url:'https://www.hm.com/en_us/search-results.html?q=wide+leg+jeans'},{id:'b5',name:'Barrel Jeans',price:'$180',store:'Revolve',img:'photo-1509631179647-0177331693ae',url:'https://www.revolve.com/search/?q=barrel+jeans'}]},{id:'dresses',label:'Dresses',icon:'ð',items:[{id:'d1',name:'White Linen Dress',price:'$79',store:'Zara',img:'photo-1502716119720-b23a93e5fe0b',url:'https://www.zara.com/us/en/search?searchTerm=white+linen+dress'},{id:'d2',name:'Mini Sundress',price:'$38',store:'H&M',img:'photo-1515886657613-9f3515b0c78f',url:'https://www.hm.com/en_us/search-results.html?q=sundress'},{id:'d3',name:'Silk Slip Dress',price:'$215',store:'Revolve',img:'photo-1529139574466-a303027c1d8b',url:'https://www.revolve.com/search/?q=silk+slip+dress'},{id:'d4',name:'Wrap Dress',price:'$55',store:'ASOS',img:'photo-1469334031218-e382a71b716b',url:'https://www.asos.com/search/?q=wrap+dress'},{id:'d5',name:'Vintage Dress',price:'$25',store:'ThredUp',img:'photo-1581044777550-4cfa60707c03',url:'https://www.thredup.com/search#searchText=wrap+dress'}]},{id:'shoes',label:'Shoes',icon:'ð¡',items:[{id:'s1',name:'Leather Sandal',price:'$68',store:'ASOS',img:'photo-1502716119720-b23a93e5fe0b',url:'https://www.asos.com/search/?q=leather+sandal'},{id:'s2',name:'White Sneaker',price:'$42',store:'H&M',img:'photo-1515886657613-9f3515b0c78f',url:'https://www.hm.com/en_us/search-results.html?q=white+sneaker'},{id:'s3',name:'Strappy Heel',price:'$165',store:'Revolve',img:'photo-1529139574466-a303027c1d8b',url:'https://www.revolve.com/search/?q=strappy+heels'},{id:'s4',name:'Platform Sandal',price:'$38',store:'Amazon',img:'photo-1506629082955-511b1aa562c8',url:'https://www.amazon.com/s?k=platform+sandals+women&tag='+aff}]},{id:'bags',label:'Bags',icon:'ð',items:[{id:'bg1',name:'Raffia Tote',price:'$32',store:'Amazon',img:'photo-1509631179647-0177331693ae',url:'https://www.amazon.com/s?k=raffia+tote+bag+women&tag='+aff},{id:'bg2',name:'Leather Mini Bag',price:'$145',store:'Revolve',img:'photo-1502716119720-b23a93e5fe0b',url:'https://www.revolve.com/search/?q=mini+leather+bag'},{id:'bg3',name:'Wicker Clutch',price:'$42',store:'ASOS',img:'photo-1515886657613-9f3515b0c78f',url:'https://www.asos.com/search/?q=wicker+clutch'},{id:'bg4',name:'Canvas Tote',price:'$18',store:'H&M',img:'photo-1529139574466-a303027c1d8b',url:'https://www.hm.com/en_us/search-results.html?q=canvas+tote'},{id:'bg5',name:'Vintage Bucket Bag',price:'$30',store:'Depop',img:'photo-1469334031218-e382a71b716b',url:'https://www.depop.com/search/?q=bucket+bag'}]},{id:'accessories',label:'Accessories',icon:'ð',items:[{id:'ac1',name:'Gold Hoops',price:'$24',store:'Amazon',img:'photo-1581044777550-4cfa60707c03',url:'https://www.amazon.com/s?k=gold+hoop+earrings&tag='+aff},{id:'ac2',name:'Sun Hat',price:'$28',store:'Amazon',img:'photo-1506629082955-511b1aa562c8',url:'https://www.amazon.com/s?k=sun+hat+packable+women&tag='+aff},{id:'ac3',name:'Silk Scarf',price:'$55',store:'ASOS',img:'photo-1509631179647-0177331693ae',url:'https://www.asos.com/search/?q=silk+scarf'},{id:'ac4',name:'Tortoise Sunnies',price:'$45',store:'ASOS',img:'photo-1502716119720-b23a93e5fe0b',url:'https://www.asos.com/search/?q=tortoise+sunglasses'},{id:'ac5',name:'Gold Chain Necklace',price:'$155',store:'Revolve',img:'photo-1515886657613-9f3515b0c78f',url:'https://www.revolve.com/search/?q=gold+chain+necklace'}]}];
+let lookSelections={};
+function buildMixer(){const container=document.getElementById('mixerRows');if(!container)return;const lookPanelWrap=document.getElementById('lookPanelWrap');const mixerWrap=document.createElement('div');mixerWrap.className='mixer-wrap';mixerWrap.style.alignItems='start';const rowsDiv=document.createElement('div');rowsDiv.className='mixer-rows';MIXER_CATEGORIES.forEach(cat=>{const section=document.createElement('div');section.className='mixer-row-section';section.id='cat-'+cat.id;section.innerHTML='<div class="mixer-row-header" onclick="toggleMixerRow(''+cat.id+'')"><div class="mixer-row-label"><span class="mixer-row-icon">'+cat.icon+'</span>'+cat.label+'</div><span class="mixer-row-count" id="cnt-'+cat.id+'">'+cat.items.length+' options</span></div><div class="mixer-slider-wrap"><div class="mixer-slider" id="slider-'+cat.id+'">'+cat.items.map(item=>'<div class="mixer-item '+(lookSelections[cat.id]?.id===item.id?'selected':'')+'" id="mi-'+item.id+'" onclick="selectMixerItem(''+cat.id+'',''+item.id+'')"><div class="mixer-item-img"><img src="https://images.unsplash.com/'+item.img+'?w=140&h=190&fit=crop&q=80" alt="'+item.name+'" loading="lazy"/></div><div class="mixer-item-info"><div class="mixer-item-name">'+item.name+'</div><div class="mixer-item-price">'+item.price+'</div><div class="mixer-item-store">'+item.store+'</div></div></div>').join('')+'</div></div>';rowsDiv.appendChild(section);});mixerWrap.appendChild(rowsDiv);const lookDiv=document.createElement('div');lookDiv.innerHTML='<div class="look-panel" id="lookPanel"><div class="look-panel-title">Your Look Preview</div><div class="look-slots" id="lookSlots"><div class="look-empty" id="lookEmpty">Select pieces from the categories to build your look.</div></div><div class="look-total" id="lookTotalRow" style="display:none"><span class="look-total-label">Look Total</span><span class="look-total-price" id="lookTotalPrice">$0</span></div><button class="btn-shop-look" id="btnShopLook" onclick="shopLook()" style="display:none">Shop This Look â</button><button class="btn-save-look" id="btnSaveLook" onclick="saveLook()" style="display:none">â¦ Save to Itinerary</button></div>';mixerWrap.appendChild(lookDiv);container.parentNode.insertBefore(mixerWrap,container);container.remove();if(lookPanelWrap)lookPanelWrap.remove();}
+function toggleMixerRow(catId){const section=document.getElementById('cat-'+catId);const wasOpen=section.classList.contains('open');MIXER_CATEGORIES.forEach(c=>{const s=document.getElementById('cat-'+c.id);if(s)s.classList.remove('open');});if(!wasOpen)section.classList.add('open');}
+function selectMixerItem(catId,itemId){const cat=MIXER_CATEGORIES.find(c=>c.id===catId);const item=cat.items.find(i=>i.id===itemId);if(lookSelections[catId]?.id===itemId){delete lookSelections[catId];}else{lookSelections[catId]=item;}document.querySelectorAll('#slider-'+catId+' .mixer-item').forEach(el=>{el.classList.remove('selected');if(el.id==='mi-'+itemId&&lookSelections[catId])el.classList.add('selected');});updateLookPanel();}
+function updateLookPanel(){const slots=document.getElementById('lookSlots');const totalRow=document.getElementById('lookTotalRow');const totalPrice=document.getElementById('lookTotalPrice');const btnShop=document.getElementById('btnShopLook');const btnSave=document.getElementById('btnSaveLook');const selected=Object.entries(lookSelections);if(!selected.length){if(slots)slots.innerHTML='<div class="look-empty" id="lookEmpty">Select pieces from the categories to build your look.</div>';if(totalRow)totalRow.style.display='none';if(btnShop)btnShop.style.display='none';if(btnSave)btnSave.style.display='none';return;}let total=0;const catIcons={tops:'ð',bottoms:'ð',dresses:'ð',shoes:'ð¡',bags:'ð',accessories:'ð'};if(slots)slots.innerHTML=selected.map(([catId,item])=>{const price=parseFloat(item.price.replace('$',''));total+=price;return '<div class="look-slot"><div class="look-slot-thumb"><img src="https://images.unsplash.com/'+item.img+'?w=44&h=44&fit=crop&q=80" alt="'+item.name+'"/></div><div class="look-slot-info"><div class="look-slot-cat">'+(catIcons[catId]||'â¦')+' '+catId+'</div><div class="look-slot-name">'+item.name+'</div><div class="look-slot-price">'+item.store+' Â· '+item.price+'</div></div><span class="look-slot-remove" onclick="selectMixerItem(''+catId+'',''+item.id+'')">â</span></div>';}).join('');if(totalRow)totalRow.style.display='flex';if(totalPrice)totalPrice.textContent='$'+total.toFixed(0);if(btnShop)btnShop.style.display='block';if(btnSave)btnSave.style.display='block';}
+function shopLook(){Object.values(lookSelections).forEach(item=>{window.open(item.url,'_blank');});}
+function saveLook(){const names=Object.values(lookSelections).map(i=>i.name).join(', ');alert('Look saved! Items: '+names+'
 
-  document.getElementById('celebMasonry').innerHTML=data.map(c=>{
-    if(c.post&&c.post.startsWith('http'))celebPostUrls.push(c.post);
-    const cachedImg=ogCache[c.post];
-    const photoStyle=cachedImg?`background-image:url(${cachedImg});background-size:cover;background-position:center top;`:'';
-    const artOpacity=cachedImg?'opacity:0;':'';
-const celebKeyword=encodeURIComponent((c.name||'celebrity fashion').split(' ')[0]+' fashion');
-const celebPhotoStyle=cachedImg?photoStyle:`background-image:url(${getUnsplashUrl(c.name + ' street style', 400, 500)});background-size:cover;background-position:center top;`;
-    const finalArtOpacity='opacity:0;';
-    return `
-    <div class="ccard">
-      <div class="cc-ig-header">
-        <div class="cc-avatar">${c.initials}</div>
-        <div class="cc-handle-col"><span class="cc-name">${c.name}</span><span class="cc-handle">@${c.handle}</span></div>
-        <span class="cc-platform ${c.platform}">${c.platform==='ig'?'IG':'TT'}</span>
-      </div>
-      <div class="cc-photo-art ${cachedImg?'og-loaded':''}" data-og-url="${c.post}" style="${celebPhotoStyle}">
-        <div class="cc-photo-city" style="${finalArtOpacity}">${c.city.charAt(0).toUpperCase()+c.city.slice(1)}</div>
-        <div class="cc-photo-content" style="${finalArtOpacity}">
-          <div class="cc-photo-name-big">${c.name.split(' ')[0]}</div>
-          <div class="cc-geo-tag">📍 ${c.geo.replace('📍 ','')}</div>
-        </div>
-      </div>
-      <div class="cc-info">
-        <div class="cc-desc">${c.desc}</div>
-        <div class="cc-items">${c.items.map(i=>`<div class="cc-item">— ${i}</div>`).join('')}</div>
-        <div class="cc-links">
-          <a href="${c.post}" target="_blank" rel="noopener" class="cc-post-link"><span>↗ View @${c.handle} on Instagram</span><span>→</span></a>
-          <div class="cc-shop-row">
-            <a href="${c.shop.b}" target="_blank" rel="noopener" class="cc-shop">Budget</a>
-            <a href="${c.shop.m}" target="_blank" rel="noopener" class="cc-shop">Mid</a>
-            <a href="${c.shop.l}" target="_blank" rel="noopener" class="cc-shop lux">Luxury →</a>
-          </div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  // Fire OG photo fetch for all celeb profile posts
-  if(celebPostUrls.length) loadOGPhotos(celebPostUrls);
-}
-function filterCelebs(city,el){celebFilter=city;document.querySelectorAll('.scpill').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderCelebs();}
-
-// ── CLOSET ────────────────────────────────────────────
-function openLayer(layer,rowEl){
-  activeLayer=layer;
-  if(rowEl){document.querySelectorAll('.lrow').forEach(r=>r.classList.remove('on'));rowEl.classList.add('on');}
-  document.getElementById('pdTitle').textContent=layer.charAt(0).toUpperCase()+layer.slice(1);
-  document.getElementById('pdrawer').classList.add('on');
-  renderPieces(layer,pdt);
-}
-function closeDrawer(){document.getElementById('pdrawer').classList.remove('on');}
-function filterPDT(tier,el){pdt=tier;document.querySelectorAll('.pdt').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderPieces(activeLayer,tier);}
-function renderPieces(layer,tier){
-  const cat=PIECES[layer];if(!cat)return;
-  const items=tier==='all'?[...(cat.budget||[]),...(cat.mid||[]),...(cat.luxury||[])]:(cat[tier]||[]);
-  document.getElementById('pieceScroll').innerHTML=items.map(p=>`<div class="pcard ${outfit[layer]?.id===p.id?'sel':''}" onclick="pickPiece('${layer}','${p.id}')" id="pc-${p.id}"><div class="pcard-em"><img class="pcard-img" src="${getUnsplashUrl(p.n||'fashion', 200, 240)}" alt="${p.n}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.remove()"><span class="pcard-emoji">${p.e}</span></div><div class="pcard-bd"><strong>${p.n}</strong><span class="pp">${p.p}</span><span class="pb">${p.b}</span></div></div>`).join('');
-}
-function pickPiece(layer,id){
-  const all=Object.values(PIECES[layer]).flat();const piece=all.find(p=>p.id===id);if(!piece)return;
-  outfit[layer]=piece;
-  const slot=document.getElementById(`ls-${layer}`);
-  if(slot){slot.classList.add('filled');slot.innerHTML=`<span class="ls-ic">${piece.e}</span><span class="ls-info"><span class="ls-name">${piece.n}</span><span class="ls-label">${piece.b} · ${piece.p}</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('${layer}')">✕</button>`;}
-  document.querySelectorAll('#pieceScroll .pcard').forEach(c=>c.classList.remove('sel'));
-  const card=document.getElementById(`pc-${id}`);if(card)card.classList.add('sel');
-  updateTotal();
-}
-function rmSlot(layer){
-  outfit[layer]=null;
-  const slot=document.getElementById(`ls-${layer}`);
-  const lbl={tops:'Top',bottoms:'Bottom',dresses:'Dress',shoes:'Shoes',bags:'Bag',accessories:'Accessories',outerwear:'Outerwear'};
-  const ic={tops:'👚',bottoms:'👖',dresses:'👗',shoes:'👡',bags:'👜',accessories:'💍',outerwear:'🧥'};
-  if(slot){slot.classList.remove('filled');slot.innerHTML=`<span class="ls-ic">${ic[layer]}</span><span class="ls-info"><span class="ls-label">${lbl[layer]}</span></span><button class="ls-rm" onclick="event.stopPropagation();rmSlot('${layer}')">✕</button>`;}
-  updateTotal();
-}
-function updateTotal(){let t=0;Object.values(outfit).forEach(p=>{if(p?.p){const n=parseInt(p.p.replace(/[^0-9]/g,''));if(!isNaN(n))t+=n;}});document.getElementById('lookTotal').textContent=t>0?`$${t.toLocaleString()}`:'—';}
-function clearLook(){Object.keys(outfit).forEach(k=>rmSlot(k));}
-function randomLook(){clearLook();const tiers=['budget','mid','luxury'];['tops','bottoms','shoes','bags','accessories'].forEach(layer=>{const tier=tiers[Math.floor(Math.random()*tiers.length)];const items=PIECES[layer]?.[tier]||[];if(items.length)pickPiece(layer,items[Math.floor(Math.random()*items.length)].id);});}
-function shopLook(){const items=Object.values(outfit).filter(Boolean);if(!items.length){alert('Add pieces first.');return;}document.getElementById('mbItems').innerHTML=items.map(p=>`<div class="mb-item"><strong>${p.n} · ${p.b}</strong><a href="${p.l}" target="_blank" rel="noopener">${p.p} →</a></div>`).join('');let t=0;items.forEach(p=>{const n=parseInt(p.p.replace(/[^0-9]/g,''));if(!isNaN(n))t+=n;});document.getElementById('mbTotal').textContent=`$${t.toLocaleString()}`;document.getElementById('shopModal').classList.add('on');}
-function closeMdl(){document.getElementById('shopModal').classList.remove('on');}
-
-function renderEssentials(){
-  document.getElementById('essGrid').innerHTML=ESSENTIALS.map(e=>`<div class="ecrd"><div class="ecrd-cat">${e.cat}</div><div class="ecrd-name">${e.name}</div><div class="ecrd-desc">${e.desc}</div><div class="etiers">${e.tiers.map(t=>`<a href="${t.h}" target="_blank" rel="noopener" class="etier"><span class="et-r">${t.r}</span><span class="et-l ${t.l==='Budget'?'b':t.l==='Mid'?'m':'l'}">${t.l}</span></a>`).join('')}</div></div>`).join('');
-}
-
-async function joinWL(){
-  const email=document.getElementById('wlEmail').value.trim();
-  if(!email||!email.includes('@')){alert('Please enter a valid email.');return;}
-  try{await fetch(`${API}/waitlist`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});}catch(e){}
-  document.getElementById('wlEmail').value='';
-  const m=document.getElementById('wlMsg');m.textContent='✓ You\'re on the list.';
-}
-
-// ── AUTO-REFRESH 4× DAILY ─────────────────────────────
-setInterval(async()=>{const now=Date.now();const cached=trendCache[city];if(!cached||now-cached.ts>CACHE_TTL){delete trendCache[city];await loadTrends(city,false);}},CACHE_TTL);
-
-// ── INIT ──────────────────────────────────────────────
-(async()=>{
-  buildHeroTiles();
-  await pickCity('paris',document.querySelector('.ctab.on'));
-  renderCelebs();
-  renderEssentials();
-  openLayer('tops',document.querySelector('.lrow.on'));
-  // Pre-warm
-  setTimeout(()=>['santorini','milan'].forEach(c=>fetch(`${API}/trends?city=${c}`).catch(()=>{})),5000);
-
-
-})();
+This will sync to your itinerary â full feature coming with account access.');}
+function handleWardrobe(input){const grid=document.getElementById('wardrobeGrid');if(!grid)return;const CATS=['Top','Bottom','Dress','Shoes','Bag','Jacket'];Array.from(input.files).forEach((file,i)=>{const reader=new FileReader();reader.onload=e=>{const div=document.createElement('div');div.className='wardrobe-item';div.innerHTML='<img src="'+e.target.result+'" alt="Wardrobe item"/><span class="wardrobe-category-badge">'+CATS[i%CATS.length]+'</span><div class="wardrobe-item-overlay" style="color:white;font-size:11px;flex-direction:column;gap:6px"><span>â Identified</span><span style="font-size:9px;opacity:.7">Won't be recommended</span></div>';grid.appendChild(div);};reader.readAsDataURL(file);});}
+const SEEN_ON_LOOKS=[{city:'Paris',look:'Sheer Overlay Dress',img:'photo-1515886657613-9f3515b0c78f',items:[{name:'Similar Sheer Dress',store:'ASOS',price:'$72',url:'https://www.asos.com/search/?q=sheer+overlay+dress',sustainable:false},{name:'Zara Sheer Maxi',store:'Zara',price:'$89',url:'https://www.zara.com/us/en/search?searchTerm=sheer+dress',sustainable:false},{name:'Vintage Sheer Dress',store:'Depop',price:'$28',url:'https://www.depop.com/search/?q=sheer+dress',sustainable:true}]},{city:'Santorini',look:'White Linen Moment',img:'photo-1502716119720-b23a93e5fe0b',items:[{name:'Linen Midi Dress',store:'Zara',price:'$79',url:'https://www.zara.com/us/en/search?searchTerm=white+linen+dress',sustainable:false},{name:'H&M Linen Dress',store:'H&M',price:'$35',url:'https://www.hm.com/en_us/search-results.html?q=white+linen+dress',sustainable:false},{name:'Thrifted Linen Dress',store:'ThredUp',price:'$18',url:'https://www.thredup.com/search#searchText=linen+dress+white',sustainable:true}]},{city:'Milan',look:'Power Blazer Edit',img:'photo-1529139574466-a303027c1d8b',items:[{name:'Structured Blazer',store:'ASOS',price:'$95',url:'https://www.asos.com/search/?q=structured+blazer',sustainable:false},{name:'Revolve Statement Blazer',store:'Revolve',price:'$185',url:'https://www.revolve.com/search/?q=oversized+blazer',sustainable:false},{name:'Vintage Blazer',store:'Depop',price:'$32',url:'https://www.depop.com/search/?q=vintage+blazer',sustainable:true}]},{city:'NYC',look:'Barrel Jeans + Crop',img:'photo-1469334031218-e382a71b716b',items:[{name:'Barrel Leg Jeans',store:'ASOS',price:'$68',url:'https://www.asos.com/search/?q=barrel+jeans',sustainable:false},{name:'H&M Barrel Jeans',store:'H&M',price:'$40',url:'https://www.hm.com/en_us/search-results.html?q=barrel+jeans',sustainable:false},{name:'Vintage Denim',store:'Depop',price:'$24',url:'https://www.depop.com/search/?q=barrel+jeans+vintage',sustainable:true}]},{city:'Amalfi',look:'Resort Halter & Linen',img:'photo-1581044777550-4cfa60707c03',items:[{name:'Halter Neck Top',store:'Revolve',price:'$95',url:'https://www.revolve.com/search/?q=halter+top+resort',sustainable:false},{name:'ASOS Halter',store:'ASOS',price:'$45',url:'https://www.asos.com/search/?q=halter+top',sustainable:false},{name:'Secondhand Halter',store:'ThredUp',price:'$14',url:'https://www.thredup.com/search#searchText=halter+top',sustainable:true}]},{city:'Tokyo',look:'Kawaii Street Mix',img:'photo-1509631179647-0177331693ae',items:[{name:'Layered Skirt',store:'ASOS',price:'$55',url:'https://www.asos.com/search/?q=layered+mini+skirt',sustainable:false},{name:'Platform Sneakers',store:'Amazon',price:'$42',url:'https://www.amazon.com/s?k=platform+sneakers+women&tag='+aff,sustainable:false},{name:'Vintage Layers',store:'Depop',price:'$30',url:'https://www.depop.com/search/?q=kawaii+fashion',sustainable:true}]},{city:'Paris',look:'Trench + Ballet Flats',img:'photo-1506629082955-511b1aa562c8',items:[{name:'Classic Trench',store:'Zara',price:'$129',url:'https://www.zara.com/us/en/search?searchTerm=trench+coat',sustainable:false},{name:'H&M Trench Coat',store:'H&M',price:'$65',url:'https://www.hm.com/en_us/search-results.html?q=trench+coat',sustainable:false},{name:'Vintage Trench',store:'ThredUp',price:'$35',url:'https://www.thredup.com/search#searchText=trench+coat',sustainable:true}]},{city:'Santorini',look:'Backless Sundress',img:'photo-1529139574466-a303027c1d8b',items:[{name:'Backless Maxi',store:'ASOS',price:'$62',url:'https://www.asos.com/search/?q=backless+sundress',sustainable:false},{name:'Revolve Resort Dress',store:'Revolve',price:'$145',url:'https://www.revolve.com/search/?q=backless+dress+resort',sustainable:false},{name:'Pre-loved Maxi',store:'Depop',price:'$22',url:'https://www.depop.com/search/?q=backless+maxi+dress',sustainable:true}]}];
+let seenCityFilter='All';
+function filterSeen(btn){document.querySelectorAll('.seen-filter').forEach(b=>b.classList.remove('active'));btn.classList.add('active');seenCityFilter=btn.dataset.city;renderSeenGrid();}
+function renderSeenGrid(){const grid=document.getElementById('seenGrid');if(!grid)return;const items=seenCityFilter==='All'?SEEN_ON_LOOKS:SEEN_ON_LOOKS.filter(l=>l.city===seenCityFilter);grid.innerHTML=items.map((look,i)=>'<div class="seen-card" onclick="openSeenPanel('+SEEN_ON_LOOKS.indexOf(look)+')" data-city="'+look.city+'"><img src="https://images.unsplash.com/'+look.img+'?w=400&q=85&fit=crop" alt="'+look.look+'" loading="lazy"/><div class="seen-card-badge">'+look.city+'</div><div class="seen-card-overlay"><div class="seen-card-city">'+look.city+'</div><div class="seen-card-look">'+look.look+'</div><div class="seen-card-cta">Shop the Look â</div></div></div>').join('');}
+function openSeenPanel(idx){const look=SEEN_ON_LOOKS[idx];document.getElementById('seenPanelCity').textContent=look.city;document.getElementById('seenPanelTitle').textContent=look.look;document.getElementById('seenPanelItems').innerHTML=look.items.map(item=>'<a href="'+item.url+'" target="_blank" style="display:flex;flex-direction:column;gap:6px;padding:16px 20px;background:'+(item.sustainable?'#F0FAF5':'#F8F5EF')+';border:1px solid '+(item.sustainable?'#1B8A5A':'var(--border)')+';border-radius:4px;text-decoration:none;flex:1;min-width:160px;max-width:220px"><span style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:'+(item.sustainable?'#1B8A5A':'var(--gold)')+';font-weight:600">'+(item.sustainable?'â» '+item.store:item.store)+'</span><span style="font-size:13px;color:var(--b);font-weight:500">'+item.name+'</span><span style="font-family:var(--serif);font-size:20px;color:var(--b)">'+item.price+'</span></a>').join('');document.getElementById('seenPanel').style.display='block';}
+function closeSeenPanel(){document.getElementById('seenPanel').style.display='none';}
+const PINT_BOARDS=[{name:'Paris Â· Chic & Effortless',slug:'paris-style',pins:'142'},{name:'Santorini Â· Summer Whites',slug:'santorini-style',pins:'89'},{name:'Milan Â· Power Dressing',slug:'milan-style',pins:'76'},{name:'Tokyo Â· Street Style',slug:'tokyo-style',pins:'203'},{name:'Amalfi Â· Resort Luxe',slug:'amalfi-coast-style',pins:'58'}];
+function buildPintBoardLinks(){const el=document.getElementById('pintBoardLinks');if(!el)return;el.innerHTML=PINT_BOARDS.map(b=>'<a href="https://www.pinterest.com/mikaylaco/'+b.slug+'/" target="_blank" style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1px solid rgba(255,255,255,.1);border-radius:4px;color:var(--cr);transition:border-color .2s;text-decoration:none"><span style="font-size:12px">'+b.name+'</span><span style="font-size:9px;color:var(--gold);letter-spacing:.08em">'+b.pins+' pins â</span></a>').join('');}
+async function joinWaitlist(){const email=document.getElementById('waitlistEmail').value.trim();const msg=document.getElementById('waitlistMsg');if(!email||!email.includes('@')){msg.style.display='block';msg.style.color='#E60023';msg.textContent='Please enter a valid email address.';return;}const btn=document.querySelector('.waitlist-btn');btn.textContent='â¦';btn.disabled=true;try{const r=await fetch('/.netlify/functions/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});const data=await r.json();msg.style.display='block';msg.style.color='var(--gold)';msg.innerHTML=data.message||'You're on the list â we'll be in touch.';document.getElementById('waitlistEmail').value='';const ct=document.getElementById('waitCount');if(ct)ct.textContent=(parseInt(ct.textContent.replace(',',''))+1).toLocaleString();}catch(e){msg.style.display='block';msg.style.color='var(--gold)';msg.textContent='You're on the list â we'll be in touch!';}finally{btn.textContent='Join â';btn.disabled=false;}}
+function addDragHandlers(zoneId){const zone=document.getElementById(zoneId);if(!zone)return;zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag')});zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag');const input=zone.querySelector('input[type=file]');if(input&&e.dataTransfer.files.length){input.files=e.dataTransfer.files;input.dispatchEvent(new Event('change'));}});}
+window.addEventListener('DOMContentLoaded',()=>{buildTicker();loadTrends('Paris');renderEssentials();renderSeenGrid();buildMixer();buildPintBoardLinks();addDragHandlers('uploadZone');addDragHandlers('wardrobeUpload');setTimeout(()=>{document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>io.observe(el));},100);});
 </script>
 </body>
 </html>
