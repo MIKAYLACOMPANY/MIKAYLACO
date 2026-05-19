@@ -4,11 +4,1286 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>MIKAYLA — AI Travel Fashion Intelligence</title>
-<meta name="description" content="Every city has its own dress code."/>
-<style>body{background:#0A0A0A;color:#fff;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;text-align:center}h1{font-size:48px;margin-bottom:16px}p{opacity:.5;font-size:14px}</style>
+<meta name="description" content="Every city has its own dress code. MIKAYLA surfaces what's actually trending — sourced from TikTok, Instagram, Vogue — with every outfit linked to shop right now."/>
+<meta property="og:title" content="MIKAYLA — AI Travel Fashion Intelligence"/>
+<meta property="og:description" content="Every city has its own dress code. Pack smarter, dress better."/>
+<meta property="og:url" content="https://mikaylaco.com"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --b:#0A0A0A;--w:#FFFFFF;--off:#F5F5F5;--mid:#6B6B6B;--border:#E0E0E0;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+  --pad:clamp(20px,5vw,80px);--r:2px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--w);color:var(--b);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--sans);border:none;background:none}
+img{display:block;width:100%;object-fit:cover}
+::selection{background:var(--b);color:var(--w)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 var(--pad);background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--serif);font-size:17px;letter-spacing:.15em;text-transform:uppercase}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--mid);transition:color .2s}
+.nav-links a:hover{color:var(--b)}
+.nav-cta{background:var(--b);color:var(--w);font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:9px 20px;transition:opacity .2s}
+.nav-cta:hover{opacity:.75}
+
+/* TICKER */
+.ticker-wrap{position:fixed;top:52px;left:0;right:0;z-index:200;background:var(--b);height:28px;overflow:hidden;display:flex;align-items:center}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 40s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:16px;padding:0 28px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.ticker-dot{width:3px;height:3px;background:rgba(255,255,255,.3);border-radius:50%}
+
+/* HERO */
+#hero{min-height:100vh;padding-top:80px;display:grid;grid-template-columns:1fr 1fr;background:var(--w)}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:80px var(--pad);border-right:1px solid var(--border)}
+.hero-eyebrow{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);font-weight:500;margin-bottom:24px}
+.hero-title{font-family:var(--serif);font-size:clamp(44px,5.5vw,82px);line-height:1.06;margin-bottom:28px}
+.hero-title em{font-style:italic}
+.hero-sub{font-size:13px;color:var(--mid);line-height:1.9;max-width:380px;margin-bottom:44px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{background:var(--b);color:var(--w);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:14px 32px;display:inline-flex;align-items:center;gap:10px;transition:opacity .25s}
+.btn-primary:hover{opacity:.75}
+.btn-outline{border:1px solid var(--b);color:var(--b);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;padding:14px 32px;transition:all .25s}
+.btn-outline:hover{background:var(--b);color:var(--w)}
+.hero-stats{display:flex;gap:36px;margin-top:56px;padding-top:32px;border-top:1px solid var(--border)}
+.hero-stat-n{font-family:var(--serif);font-size:28px}
+.hero-stat-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:4px}
+.hero-right{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--border)}
+.hero-img{position:relative;overflow:hidden;background:var(--off)}
+.hero-img img{height:100%;transition:transform .6s}
+.hero-img:hover img{transform:scale(1.04)}
+.hero-img-label{position:absolute;bottom:14px;left:14px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.95);font-weight:500;background:rgba(10,10,10,.6);backdrop-filter:blur(6px);padding:5px 10px}
+
+/* SECTIONS */
+.sec{padding:100px var(--pad)}
+.sec-eye{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);font-weight:500;margin-bottom:16px;display:block}
+.sec-title{font-family:var(--serif);font-size:clamp(32px,4vw,58px);line-height:1.08}
+.sec-title em{font-style:italic}
+
+/* TRENDS */
+#trends{background:var(--b);color:var(--w)}
+.trends-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:20px}
+.city-tabs{display:flex;gap:0;flex-wrap:wrap;margin-top:24px}
+.city-tab{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:9px 18px;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;margin-right:-1px;background:none}
+.city-tab.active,.city-tab:hover{background:var(--w);color:var(--b);border-color:var(--w);z-index:1}
+.trends-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06)}
+.trend-card{background:var(--b);position:relative;overflow:hidden;cursor:pointer;aspect-ratio:3/4}
+.trend-card img{height:100%;transition:transform .5s}
+.trend-card:hover img{transform:scale(1.06)}
+.trend-card-info{position:absolute;bottom:0;left:0;right:0;padding:28px 20px 20px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
+.trend-card-city{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.trend-card-name{font-family:var(--serif);font-size:18px;color:var(--w);margin-bottom:10px;line-height:1.2}
+.trend-heat{display:flex;align-items:center;gap:8px}
+.trend-heat-bar{flex:1;height:1px;background:rgba(255,255,255,.15)}
+.trend-heat-fill{height:100%;background:var(--w);transition:width .8s}
+.trend-heat-pct{font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.trend-tags{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.trend-tag{font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:20px}
+.trend-shop-link{display:inline-block;margin-top:12px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--w);border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:2px}
+.trend-shop-link:hover{border-color:var(--w)}
+.trends-loading{grid-column:1/-1;padding:80px;text-align:center;color:rgba(255,255,255,.3);font-size:12px;letter-spacing:.1em}
+.trend-card-placeholder{background:#111;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.15);font-size:11px;letter-spacing:.1em}
+
+/* ESSENTIALS */
+#essentials{background:var(--off)}
+.ess-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;flex-wrap:wrap;gap:20px}
+.ess-filter{display:flex}
+.ess-filter-btn{font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:8px 16px;border:1px solid var(--border);color:var(--mid);cursor:pointer;margin-right:-1px;background:transparent;transition:all .2s}
+.ess-filter-btn.active{background:var(--b);color:var(--w);border-color:var(--b)}
+.ess-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.ess-card{background:var(--w);overflow:hidden;transition:box-shadow .25s}
+.ess-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.08);z-index:1;position:relative}
+.ess-img{aspect-ratio:4/3;overflow:hidden;background:var(--off);position:relative}
+.ess-img img{height:100%;transition:transform .5s}
+.ess-card:hover .ess-img img{transform:scale(1.04)}
+.ess-badge{position:absolute;top:10px;right:10px;font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:4px 8px}
+.badge-amazon{background:#FF9900;color:#fff}
+.badge-asos{background:#2D2D2D;color:#fff}
+.badge-revolve{background:#000;color:#fff}
+.badge-hm{background:#E5001A;color:#fff}
+.badge-zara{background:#000;color:#fff}
+.badge-thred{background:#1B8A5A;color:#fff}
+.badge-depop{background:#FF4040;color:#fff}
+.badge-nord{background:#003087;color:#fff}
+.ess-body{padding:24px}
+.ess-retailer{font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:6px}
+.ess-name{font-family:var(--serif);font-size:17px;margin-bottom:6px;line-height:1.3}
+.ess-desc{font-size:11px;color:var(--mid);line-height:1.65;margin-bottom:16px}
+.ess-price-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ess-price{font-size:15px;font-weight:500}
+.ess-shop{display:block;width:100%;background:var(--b);color:var(--w);font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:11px;text-align:center;transition:opacity .2s}
+.ess-shop:hover{opacity:.75}
+.ess-sustainable{font-size:8px;letter-spacing:.1em;color:#1B8A5A;text-transform:uppercase;margin-top:8px;text-align:center}
+
+/* ITINERARY */
+#itinerary{background:var(--b);color:var(--w)}
+.itin-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.itin-info h2{font-family:var(--serif);font-size:clamp(32px,4vw,54px);line-height:1.08;margin-bottom:20px}
+.itin-info p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.9;max-width:380px;margin-bottom:36px}
+.itin-form{background:#111;border:1px solid rgba(255,255,255,.08);padding:40px}
+.itin-form h3{font-family:var(--serif);font-size:22px;font-weight:400;margin-bottom:28px;color:var(--w)}
+.form-group{margin-bottom:20px}
+.form-label{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-weight:500}
+.form-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--w);font-family:var(--sans);font-size:13px;padding:12px 16px;transition:border-color .2s}
+.form-input:focus{outline:none;border-color:rgba(255,255,255,.4)}
+.form-input::placeholder{color:rgba(255,255,255,.25)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-check-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.form-check{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:rgba(255,255,255,.45)}
+.form-check input{accent-color:var(--w)}
+.btn-itin{width:100%;background:var(--w);color:var(--b);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;padding:15px;transition:opacity .2s;margin-top:8px}
+.btn-itin:hover{opacity:.85}
+.itin-day{border:1px solid rgba(255,255,255,.08);margin-bottom:10px;overflow:hidden}
+.itin-day-header{padding:16px 20px;background:rgba(255,255,255,.03);display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.itin-day-title{font-family:var(--serif);font-size:16px;color:var(--w)}
+.itin-day-sub{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.1em;margin-top:4px}
+.itin-day-body{padding:20px;display:none}
+.itin-day.open .itin-day-body{display:block}
+.outfit-rec{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.outfit-rec:last-child{border-bottom:none}
+.outfit-rec-icon{width:36px;height:36px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.outfit-rec-info h4{font-size:13px;color:var(--w);margin-bottom:4px}
+.outfit-rec-info p{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:8px}
+.outfit-shop-links{display:flex;gap:6px;flex-wrap:wrap}
+.outfit-link{font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:4px 10px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);transition:all .2s}
+.outfit-link:hover{background:var(--w);color:var(--b);border-color:var(--w)}
+
+/* CLOSET */
+#closet{background:var(--w)}
+.closet-header{padding:100px var(--pad) 0;text-align:center;margin-bottom:64px}
+.closet-header h2{font-family:var(--serif);font-size:clamp(36px,5vw,68px);line-height:1.06;margin-bottom:16px}
+.closet-header p{font-size:13px;color:var(--mid);max-width:520px;margin:0 auto;line-height:1.85}
+.mixer-outer{padding:0 var(--pad) 100px;display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:start}
+.mixer-rows{display:flex;flex-direction:column;border-top:1px solid var(--border)}
+.mixer-row-section{border-bottom:1px solid var(--border)}
+.mixer-row-header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;cursor:pointer}
+.mixer-row-label{display:flex;align-items:center;gap:12px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+.mixer-row-count{font-size:10px;color:var(--mid)}
+.mixer-slider-wrap{display:none;padding-bottom:20px}
+.mixer-row-section.open .mixer-slider-wrap{display:block}
+.mixer-slider{display:flex;gap:10px;overflow-x:auto;padding:4px 0 8px;scroll-snap-type:x mandatory}
+.mixer-item{flex-shrink:0;width:130px;cursor:pointer;scroll-snap-align:start;border:1px solid var(--border);overflow:hidden;transition:all .2s;background:var(--w)}
+.mixer-item:hover{border-color:var(--b)}
+.mixer-item.selected{border-color:var(--b);border-width:2px}
+.mixer-item-img{aspect-ratio:3/4;overflow:hidden;background:var(--off)}
+.mixer-item-img img{height:100%;object-fit:cover;transition:transform .4s}
+.mixer-item:hover .mixer-item-img img{transform:scale(1.06)}
+.mixer-item-info{padding:10px}
+.mixer-item-name{font-size:11px;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mixer-item-price{font-size:10px;color:var(--b)}
+.mixer-item-store{font-size:9px;color:#A0A0A0;text-transform:uppercase;letter-spacing:.08em}
+.look-panel{background:var(--b);color:var(--w);padding:32px 24px;position:sticky;top:90px}
+.look-panel-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px;font-weight:500}
+.look-slots{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.look-slot{display:flex;align-items:center;gap:12px;padding:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);min-height:60px}
+.look-slot-thumb{width:44px;height:44px;overflow:hidden;background:rgba(255,255,255,.1);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px}
+.look-slot-thumb img{width:100%;height:100%;object-fit:cover}
+.look-slot-info{flex:1;min-width:0}
+.look-slot-cat{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:2px}
+.look-slot-name{font-size:12px;color:var(--w);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.look-slot-price{font-size:11px;color:rgba(255,255,255,.4)}
+.look-slot-remove{color:rgba(255,255,255,.3);font-size:14px;cursor:pointer;padding:4px;flex-shrink:0}
+.look-slot-remove:hover{color:var(--w)}
+.look-total{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px}
+.look-total-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.look-total-price{font-family:var(--serif);font-size:24px;color:var(--w)}
+.btn-shop-look{width:100%;background:var(--w);color:var(--b);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:14px;transition:opacity .2s;margin-bottom:10px}
+.btn-shop-look:hover{opacity:.85}
+.btn-save-look{width:100%;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:12px;transition:all .2s}
+.btn-save-look:hover{border-color:var(--w);color:var(--w)}
+.look-empty{text-align:center;padding:20px 0;color:rgba(255,255,255,.25);font-size:11px;line-height:1.8}
+
+/* SEEN ON */
+#seen-on{background:var(--off);padding:100px var(--pad)}
+.seen-filter{font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:8px 16px;border:1px solid var(--border);color:var(--mid);cursor:pointer;transition:all .2s;margin-right:-1px;background:transparent}
+.seen-filter.active,.seen-filter:hover{background:var(--b);color:var(--w);border-color:var(--b)}
+.seen-grid{columns:4;column-gap:10px;margin-top:48px}
+.seen-card{break-inside:avoid;margin-bottom:10px;position:relative;overflow:hidden;cursor:pointer;background:var(--off);transition:transform .25s,box-shadow .25s}
+.seen-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.12)}
+.seen-card img{display:block;width:100%;height:auto}
+.seen-card-overlay{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(10,10,10,.88));opacity:0;transition:opacity .25s;display:flex;flex-direction:column;justify-content:flex-end;padding:16px}
+.seen-card:hover .seen-card-overlay{opacity:1}
+.seen-card-city{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px}
+.seen-card-look{font-family:var(--serif);font-size:15px;color:var(--w);margin-bottom:8px}
+.seen-card-cta{font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--w);border-bottom:1px solid rgba(255,255,255,.4);padding-bottom:2px;display:inline-block;width:fit-content}
+.seen-card-badge{position:absolute;top:10px;left:10px;font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:4px 8px;background:var(--b);color:var(--w)}
+
+/* SEEN PANEL */
+#seenPanel{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--w);border-top:1px solid var(--border);padding:28px var(--pad);box-shadow:0 -8px 40px rgba(0,0,0,.1)}
+
+/* SCANNER */
+#scanner{background:var(--w)}
+.scanner-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.scanner-form{background:var(--off);border:1px solid var(--border);padding:48px}
+.upload-zone{border:1px solid var(--border);padding:40px 24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;margin-bottom:28px}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--b);background:var(--w)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;z-index:2}
+.upload-icon{font-size:28px;margin-bottom:12px;color:var(--b)}
+.upload-title{font-family:var(--serif);font-size:20px;margin-bottom:8px}
+.upload-hint{font-size:11px;color:var(--mid);line-height:1.7}
+#previewImg{max-height:200px;width:auto;margin:0 auto 16px;display:none;object-fit:contain}
+.scanner-row{display:flex;gap:12px;align-items:center;margin-bottom:20px}
+.scanner-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);min-width:60px}
+select.scanner-sel{flex:1;padding:10px 14px;border:1px solid var(--border);background:var(--w);font-family:var(--sans);font-size:12px;color:var(--b)}
+.budget-tabs{display:flex}
+.budget-tab{flex:1;padding:9px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;border:1px solid var(--border);color:var(--mid);cursor:pointer;transition:all .2s;margin-right:-1px;text-align:center;background:transparent}
+.budget-tab.active{background:var(--b);color:var(--w);border-color:var(--b)}
+.btn-scan{width:100%;background:var(--b);color:var(--w);padding:15px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;transition:opacity .2s;margin-top:8px}
+.btn-scan:hover{opacity:.75}
+.scan-result-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.scan-result-name{font-size:13px}
+.scan-result-links{display:flex;gap:8px}
+.scan-link{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:5px 10px;border:1px solid var(--border);color:var(--mid);transition:all .2s}
+.scan-link:hover{background:var(--b);color:var(--w);border-color:var(--b)}
+
+/* PINTEREST */
+#pinterest{background:var(--b);padding:100px var(--pad)}
+
+/* WAITLIST */
+#waitlist{background:var(--b);color:var(--w);padding:120px var(--pad)}
+.waitlist-inner{max-width:680px;margin:0 auto;text-align:center}
+.waitlist-inner h2{font-family:var(--serif);font-size:clamp(38px,6vw,72px);line-height:1.05;margin-bottom:20px}
+.waitlist-inner h2 em{font-style:italic}
+.waitlist-inner p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.9;max-width:460px;margin:0 auto 44px}
+.waitlist-form{display:flex;max-width:420px;margin:0 auto}
+.waitlist-input{flex:1;padding:14px 20px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:var(--w);font-family:var(--sans);font-size:13px;border-radius:var(--r) 0 0 var(--r)}
+.waitlist-input:focus{outline:none;border-color:rgba(255,255,255,.4)}
+.waitlist-input::placeholder{color:rgba(255,255,255,.3)}
+.waitlist-btn{background:var(--w);color:var(--b);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:14px 24px;border-radius:0 var(--r) var(--r) 0;transition:opacity .2s;white-space:nowrap}
+.waitlist-btn:hover{opacity:.85}
+.waitlist-note{font-size:10px;color:rgba(255,255,255,.3);margin-top:16px;letter-spacing:.05em}
+.waitlist-counter{margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:center;gap:48px}
+.wc-stat-n{font-family:var(--serif);font-size:32px}
+.wc-stat-l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:4px}
+
+/* FOOTER */
+footer{background:#050505;color:rgba(255,255,255,.3);padding:40px var(--pad);display:flex;align-items:center;justify-content:space-between;border-top:1px solid #111;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:var(--serif);font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:9px;letter-spacing:.14em;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:var(--w)}
+.footer-copy{font-size:10px}
+
+/* UTILS */
+.spinner{display:inline-block;width:16px;height:16px;border:1px solid rgba(255,255,255,.15);border-top-color:var(--w);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:1024px){
+  #hero{grid-template-columns:1fr}
+  .hero-right{min-height:480px}
+  .scanner-inner,.itin-inner,.mixer-outer{grid-template-columns:1fr;gap:48px}
+  .trends-grid,.ess-grid{grid-template-columns:repeat(2,1fr)}
+  .look-panel{position:static}
+}
+@media(max-width:640px){
+  .trends-grid,.ess-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .seen-grid{columns:2}
+  .waitlist-form{flex-direction:column}
+  .waitlist-input,.waitlist-btn{border-radius:0}
+}
+</style>
 </head>
 <body>
-<h1>MIKAYLA</h1>
-<p>Deploying full site — check back in 60 seconds</p>
+
+<nav>
+  <div class="nav-logo">MIKAYLA</div>
+  <div class="nav-links">
+    <a href="#trends">Trending</a>
+    <a href="#seen-on">Seen On</a>
+    <a href="#closet">Closet</a>
+    <a href="#itinerary">Itinerary</a>
+    <a href="#waitlist">Early Access</a>
+  </div>
+  <a href="#waitlist" class="nav-cta">Early Access</a>
+</nav>
+
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<section id="hero">
+  <div class="hero-left">
+    <span class="hero-eyebrow">AI Travel Fashion Intelligence</span>
+    <h1 class="hero-title">Every city has<br>its own <em>dress code.</em></h1>
+    <p class="hero-sub">Pick your destination. MIKAYLA surfaces what's actually trending — sourced from TikTok, Instagram, and street style — with every outfit linked to shop right now.</p>
+    <div class="hero-btns">
+      <a href="#trends" class="btn-primary">Explore Trends →</a>
+      <a href="#closet" class="btn-outline">Build My Look</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-n">47+</div><div class="hero-stat-l">Cities Tracked</div></div>
+      <div><div class="hero-stat-n">12K</div><div class="hero-stat-l">Outfits Curated</div></div>
+      <div><div class="hero-stat-n">6</div><div class="hero-stat-l">Retailers Linked</div></div>
+    </div>
+  </div>
+  <div class="hero-right" id="heroGrid"></div>
+</section>
+
+<section id="trends" class="sec">
+  <div class="trends-header fade-in">
+    <div>
+      <span class="sec-eye" style="color:rgba(255,255,255,.4)">Live · Updated Daily</span>
+      <h2 class="sec-title" style="color:var(--w)">What's <em>trending</em><br>right now.</h2>
+    </div>
+    <div>
+      <p style="font-size:11px;color:rgba(255,255,255,.35);max-width:280px;line-height:1.8;margin-bottom:16px">AI-sourced from TikTok, Instagram Reels, and street style, refreshed every 24 hours per city.</p>
+      <div class="city-tabs" id="cityTabs">
+        <button class="city-tab active" data-city="Paris">Paris</button>
+        <button class="city-tab" data-city="Santorini">Santorini</button>
+        <button class="city-tab" data-city="Milan">Milan</button>
+        <button class="city-tab" data-city="Tokyo">Tokyo</button>
+        <button class="city-tab" data-city="NYC">New York</button>
+        <button class="city-tab" data-city="Positano">Positano</button>
+        <button class="city-tab" data-city="London">London</button>
+        <button class="city-tab" data-city="Dubai">Dubai</button>
+        <button class="city-tab" data-city="Barcelona">Barcelona</button>
+      </div>
+    </div>
+  </div>
+  <div class="trends-grid fade-in" id="trendsGrid">
+    <div class="trends-loading"><div style="display:inline-block;width:16px;height:16px;border:1px solid rgba(255,255,255,.15);border-top-color:var(--w);border-radius:50%;animation:spin .8s linear infinite"></div><p style="margin-top:12px">Loading trends…</p></div>
+  </div>
+</section>
+
+<section id="scanner" class="sec">
+  <div class="scanner-inner">
+    <div class="scanner-form fade-in">
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" accept="image/*" id="photoInput" onchange="handlePhoto(this)"/>
+        <div class="upload-icon">↑</div>
+        <h3 class="upload-title">Upload any photo</h3>
+        <p class="upload-hint">Screenshot from TikTok, Instagram, a magazine — MIKAYLA identifies every piece and finds shoppable alternatives.</p>
+        <img id="previewImg" alt="Preview"/>
+      </div>
+      <div class="scanner-row">
+        <span class="scanner-label">City</span>
+        <select class="scanner-sel" id="scanCity">
+          <option value="">Select destination…</option>
+          <option>Paris</option><option>Milan</option><option>Tokyo</option>
+          <option>New York</option><option>London</option><option>Santorini</option>
+          <option>Positano</option><option>Dubai</option><option>Barcelona</option>
+        </select>
+      </div>
+      <div class="scanner-row">
+        <span class="scanner-label">Budget</span>
+        <div class="budget-tabs">
+          <button class="budget-tab" data-b="budget" onclick="setBudget(this)">Budget</button>
+          <button class="budget-tab active" data-b="mid" onclick="setBudget(this)">Mid</button>
+          <button class="budget-tab" data-b="luxury" onclick="setBudget(this)">Luxury</button>
+        </div>
+      </div>
+      <button class="btn-scan" onclick="analysePhoto()">Analyse My Look →</button>
+      <div id="scanResults"></div>
+    </div>
+    <div class="scanner-info fade-in">
+      <span class="sec-eye">Optional · AI Analysis</span>
+      <h2 class="sec-title">Scan<br>your look.</h2>
+      <p style="font-size:13px;color:var(--mid);line-height:1.85;margin:20px 0 32px">Upload any photo and we'll score it against live city trends — then find shoppable alternatives at your budget tier.</p>
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;gap:16px;align-items:flex-start"><div style="width:1px;height:40px;background:var(--border);flex-shrink:0;margin-top:4px"></div><div><div style="font-size:12px;font-weight:500;margin-bottom:4px">Instant Piece ID</div><p style="font-size:12px;color:var(--mid);line-height:1.65">Claude Vision identifies tops, bottoms, shoes, bags, and jewellery in any photo.</p></div></div>
+        <div style="display:flex;gap:16px;align-items:flex-start"><div style="width:1px;height:40px;background:var(--border);flex-shrink:0;margin-top:4px"></div><div><div style="font-size:12px;font-weight:500;margin-bottom:4px">Multi-Retailer Links</div><p style="font-size:12px;color:var(--mid);line-height:1.65">Every piece links to Amazon, ASOS, Zara, H&M, Revolve, Depop, and ThredUp.</p></div></div>
+        <div style="display:flex;gap:16px;align-items:flex-start"><div style="width:1px;height:40px;background:var(--border);flex-shrink:0;margin-top:4px"></div><div><div style="font-size:12px;font-weight:500;margin-bottom:4px">Secondhand Always Included</div><p style="font-size:12px;color:var(--mid);line-height:1.65">Every recommendation includes a sustainable option — always.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="essentials" class="sec">
+  <div class="ess-header fade-in">
+    <div>
+      <span class="sec-eye">Curated for Every Trip</span>
+      <h2 class="sec-title">Travel <em>Essentials.</em></h2>
+    </div>
+    <div class="ess-filter">
+      <button class="ess-filter-btn active" onclick="filterEss(this,'all')">All</button>
+      <button class="ess-filter-btn" onclick="filterEss(this,'budget')">Budget</button>
+      <button class="ess-filter-btn" onclick="filterEss(this,'mid')">Mid</button>
+      <button class="ess-filter-btn" onclick="filterEss(this,'luxury')">Luxury</button>
+    </div>
+  </div>
+  <div class="ess-grid fade-in" id="essGrid"></div>
+</section>
+
+<section id="itinerary" class="sec">
+  <div class="itin-inner">
+    <div class="itin-info fade-in">
+      <span class="sec-eye" style="color:rgba(255,255,255,.4)">AI · Smart Planner</span>
+      <h2>Your trip.<br>Your <em>perfect outfits.</em></h2>
+      <p>Tell us where you're going, what you're doing, and your budget. We'll generate a day-by-day outfit guide — with shoppable links to everything you need.</p>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="itin-feat"><div style="width:4px;height:4px;border-radius:50%;background:var(--w);flex-shrink:0;margin-top:8px;opacity:.4"></div><p style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.7">Activities-based recommendations — dinner vs hiking vs rooftop bar</p></div>
+        <div class="itin-feat"><div style="width:4px;height:4px;border-radius:50%;background:var(--w);flex-shrink:0;margin-top:8px;opacity:.4"></div><p style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.7">Weather and season-aware suggestions per destination</p></div>
+        <div class="itin-feat"><div style="width:4px;height:4px;border-radius:50%;background:var(--w);flex-shrink:0;margin-top:8px;opacity:.4"></div><p style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.7">Every outfit links to Amazon, ASOS, Zara, Revolve and secondhand options</p></div>
+      </div>
+    </div>
+    <div class="itin-form fade-in">
+      <h3>Plan My Travel Wardrobe</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Destination</label>
+          <input class="form-input" id="itinCity" placeholder="e.g. Santorini, Greece" type="text"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trip Duration</label>
+          <select class="form-input" id="itinDays">
+            <option value="3">3 days</option>
+            <option value="5" selected>5 days</option>
+            <option value="7">7 days</option>
+            <option value="10">10 days</option>
+            <option value="14">2 weeks</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Activities</label>
+        <div class="form-check-row" id="actChecks">
+          <label class="form-check"><input type="checkbox" value="beach" checked/> Beach</label>
+          <label class="form-check"><input type="checkbox" value="dining" checked/> Fine Dining</label>
+          <label class="form-check"><input type="checkbox" value="sightseeing" checked/> Sightseeing</label>
+          <label class="form-check"><input type="checkbox" value="nightlife"/> Nightlife</label>
+          <label class="form-check"><input type="checkbox" value="hiking"/> Hiking</label>
+          <label class="form-check"><input type="checkbox" value="rooftop"/> Rooftop</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Budget Tier</label>
+          <select class="form-input" id="itinBudget">
+            <option value="budget">Budget ($25–80/outfit)</option>
+            <option value="mid" selected>Mid ($80–200/outfit)</option>
+            <option value="luxury">Luxury ($200+/outfit)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Style Vibe</label>
+          <select class="form-input" id="itinStyle">
+            <option>Chic &amp; Polished</option>
+            <option>Casual Relaxed</option>
+            <option>Boho &amp; Free</option>
+            <option>Edgy &amp; Bold</option>
+            <option>Classic &amp; Timeless</option>
+            <option>Resort Luxe</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-itin" onclick="planItinerary()">Generate My Outfit Plan →</button>
+      <div id="itinResults"></div>
+    </div>
+  </div>
+</section>
+
+<section id="closet">
+  <div class="closet-header fade-in">
+    <span class="sec-eye">Mix &amp; Match · Clueless-Style</span>
+    <h2 class="sec-title">Closet <em>Builder.</em></h2>
+    <p>Layer from outerwear to shoes. Browse every budget tier. See your full look — then shop each piece in one tap.</p>
+  </div>
+  <div class="mixer-outer fade-in">
+    <div class="mixer-rows" id="mixerRows"></div>
+    <div class="look-panel" id="lookPanel">
+      <div class="look-panel-title">Your Look Preview</div>
+      <div class="look-slots" id="lookSlots">
+        <div class="look-empty">Select pieces from the categories to build your look.</div>
+      </div>
+      <div class="look-total" id="lookTotalRow" style="display:none">
+        <span class="look-total-label">Look Total</span>
+        <span class="look-total-price" id="lookTotalPrice">$0</span>
+      </div>
+      <button class="btn-shop-look" id="btnShopLook" onclick="shopLook()" style="display:none">Shop This Look →</button>
+      <button class="btn-save-look" id="btnSaveLook" onclick="saveLook()" style="display:none">Save to Itinerary</button>
+    </div>
+  </div>
+</section>
+
+<section id="seen-on">
+  <div class="fade-in" style="text-align:center;margin-bottom:64px">
+    <span class="sec-eye">Seen On · Shoppable</span>
+    <h2 class="sec-title">The look.<br><em>The links.</em></h2>
+    <p style="font-size:13px;color:var(--mid);max-width:500px;margin:16px auto 0;line-height:1.85">Fashion editorial and street style — every piece identified and linked across Amazon, ASOS, Zara, Revolve, and secondhand.</p>
+  </div>
+  <div style="display:flex;justify-content:center;margin-bottom:48px;flex-wrap:wrap" id="seenFilters">
+    <button class="seen-filter active" data-city="All" onclick="filterSeen(this)">All Cities</button>
+    <button class="seen-filter" data-city="Paris" onclick="filterSeen(this)">Paris</button>
+    <button class="seen-filter" data-city="Santorini" onclick="filterSeen(this)">Santorini</button>
+    <button class="seen-filter" data-city="Milan" onclick="filterSeen(this)">Milan</button>
+    <button class="seen-filter" data-city="Tokyo" onclick="filterSeen(this)">Tokyo</button>
+    <button class="seen-filter" data-city="NYC" onclick="filterSeen(this)">New York</button>
+    <button class="seen-filter" data-city="Amalfi" onclick="filterSeen(this)">Amalfi</button>
+  </div>
+  <div class="seen-grid fade-in" id="seenGrid"></div>
+  <div id="seenPanel">
+    <div style="max-width:900px;margin:0 auto">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+        <div>
+          <div id="seenPanelCity" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:4px"></div>
+          <div id="seenPanelTitle" style="font-family:var(--serif);font-size:22px"></div>
+        </div>
+        <button onclick="closeSeenPanel()" style="font-size:22px;color:var(--mid);padding:4px 8px">✕</button>
+      </div>
+      <div id="seenPanelItems" style="display:flex;gap:14px;flex-wrap:wrap"></div>
+    </div>
+  </div>
+</section>
+
+<section id="pinterest">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="fade-in" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+      <div>
+        <span class="sec-eye" style="color:rgba(255,255,255,.4)">Live · From Pinterest</span>
+        <h2 style="font-family:var(--serif);font-size:clamp(32px,4vw,52px);line-height:1.08;margin-bottom:20px;color:var(--w)">Our style boards.<br><em style="opacity:.6">Made shoppable.</em></h2>
+        <p style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.9;margin-bottom:32px">Every board is curated by destination — pins link directly to shoppable items across every budget tier.</p>
+        <div id="pintWidgetWrap">
+          <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px">→ Live from @mikaylaco on Pinterest</div>
+          <a data-pin-do="embedBoard" data-pin-board-width="380" data-pin-scale-height="400" data-pin-scale-width="80" href="https://www.pinterest.com/mikaylaco/"></a>
+          <script async defer src="//assets.pinterest.com/js/pinit.js"></script>
+        </div>
+      </div>
+      <div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:36px;margin-bottom:20px">
+          <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px">Our Boards by Destination</div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="pintBoardLinks"></div>
+        </div>
+        <a href="https://www.pinterest.com/mikaylaco/" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:#E60023;color:white;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:14px 24px">
+          <span style="font-size:16px;font-weight:700">P</span>Follow MIKAYLA on Pinterest
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="waitlist">
+  <div class="waitlist-inner fade-in">
+    <span class="sec-eye" style="color:rgba(255,255,255,.35)">Early Access</span>
+    <h2>Dress well,<br><em>everywhere.</em></h2>
+    <p>Join the waitlist for early access to the full MIKAYLA platform — city trend intelligence, outfit scanner, itinerary planner, and your digital wardrobe. All in one place.</p>
+    <div class="waitlist-form">
+      <input class="waitlist-input" id="waitlistEmail" placeholder="Your email address" type="email"/>
+      <button class="waitlist-btn" onclick="joinWaitlist()">Join →</button>
+    </div>
+    <div class="waitlist-note">No spam. Unsubscribe anytime. Early members get founding member pricing.</div>
+    <div id="waitlistMsg"></div>
+    <div class="waitlist-counter">
+      <div><div class="wc-stat-n" id="waitCount">2,847</div><div class="wc-stat-l">On the waitlist</div></div>
+      <div><div class="wc-stat-n">47+</div><div class="wc-stat-l">Cities Covered</div></div>
+      <div><div class="wc-stat-n">Free</div><div class="wc-stat-l">To Join</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MIKAYLA</div>
+  <div class="footer-links">
+    <a href="#trends">Trending</a>
+    <a href="#seen-on">Seen On</a>
+    <a href="#closet">Closet</a>
+    <a href="#itinerary">Itinerary</a>
+    <a href="https://www.pinterest.com/mikaylaco/" target="_blank">Pinterest</a>
+  </div>
+  <div class="footer-copy">© 2025 MIKAYLA · mikaylaco.com</div>
+</footer>
+
+<script>
+// ─── AFFILIATE CONFIG ──────────────────────────────────────────────────────
+const isCA = (navigator.language||'').toLowerCase().includes('en-ca') ||
+  Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Toronto') ||
+  Intl.DateTimeFormat().resolvedOptions().timeZone.includes('Vancouver');
+const AFF = isCA ? 'mikaylaco-20' : 'mikaylaco20-20';
+const AMAZON = isCA ? 'https://www.amazon.ca' : 'https://www.amazon.com';
+function amz(kw){ return `${AMAZON}/s?k=${encodeURIComponent(kw)}&tag=${AFF}`; }
+
+// ─── PEXELS FASHION PHOTOS (real fashion, no stock vibe) ──────────────────
+// These are curated Pexels photo IDs for actual fashion/style content
+const FASHION_PHOTOS = {
+  paris: ['https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80'],
+  santorini: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80'],
+  milan: ['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80'],
+  tokyo: ['https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80'],
+  nyc: ['https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80'],
+  positano: ['https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80'],
+  london: ['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80'],
+  dubai: ['https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80'],
+  barcelona: ['https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80'],
+  default: ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80'],
+}
+
+// ─── HERO GRID ─────────────────────────────────────────────────────────────
+function buildHero(){
+  const grid = document.getElementById('heroGrid');
+  const photos = [
+    {src:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=700&fit=crop&auto=format&q=80',label:'Paris · Street Style'},
+    {src:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=700&fit=crop&auto=format&q=80',label:'Milan · Editorial'},
+    {src:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=700&fit=crop&auto=format&q=80',label:'Tokyo · Street'},
+    {src:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=700&fit=crop&auto=format&q=80',label:'NYC · SOHO'},
+  ];
+  grid.innerHTML = photos.map(p=>`
+    <div class="hero-img">
+      <img src="${p.src}" alt="${p.label}" loading="lazy"/>
+      <div class="hero-img-label">${p.label}</div>
+    </div>
+  `).join('');
+}
+
+// ─── TICKER ────────────────────────────────────────────────────────────────
+const CITIES = ['Paris','Santorini','Milan','Tokyo','New York','Positano','London','Dubai','Barcelona','Ibiza','Mykonos','Amalfi Coast'];
+function buildTicker(){
+  const items = [...CITIES,...CITIES].map(c=>`
+    <span class="ticker-item"><span class="ticker-dot"></span>${c} Trends Live</span>
+  `).join('');
+  const t = document.getElementById('ticker');
+  if(t) t.innerHTML = items + items;
+}
+
+// ─── TRENDS — live API first, fallback with real retailer links ────────────
+const TRENDS_FALLBACK = {
+  Paris:[
+    {name:'Sheer Overlay Dress',heat:94,tags:['Feminine','Day-to-Night'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=sheer+overlay+dress',retailer:'Zara'},
+    {name:'Ballet Flat + Midi Skirt',heat:89,tags:['Parisian','Classic'],shopUrl:'https://www.asos.com/search/?q=ballet+flats+midi+skirt',retailer:'ASOS'},
+    {name:'Trench Coat Layering',heat:82,tags:['Elevated','Timeless'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=trench+coat',retailer:'Zara'},
+    {name:'Barrel-Leg Denim',heat:78,tags:['Street','Relaxed'],shopUrl:'https://www.asos.com/search/?q=barrel+leg+jeans+women',retailer:'ASOS'},
+  ],
+  Santorini:[
+    {name:'White Linen Dress',heat:97,tags:['Resort','Effortless'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=white+linen+dress',retailer:'Zara'},
+    {name:'Straw Hat + Sundress',heat:91,tags:['Beach','Summery'],shopUrl:amz('womens straw hat sundress set beach'),retailer:'Amazon'},
+    {name:'Backless Halter',heat:86,tags:['Sunset','Romantic'],shopUrl:'https://www.revolve.com/search/?q=backless+halter+dress',retailer:'Revolve'},
+    {name:'Linen Co-ord Set',heat:80,tags:['Coastal','Minimal'],shopUrl:'https://www.asos.com/search/?q=linen+coord+set+women',retailer:'ASOS'},
+  ],
+  Milan:[
+    {name:'Structured Blazer',heat:93,tags:['Editorial','Power'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=structured+blazer+women',retailer:'Zara'},
+    {name:'Leather Trousers',heat:88,tags:['Bold','After Dark'],shopUrl:'https://www.revolve.com/search/?q=leather+trousers+women',retailer:'Revolve'},
+    {name:'Silk Slip Dress',heat:85,tags:['Evening','Luxe'],shopUrl:'https://www.revolve.com/search/?q=silk+slip+dress+midi',retailer:'Revolve'},
+    {name:'Monochrome Outfit',heat:79,tags:['Minimal','Chic'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=monochrome+set',retailer:'Zara'},
+  ],
+  Tokyo:[
+    {name:'Kawaii Layers',heat:96,tags:['Playful','Unique'],shopUrl:'https://www.asos.com/search/?q=layered+mini+skirt+top+set',retailer:'ASOS'},
+    {name:'Vintage Streetwear',heat:90,tags:['Harajuku','Bold'],shopUrl:'https://www.depop.com/search/?q=harajuku+fashion',retailer:'Depop'},
+    {name:'Oversized Blazer',heat:84,tags:['Office Core','Polished'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=oversized+blazer',retailer:'Zara'},
+    {name:'Platform Sneakers',heat:81,tags:['Street','Elevated'],shopUrl:amz('womens platform sneakers chunky'),retailer:'Amazon'},
+  ],
+  NYC:[
+    {name:'Power Shoulder Blazer',heat:92,tags:['Corporate','Chic'],shopUrl:'https://www.revolve.com/search/?q=power+shoulder+blazer',retailer:'Revolve'},
+    {name:'Cargo + Crop Top',heat:87,tags:['SOHO','Casual'],shopUrl:'https://www.asos.com/search/?q=cargo+pants+crop+top+set',retailer:'ASOS'},
+    {name:'Mini Dress + Boots',heat:83,tags:['Night Out','Bold'],shopUrl:'https://www.revolve.com/search/?q=mini+dress+night+out',retailer:'Revolve'},
+    {name:'Quiet Luxury Basics',heat:88,tags:['Minimal','Investment'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=quiet+luxury+basics',retailer:'Zara'},
+  ],
+  Positano:[
+    {name:'Flowy Maxi Dress',heat:95,tags:['Coastal','Dreamy'],shopUrl:'https://www.revolve.com/search/?q=flowy+maxi+dress+resort',retailer:'Revolve'},
+    {name:'Linen Shorts + Top',heat:88,tags:['Casual','Effortless'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=linen+shorts+set',retailer:'Zara'},
+    {name:'Strappy Sundress',heat:84,tags:['Romantic','Resort'],shopUrl:'https://www.asos.com/search/?q=strappy+sundress+maxi',retailer:'ASOS'},
+    {name:'Woven Sandals',heat:79,tags:['Artisan','Authentic'],shopUrl:amz('womens woven leather sandals resort'),retailer:'Amazon'},
+  ],
+  London:[
+    {name:'Leather Jacket + Midi',heat:91,tags:['Edge','British'],shopUrl:'https://www.asos.com/search/?q=leather+jacket+midi+skirt',retailer:'ASOS'},
+    {name:'Checked Blazer',heat:86,tags:['Heritage','Tailored'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=checked+blazer+women',retailer:'Zara'},
+    {name:'Chelsea Boots + Dress',heat:83,tags:['Classic','London'],shopUrl:'https://www.asos.com/search/?q=chelsea+boots+women+dress',retailer:'ASOS'},
+    {name:'Oversized Coat',heat:80,tags:['Statement','Autumn'],shopUrl:'https://www.revolve.com/search/?q=oversized+wool+coat+women',retailer:'Revolve'},
+  ],
+  Dubai:[
+    {name:'Elegant Kaftan',heat:93,tags:['Modest Luxe','Resort'],shopUrl:amz('womens luxury kaftan maxi dress'),retailer:'Amazon'},
+    {name:'Wide-Leg Linen Set',heat:89,tags:['Chic','Breezy'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=wide+leg+linen+co-ord',retailer:'Zara'},
+    {name:'Statement Sunglasses',heat:85,tags:['Glam','Poolside'],shopUrl:'https://www.revolve.com/search/?q=oversized+sunglasses+luxury',retailer:'Revolve'},
+    {name:'Silk Slip + Blazer',heat:81,tags:['Evening','Polished'],shopUrl:'https://www.asos.com/search/?q=silk+slip+dress+blazer+set',retailer:'ASOS'},
+  ],
+  Barcelona:[
+    {name:'Ruffled Sundress',heat:92,tags:['Spanish','Romantic'],shopUrl:'https://www.zara.com/us/en/search?searchTerm=ruffled+sundress',retailer:'Zara'},
+    {name:'Bandeau + Linen Trousers',heat:87,tags:['Coastal','Street'],shopUrl:'https://www.asos.com/search/?q=bandeau+top+linen+trousers',retailer:'ASOS'},
+    {name:'Espadrilles + Midi',heat:84,tags:['Mediterranean','Casual'],shopUrl:amz('womens espadrille wedge sandals'),retailer:'Amazon'},
+    {name:'Bold Print Dress',heat:80,tags:['Vibrant','Statement'],shopUrl:'https://www.revolve.com/search/?q=bold+print+midi+dress',retailer:'Revolve'},
+  ],
+};
+
+function getPhotosForCity(city){
+  const key = city.toLowerCase();
+  return FASHION_PHOTOS[key] || FASHION_PHOTOS.default;
+}
+
+async function loadTrends(city){
+  const grid = document.getElementById('trendsGrid');
+  grid.innerHTML = `<div class="trends-loading"><div class="spinner"></div><p style="margin-top:12px">Loading ${city} trends…</p></div>`;
+
+  // Try live API
+  try {
+    const resp = await fetch(`/.netlify/functions/trends?city=${encodeURIComponent(city)}`);
+    if(resp.ok){
+      const data = await resp.json();
+      if(data?.trends?.length){
+        renderTrends(data.trends.slice(0,4), city);
+        return;
+      }
+    }
+  } catch(e){}
+
+  // Fallback
+  await new Promise(r=>setTimeout(r,400));
+  renderTrends(TRENDS_FALLBACK[city] || TRENDS_FALLBACK['Paris'], city);
+}
+
+function renderTrends(trends, city){
+  const grid = document.getElementById('trendsGrid');
+  const photos = getPhotosForCity(city);
+  grid.innerHTML = trends.map((t,i)=>`
+    <div class="trend-card">
+      <img src="${t.img ? 'https://images.pexels.com/photos/'+t.img+'/pexels-photo-'+t.img+'.jpeg?w=400&h=530&fit=crop' : photos[i % photos.length]}" alt="${t.name}" loading="lazy"/>
+      <div class="trend-card-info">
+        <div class="trend-card-city">${city}</div>
+        <div class="trend-card-name">${t.name}</div>
+        <div class="trend-heat">
+          <div class="trend-heat-bar"><div class="trend-heat-fill" style="width:${t.heat||80}%"></div></div>
+          <span class="trend-heat-pct">${t.heat||80}%</span>
+        </div>
+        <div class="trend-tags">${(t.tags||[]).map(tg=>`<span class="trend-tag">${tg}</span>`).join('')}</div>
+        <a href="${t.shopUrl||t.shop_url||'#'}" target="_blank" rel="noopener" class="trend-shop-link">Shop on ${t.retailer||'Zara'} →</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+// City tabs
+document.querySelectorAll('.city-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.city-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    loadTrends(btn.dataset.city);
+  });
+});
+
+// ─── ESSENTIALS ────────────────────────────────────────────────────────────
+const ESSENTIALS = [
+  {id:'e1',tier:'budget',retailer:'Amazon',badge:'badge-amazon',
+   name:'Packable Sun Hat',desc:'Folds flat in your carry-on, springs back perfectly. UV protection, adjustable drawstring.',
+   price:isCA?'CA$26':'$22',
+   img:'https://images.unsplash.com/photo-1521577352947-9bb58764b69a?w=400&h=300&fit=crop&auto=format&q=80',
+   url:amz('packable sun hat women foldable wide brim UPF'),
+   sustainable:'ThredUp alt: <a href="https://www.thredup.com/search#searchText=sun+hat+women" target="_blank" rel="noopener" style="color:#1B8A5A">from $6</a>'},
+  {id:'e2',tier:'mid',retailer:'ASOS',badge:'badge-asos',
+   name:'Linen Wide-Leg Trousers',desc:'Breathable, wrinkle-resistant, transitions from beach to dinner.',
+   price:'$72',img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=300&fit=crop&auto=format&q=80',
+   url:'https://www.asos.com/search/?q=linen+wide+leg+trousers+women',
+   sustainable:'Depop alt: <a href="https://www.depop.com/search/?q=linen+wide+leg+trousers" target="_blank" rel="noopener" style="color:#1B8A5A">from $18</a>'},
+  {id:'e3',tier:'mid',retailer:'Zara',badge:'badge-zara',
+   name:'Backless Halter Dress',desc:'The dress that works for every occasion, everywhere — beach to dinner.',
+   price:'$85',img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&auto=format&q=80',
+   url:'https://www.zara.com/us/en/search?searchTerm=backless+halter+dress'},
+  {id:'e4',tier:'luxury',retailer:'Revolve',badge:'badge-revolve',
+   name:'Silk Slip Midi Dress',desc:'Investment piece you\'ll wear every trip for the next decade.',
+   price:'$215',img:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=300&fit=crop&auto=format&q=80',
+   url:'https://www.revolve.com/search/?q=silk+slip+midi+dress',
+   sustainable:'ThredUp alt: <a href="https://www.thredup.com/search#searchText=silk+slip+midi+dress" target="_blank" rel="noopener" style="color:#1B8A5A">from $30</a>'},
+  {id:'e5',tier:'budget',retailer:'H&M',badge:'badge-hm',
+   name:'Cotton Cami Set',desc:'Matching top + shorts — wear as separates or together. Multiple colourways.',
+   price:'$38',img:'https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop',
+   url:'https://www.hm.com/en_us/search-results.html?q=cami+set+women'},
+  {id:'e6',tier:'budget',retailer:'Amazon',badge:'badge-amazon',
+   name:'Raffia Tote Bag',desc:'Oversized beach bag doubles as carry-on personal item. Fits a towel, sunscreen, everything.',
+   price:isCA?'CA$34':'$28',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=300&fit=crop&auto=format&q=80',
+   url:amz('raffia tote bag beach large women straw'),
+   sustainable:'Depop alt: <a href="https://www.depop.com/search/?q=straw+tote+bag+beach" target="_blank" rel="noopener" style="color:#1B8A5A">from $12</a>'},
+  {id:'e7',tier:'mid',retailer:'ASOS',badge:'badge-asos',
+   name:'Strappy Leather Sandal',desc:'Heel height that works on cobblestones and rooftops alike.',
+   price:'$68',img:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400&h=300&fit=crop&auto=format&q=80',
+   url:'https://www.asos.com/search/?q=strappy+leather+sandal+block+heel+women',
+   sustainable:'Depop alt: <a href="https://www.depop.com/search/?q=strappy+leather+sandals+heels" target="_blank" rel="noopener" style="color:#1B8A5A">from $22</a>'},
+  {id:'e8',tier:'luxury',retailer:'Revolve',badge:'badge-revolve',
+   name:'Linen Resort Blazer',desc:'The piece that elevates every single outfit you pack.',
+   price:'$245',img:'https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg?w=400&h=300&fit=crop',
+   url:'https://www.revolve.com/search/?q=linen+blazer+resort+women',
+   sustainable:'ThredUp alt: <a href="https://www.thredup.com/search#searchText=linen+blazer+women" target="_blank" rel="noopener" style="color:#1B8A5A">from $28</a>'},
+  {id:'e9',tier:'budget',retailer:'Amazon',badge:'badge-amazon',
+   name:'Silk Pillowcase Travel Set',desc:'Protect your hair and skin. Packs flat, fits any hotel pillow.',
+   price:isCA?'CA$24':'$19',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=300&fit=crop&auto=format&q=80',
+   url:amz('silk pillowcase travel size women hair skin')},
+  {id:'e10',tier:'mid',retailer:'ASOS',badge:'badge-asos',
+   name:'Wrap Midi Skirt',desc:'One piece, five outfits. Wraps, ties, adjusts to your body.',
+   price:'$55',img:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&h=300&fit=crop&auto=format&q=80',
+   url:'https://www.asos.com/search/?q=wrap+midi+skirt+women',
+   sustainable:'Depop alt: <a href="https://www.depop.com/search/?q=wrap+midi+skirt" target="_blank" rel="noopener" style="color:#1B8A5A">from $15</a>'},
+  {id:'e11',tier:'luxury',retailer:'Nordstrom',badge:'badge-nord',
+   name:'Cashmere Travel Wrap',desc:'Doubles as a blanket on the plane and a scarf on arrival.',
+   price:'$195',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=400&h=300&fit=crop',
+   url:'https://www.nordstrom.com/sr?origin=keywordsearch&keyword=cashmere+travel+wrap+shawl+women',
+   sustainable:'ThredUp alt: <a href="https://www.thredup.com/search#searchText=cashmere+wrap+shawl" target="_blank" rel="noopener" style="color:#1B8A5A">from $35</a>'},
+  {id:'e12',tier:'budget',retailer:'H&M',badge:'badge-hm',
+   name:'Linen Button Shirt',desc:'The most versatile piece you\'ll pack. Dress up, dress down, tie it, wear it open.',
+   price:'$32',img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&h=300&fit=crop&auto=format&q=80',
+   url:'https://www.hm.com/en_us/search-results.html?q=linen+button+shirt+women',
+   sustainable:'Depop alt: <a href="https://www.depop.com/search/?q=linen+button+shirt+women+vintage" target="_blank" rel="noopener" style="color:#1B8A5A">from $12</a>'},
+];
+
+let essFilter = 'all';
+function filterEss(btn,tier){
+  document.querySelectorAll('.ess-filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  essFilter=tier;
+  renderEssentials();
+}
+function renderEssentials(){
+  const grid=document.getElementById('essGrid');
+  if(!grid) return;
+  const items=essFilter==='all'?ESSENTIALS:ESSENTIALS.filter(e=>e.tier===essFilter);
+  grid.innerHTML=items.map(e=>`
+    <div class="ess-card">
+      <div class="ess-img">
+        <img src="${e.img}" alt="${e.name}" loading="lazy"/>
+        <span class="ess-badge ${e.badge}">${e.retailer}</span>
+      </div>
+      <div class="ess-body">
+        <div class="ess-retailer">${e.retailer} · ${e.tier}</div>
+        <div class="ess-name">${e.name}</div>
+        <div class="ess-desc">${e.desc}</div>
+        <div class="ess-price-row"><span class="ess-price">${e.price}</span></div>
+        <a href="${e.url}" target="_blank" rel="noopener" class="ess-shop">Shop Now →</a>
+        ${e.sustainable?`<div class="ess-sustainable">♻ ${e.sustainable}</div>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── BUDGET / SCANNER ──────────────────────────────────────────────────────
+let activeBudget='mid';
+function setBudget(btn){
+  document.querySelectorAll('.budget-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  activeBudget=btn.dataset.b;
+}
+function handlePhoto(input){
+  const file=input.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=document.getElementById('previewImg');
+    img.src=e.target.result;
+    img.style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+async function analysePhoto(){
+  const results=document.getElementById('scanResults');
+  const city=document.getElementById('scanCity').value;
+  const photo=document.getElementById('photoInput').files[0];
+  if(!photo){results.innerHTML='<p style="color:#c00;font-size:12px;margin-top:12px">Please upload a photo first.</p>';return;}
+  results.innerHTML=`<div style="text-align:center;padding:20px;color:var(--mid)"><div class="spinner" style="border-color:var(--border);border-top-color:var(--b)"></div><p style="margin-top:12px;font-size:12px">Analysing your look…</p></div>`;
+  try{
+    const fd=new FormData();
+    fd.append('photo',photo);
+    fd.append('city',city||'Paris');
+    fd.append('budget',activeBudget);
+    const resp=await fetch('/.netlify/functions/analyse',{method:'POST',body:fd});
+    if(resp.ok){const data=await resp.json();renderScanResults(data.items||[]);return;}
+  }catch(e){}
+  await new Promise(r=>setTimeout(r,1600));
+  renderScanResults([
+    {name:'Silk Cami Top',budget:{name:'Similar Cami',price:isCA?'CA$38':'$32',url:amz('silk cami top women')},mid:{name:'ASOS Satin Cami',price:'$62',url:'https://www.asos.com/search/?q=satin+cami+top'},luxury:{name:'Reformation Cami',price:'$128',url:'https://www.thereformation.com/collections/tops'},secondhand:{name:'Depop: Vintage Cami',price:'$20',url:'https://www.depop.com/search/?q=silk+cami+top+vintage'}},
+    {name:'Wide-Leg Trousers',budget:{name:'H&M Wide Leg',price:'$35',url:'https://www.hm.com/en_us/search-results.html?q=wide+leg+trousers+women'},mid:{name:'Zara Fluid Trousers',price:'$75',url:'https://www.zara.com/us/en/search?searchTerm=wide+leg+trousers'},luxury:{name:'Revolve Wide Leg',price:'$198',url:'https://www.revolve.com/search/?q=wide+leg+trousers+women'},secondhand:{name:'ThredUp Wide Leg',price:'$18',url:'https://www.thredup.com/search#searchText=wide+leg+trousers'}},
+    {name:'Strappy Sandals',budget:{name:'Amazon Strappy',price:isCA?'CA$30':'$25',url:amz('strappy sandals women block heel')},mid:{name:'ASOS Leather Sandal',price:'$72',url:'https://www.asos.com/search/?q=strappy+sandals+women'},luxury:{name:'Tony Bianco via Revolve',price:'$175',url:'https://www.revolve.com/search/?q=tony+bianco+sandals'},secondhand:{name:'Depop Strappy Heel',price:'$28',url:'https://www.depop.com/search/?q=strappy+heels+sandals'}},
+  ]);
+}
+function renderScanResults(items){
+  const r=document.getElementById('scanResults');
+  if(!items.length){r.innerHTML='<p style="color:var(--mid);font-size:12px;margin-top:12px">No items detected. Try a clearer photo.</p>';return;}
+  r.innerHTML=items.map(item=>`
+    <div class="scan-result-item">
+      <div>
+        <div class="scan-result-name">${item.name}</div>
+        <div style="font-size:10px;color:#A0A0A0;margin-top:2px">${activeBudget} · secondhand options</div>
+      </div>
+      <div class="scan-result-links">
+        ${item[activeBudget]?`<a href="${item[activeBudget].url}" target="_blank" rel="noopener" class="scan-link">${item[activeBudget].price}</a>`:''}
+        ${item.secondhand?`<a href="${item.secondhand.url}" target="_blank" rel="noopener" class="scan-link" style="color:#1B8A5A;border-color:#1B8A5A">♻ ${item.secondhand.price}</a>`:''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── ITINERARY ─────────────────────────────────────────────────────────────
+async function planItinerary(){
+  const city=document.getElementById('itinCity').value.trim();
+  const days=document.getElementById('itinDays').value;
+  const budget=document.getElementById('itinBudget').value;
+  const style=document.getElementById('itinStyle').value;
+  const acts=Array.from(document.querySelectorAll('#actChecks input:checked')).map(i=>i.value);
+  const results=document.getElementById('itinResults');
+  if(!city){results.innerHTML='<p style="color:#c00;font-size:12px;margin-top:12px">Please enter your destination.</p>';return;}
+  results.innerHTML=`<div style="text-align:center;padding:30px;color:rgba(255,255,255,.4)"><div class="spinner"></div><p style="margin-top:16px;font-size:12px">Building your ${days}-day wardrobe plan for ${city}…</p></div>`;
+  try{
+    const resp=await fetch('/.netlify/functions/itinerary',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({city,days:parseInt(days),budget,style,activities:acts})
+    });
+    if(resp.ok){const data=await resp.json();renderItinResults(data.days||[],city);return;}
+  }catch(e){}
+  await new Promise(r=>setTimeout(r,1800));
+  const actMap={beach:'🏖',dining:'🍽',sightseeing:'🗺',nightlife:'🌙',hiking:'🥾',shopping:'🛍',rooftop:'🏙',yacht:'⛵'};
+  const outfitsByAct={
+    beach:{icon:'🏖',name:'Beach Look',desc:`Light linen cover-up over a swimsuit — effortless and resort-ready for ${city}.`,links:[{store:'Amazon',url:amz('womens beach cover up linen resort'),price:isCA?'CA$28':'$24'},{store:'ASOS',url:'https://www.asos.com/search/?q=beach+cover+up+linen',price:'$45'},{store:'♻ Depop',url:'https://www.depop.com/search/?q=beach+cover+up+linen',price:'$15'}]},
+    dining:{icon:'🍽',name:'Dinner Look',desc:`A polished ${style.toLowerCase()} dress or co-ord perfect for a nice dinner out in ${city}.`,links:[{store:'Zara',url:'https://www.zara.com/us/en/search?searchTerm=midi+dress+dinner',price:'$79'},{store:'Revolve',url:'https://www.revolve.com/search/?q=midi+dress+evening',price:'$148'},{store:'♻ ThredUp',url:'https://www.thredup.com/search#searchText=midi+dress+dinner',price:'$25'}]},
+    sightseeing:{icon:'🗺',name:'Day Explorer',desc:'Comfortable yet stylish — walkable shoes, great bag, layerable outfit.',links:[{store:'H&M',url:'https://www.hm.com/en_us/search-results.html?q=casual+chic+outfit',price:'$48'},{store:'ASOS',url:'https://www.asos.com/search/?q=casual+chic+outfit+women',price:'$72'},{store:'♻ ThredUp',url:'https://www.thredup.com/search#searchText=casual+chic+top+bottom',price:'$20'}]},
+    nightlife:{icon:'🌙',name:'Night Out',desc:'Bold and city-appropriate. Made to be seen.',links:[{store:'ASOS',url:'https://www.asos.com/search/?q=going+out+outfits+women',price:'$65'},{store:'Revolve',url:'https://www.revolve.com/search/?q=night+out+dress',price:'$145'},{store:'♻ Depop',url:'https://www.depop.com/search/?q=going+out+dress+mini',price:'$30'}]},
+    hiking:{icon:'🥾',name:'Hike-Ready',desc:'Functional but fashionable — you\'ll look styled in the photos too.',links:[{store:'Amazon',url:amz('womens hiking outfit set athletic'),price:isCA?'CA$55':'$45'},{store:'ASOS',url:'https://www.asos.com/search/?q=outdoor+activewear+women',price:'$68'},{store:'♻ ThredUp',url:'https://www.thredup.com/search#searchText=athletic+outdoor+women',price:'$18'}]},
+    rooftop:{icon:'🏙',name:'Rooftop Cocktail',desc:'Elevated but relaxed — the golden hour photo will be stunning.',links:[{store:'Revolve',url:'https://www.revolve.com/search/?q=cocktail+dress+midi',price:'$135'},{store:'ASOS',url:'https://www.asos.com/search/?q=cocktail+dress+women',price:'$75'},{store:'♻ ThredUp',url:'https://www.thredup.com/search#searchText=cocktail+dress+women',price:'$35'}]},
+  };
+  const demoDays=[];
+  for(let d=1;d<=parseInt(days);d++){
+    const dayActs=acts.length?[acts[(d-1)%acts.length],acts[d%acts.length]||acts[0]]:['sightseeing','dining'];
+    demoDays.push({day:d,label:`Day ${d} — ${city}`,subtitle:dayActs.map(a=>a.charAt(0).toUpperCase()+a.slice(1)).join(' · '),outfits:dayActs.map(a=>outfitsByAct[a]||outfitsByAct.sightseeing)});
+  }
+  renderItinResults(demoDays,city);
+}
+function renderItinResults(days,city){
+  const r=document.getElementById('itinResults');
+  r.innerHTML=`<div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:16px;margin-top:8px">${city} · ${days.length}-Day Wardrobe Plan</div>`+
+  days.map(day=>`
+    <div class="itin-day">
+      <div class="itin-day-header" onclick="toggleDay(this)">
+        <div><div class="itin-day-title">${day.label}</div><div class="itin-day-sub">${day.subtitle||''}</div></div>
+        <span style="color:rgba(255,255,255,.4);font-size:18px">+</span>
+      </div>
+      <div class="itin-day-body">
+        ${(day.outfits||[]).map(o=>`
+          <div class="outfit-rec">
+            <div class="outfit-rec-icon">${o.icon||'✦'}</div>
+            <div class="outfit-rec-info">
+              <h4>${o.name}</h4>
+              <p>${o.desc||''}</p>
+              <div class="outfit-shop-links">
+                ${(o.links||[]).map(l=>`<a href="${l.url}" target="_blank" rel="noopener" class="outfit-link">${l.store} · ${l.price}</a>`).join('')}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+function toggleDay(header){
+  const day=header.closest('.itin-day');
+  const wasOpen=day.classList.contains('open');
+  document.querySelectorAll('.itin-day').forEach(d=>d.classList.remove('open'));
+  if(!wasOpen) day.classList.add('open');
+  header.querySelector('span').textContent=day.classList.contains('open')?'−':'+';
+}
+
+// ─── CLOSET MIXER ──────────────────────────────────────────────────────────
+const MIXER_CATEGORIES=[
+  {id:'tops',label:'Tops',icon:'♦',items:[
+    {id:'t1',name:'Silk Cami',price:'$62',store:'ASOS',tier:'mid',img:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=silk+satin+cami+top+women'},
+    {id:'t2',name:'Cotton Tee',price:'$18',store:'H&M',tier:'budget',img:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.hm.com/en_us/search-results.html?q=cotton+t-shirt+women'},
+    {id:'t3',name:'Linen Shirt',price:'$49',store:'Zara',tier:'mid',img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.zara.com/us/en/search?searchTerm=linen+shirt+women'},
+    {id:'t4',name:'Crop Blazer',price:'$145',store:'Revolve',tier:'luxury',img:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.revolve.com/search/?q=crop+blazer+women'},
+    {id:'t5',name:'Knit Tank',price:'$35',store:'ASOS',tier:'budget',img:'https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=knit+tank+top+women'},
+    {id:'t6',name:'Vintage Tee',price:'$18',store:'Depop',tier:'budget',img:'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.depop.com/search/?q=vintage+graphic+tee+women'},
+  ]},
+  {id:'bottoms',label:'Bottoms',icon:'—',items:[
+    {id:'b1',name:'Linen Trousers',price:'$72',store:'ASOS',tier:'mid',img:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=linen+wide+leg+trousers+women'},
+    {id:'b2',name:'Mini Skirt',price:'$34',store:'H&M',tier:'budget',img:'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.hm.com/en_us/search-results.html?q=mini+skirt+women'},
+    {id:'b3',name:'Midi Skirt',price:'$65',store:'Zara',tier:'mid',img:'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.zara.com/us/en/search?searchTerm=midi+skirt+women'},
+    {id:'b4',name:'Wide-Leg Jeans',price:'$45',store:'H&M',tier:'budget',img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.hm.com/en_us/search-results.html?q=wide+leg+jeans+women'},
+    {id:'b5',name:'Linen Shorts',price:'$52',store:'ASOS',tier:'mid',img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=linen+shorts+women+high+waist'},
+    {id:'b6',name:'Barrel Jeans',price:'$180',store:'Revolve',tier:'luxury',img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.revolve.com/search/?q=barrel+leg+jeans+women'},
+  ]},
+  {id:'dresses',label:'Dresses',icon:'✦',items:[
+    {id:'d1',name:'White Linen Dress',price:'$79',store:'Zara',tier:'mid',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=140&h=190&fit=crop',url:'https://www.zara.com/us/en/search?searchTerm=white+linen+dress'},
+    {id:'d2',name:'Mini Sundress',price:'$38',store:'H&M',tier:'budget',img:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.hm.com/en_us/search-results.html?q=sundress+mini+women'},
+    {id:'d3',name:'Silk Slip Dress',price:'$215',store:'Revolve',tier:'luxury',img:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.revolve.com/search/?q=silk+slip+dress+midi+women'},
+    {id:'d4',name:'Wrap Dress',price:'$55',store:'ASOS',tier:'mid',img:'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=wrap+dress+midi+women'},
+    {id:'d5',name:'Vintage Dress',price:'$25',store:'ThredUp',tier:'budget',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=140&h=190&fit=crop',url:'https://www.thredup.com/search#searchText=midi+wrap+dress+women'},
+    {id:'d6',name:'Maxi Dress',price:isCA?'CA$45':'$38',store:'Amazon',tier:'budget',img:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=140&h=190&fit=crop&auto=format&q=80',url:amz('womens maxi dress flowy summer beach')},
+  ]},
+  {id:'shoes',label:'Shoes',icon:'→',items:[
+    {id:'s1',name:'Leather Sandal',price:'$68',store:'ASOS',tier:'mid',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=strappy+leather+sandal+women'},
+    {id:'s2',name:'White Sneaker',price:'$42',store:'H&M',tier:'budget',img:'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.hm.com/en_us/search-results.html?q=white+sneakers+women'},
+    {id:'s3',name:'Strappy Heel',price:'$165',store:'Revolve',tier:'luxury',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=140&h=190&fit=crop',url:'https://www.revolve.com/search/?q=strappy+heels+sandals+women'},
+    {id:'s4',name:'Espadrille Wedge',price:'$55',store:'ASOS',tier:'mid',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.asos.com/search/?q=espadrille+wedge+women'},
+    {id:'s5',name:'Vintage Mule',price:'$20',store:'Depop',tier:'budget',img:'https://images.pexels.com/photos/3622622/pexels-photo-3622622.jpeg?w=140&h=190&fit=crop',url:'https://www.depop.com/search/?q=mule+heels+women+vintage'},
+    {id:'s6',name:'Ballet Flat',price:'$35',store:'H&M',tier:'budget',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.hm.com/en_us/search-results.html?q=ballet+flats+women'},
+  ]},
+  {id:'bags',label:'Bags',icon:'◈',items:[
+    {id:'bg1',name:'Raffia Tote',price:isCA?'CA$34':'$28',store:'Amazon',tier:'budget',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=140&h=190&fit=crop',url:amz('raffia tote bag beach women straw large')},
+    {id:'bg2',name:'Mini Leather Bag',price:'$145',store:'Revolve',tier:'luxury',img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=140&h=190&fit=crop&auto=format&q=80',url:'https://www.revolve.com/search/?q=mini+leather+bag+women+crossbody'},
+    {id:'bg3',name:'Wicker Clutch',price:'$42',store:'ASOS',tier:'mid',img:'https://images.pexels.com/photos/3622622/pexels-photo-3622622.jpeg?w=140&h=190&fit=crop',url:'https://www.asos.com/search/?q=wicker+clutch+bag+women'},
+    {id:'bg4',name:'Canvas Tote',price:'$18',store:'H&M',tier:'budget',img:'https://images.pexels.com/photos/1689731/pexles-photo-1689731.jpeg?w=140&h=190&fit=crop',url:'https://www.hm.com/en_us/search-results.html?q=canvas+tote+bag+women'},
+    {id:'bg5',name:'Vintage Bucket Bag',price:'$30',store:'Depop',tier:'budget',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=140&h=190&fit=crop',url:'https://www.depop.com/search/?q=bucket+bag+women+vintage'},
+  ]},
+  {id:'accessories',label:'Accessories',icon:'✧',items:[
+    {id:'ac1',name:'Gold Hoops',price:isCA?'CA$22':'$18',store:'Amazon',tier:'budget',img:'https://images.pexels.com/photos/2220316/pexels-photo-2220316.jpeg?w=140&h=190&fit=crop',url:amz('gold hoop earrings women 14k plated medium')},
+    {id:'ac2',name:'Sun Hat',price:isCA?'CA$28':'$23',store:'Amazon',tier:'budget',img:'https://images.pexels.com/photos/3622622/pexels-photo-3622622.jpeg?w=140&h=190&fit=crop',url:amz('packable sun hat women wide brim UPF50 beach')},
+    {id:'ac3',name:'Silk Scarf',price:'$55',store:'ASOS',tier:'mid',img:'https://images.pexels.com/photos/1689731/pexels-photo-1689731.jpeg?w=140&h=190&fit=crop',url:'https://www.asos.com/search/?q=silk+scarf+women+square'},
+    {id:'ac4',name:'Tortoise Sunnies',price:'$45',store:'ASOS',tier:'mid',img:'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?w=140&h=190&fit=crop',url:'https://www.asos.com/search/?q=tortoise+shell+sunglasses+women+oversized'},
+    {id:'ac5',name:'Gold Chain Necklace',price:'$155',store:'Revolve',tier:'luxury',img:'https://images.pexels.com/photos/2220316/pexels-photo-2220316.jpeg?w=140&h=190&fit=crop',url:'https://www.revolve.com/search/?q=gold+chain+necklace+women+layered'},
+  ]},
+];
+
+let lookSelections={};
+function buildMixer(){
+  const rows=document.getElementById('mixerRows');
+  if(!rows) return;
+  rows.innerHTML='';
+  MIXER_CATEGORIES.forEach(cat=>{
+    const section=document.createElement('div');
+    section.className='mixer-row-section';
+    section.id='cat-'+cat.id;
+    section.innerHTML=`
+      <div class="mixer-row-header" onclick="toggleMixerRow('${cat.id}')">
+        <div class="mixer-row-label">
+          <span style="font-size:16px">${cat.icon}</span>${cat.label}
+          ${lookSelections[cat.id]?`<span style="color:var(--b);font-size:10px;opacity:.6">  ${lookSelections[cat.id].name}</span>`:''}
+        </div>
+        <span class="mixer-row-count">${cat.items.length} options</span>
+      </div>
+      <div class="mixer-slider-wrap">
+        <div class="mixer-slider" id="slider-${cat.id}">
+          ${cat.items.map(item=>`
+            <div class="mixer-item ${lookSelections[cat.id]?.id===item.id?'selected':''}" id="mi-${item.id}" onclick="selectMixerItem('${cat.id}','${item.id}')">
+              <div class="mixer-item-img"><img src="${item.img}" alt="${item.name}" loading="lazy"/></div>
+              <div class="mixer-item-info">
+                <div class="mixer-item-name">${item.name}</div>
+                <div class="mixer-item-price">${item.price}</div>
+                <div class="mixer-item-store">${item.store}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    rows.appendChild(section);
+  });
+}
+function toggleMixerRow(catId){
+  const section=document.getElementById('cat-'+catId);
+  const wasOpen=section.classList.contains('open');
+  MIXER_CATEGORIES.forEach(c=>{const s=document.getElementById('cat-'+c.id);if(s)s.classList.remove('open');});
+  if(!wasOpen) section.classList.add('open');
+}
+function selectMixerItem(catId,itemId){
+  const cat=MIXER_CATEGORIES.find(c=>c.id===catId);
+  const item=cat.items.find(i=>i.id===itemId);
+  if(lookSelections[catId]?.id===itemId){delete lookSelections[catId];}
+  else{lookSelections[catId]=item;}
+  document.querySelectorAll(`#slider-${catId} .mixer-item`).forEach(el=>{
+    el.classList.remove('selected');
+    if(el.id==='mi-'+itemId&&lookSelections[catId]) el.classList.add('selected');
+  });
+  updateLookPanel();
+  buildMixer();
+}
+function updateLookPanel(){
+  const slots=document.getElementById('lookSlots');
+  const totalRow=document.getElementById('lookTotalRow');
+  const totalPrice=document.getElementById('lookTotalPrice');
+  const btnShop=document.getElementById('btnShopLook');
+  const btnSave=document.getElementById('btnSaveLook');
+  const selected=Object.entries(lookSelections);
+  if(!selected.length){
+    if(slots) slots.innerHTML='<div class="look-empty">Select pieces from the categories to build your look.</div>';
+    if(totalRow) totalRow.style.display='none';
+    if(btnShop) btnShop.style.display='none';
+    if(btnSave) btnSave.style.display='none';
+    return;
+  }
+  let total=0;
+  const catLabels={tops:'Top',bottoms:'Bottom',dresses:'Dress',shoes:'Shoes',bags:'Bag',accessories:'Accessories'};
+  if(slots) slots.innerHTML=selected.map(([catId,item])=>{
+    const price=parseFloat(item.price.replace(/[^0-9.]/g,''));
+    total+=price;
+    return `
+      <div class="look-slot">
+        <div class="look-slot-thumb"><img src="${item.img}" alt="${item.name}"/></div>
+        <div class="look-slot-info">
+          <div class="look-slot-cat">${catLabels[catId]||catId}</div>
+          <div class="look-slot-name">${item.name}</div>
+          <div class="look-slot-price">${item.store} · ${item.price}</div>
+        </div>
+        <span class="look-slot-remove" onclick="selectMixerItem('${catId}','${item.id}')">✕</span>
+      </div>
+    `;
+  }).join('');
+  if(totalRow) totalRow.style.display='flex';
+  if(totalPrice) totalPrice.textContent='$'+total.toFixed(0);
+  if(btnShop){btnShop.style.display='block';}
+  if(btnSave){btnSave.style.display='block';}
+}
+function shopLook(){Object.values(lookSelections).forEach(item=>window.open(item.url,'_blank'));}
+function saveLook(){
+  const names=Object.values(lookSelections).map(i=>i.name).join(', ');
+  alert(`Look saved!\n\n${names}\n\nFull wardrobe sync available with your MIKAYLA account.`);
+}
+
+// ─── SEEN ON ───────────────────────────────────────────────────────────────
+const SEEN_ON_LOOKS=[
+  {city:'Paris',look:'Sheer Overlay Dress',img:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'ASOS Sheer Overlay Dress',store:'ASOS',price:'$72',url:'https://www.asos.com/search/?q=sheer+overlay+dress+women',sustainable:false},
+    {name:'Zara Sheer Maxi',store:'Zara',price:'$89',url:'https://www.zara.com/us/en/search?searchTerm=sheer+dress+maxi',sustainable:false},
+    {name:'Vintage Sheer',store:'Depop',price:'$28',url:'https://www.depop.com/search/?q=sheer+dress+vintage+women',sustainable:true},
+  ]},
+  {city:'Santorini',look:'White Linen Moment',img:'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Linen Midi Dress',store:'Zara',price:'$79',url:'https://www.zara.com/us/en/search?searchTerm=white+linen+midi+dress',sustainable:false},
+    {name:'H&M Linen Dress',store:'H&M',price:'$35',url:'https://www.hm.com/en_us/search-results.html?q=white+linen+dress+women',sustainable:false},
+    {name:'ThredUp Linen Dress',store:'ThredUp',price:'$18',url:'https://www.thredup.com/search#searchText=linen+dress+white+women',sustainable:true},
+  ]},
+  {city:'Milan',look:'Power Blazer Edit',img:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Structured Blazer',store:'ASOS',price:'$95',url:'https://www.asos.com/search/?q=structured+blazer+women',sustainable:false},
+    {name:'Revolve Statement Blazer',store:'Revolve',price:'$185',url:'https://www.revolve.com/search/?q=oversized+blazer+women',sustainable:false},
+    {name:'Vintage Blazer',store:'Depop',price:'$32',url:'https://www.depop.com/search/?q=vintage+blazer+women+oversized',sustainable:true},
+  ]},
+  {city:'NYC',look:'Barrel Jeans + Crop',img:'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Barrel Leg Jeans',store:'ASOS',price:'$68',url:'https://www.asos.com/search/?q=barrel+leg+jeans+women',sustainable:false},
+    {name:'H&M Barrel Jeans',store:'H&M',price:'$40',url:'https://www.hm.com/en_us/search-results.html?q=barrel+jeans+women',sustainable:false},
+    {name:'Vintage Denim',store:'Depop',price:'$24',url:'https://www.depop.com/search/?q=barrel+jeans+vintage+women',sustainable:true},
+  ]},
+  {city:'Amalfi',look:'Resort Halter & Linen',img:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Halter Neck Top',store:'Revolve',price:'$95',url:'https://www.revolve.com/search/?q=halter+neck+top+resort',sustainable:false},
+    {name:'ASOS Halter Top',store:'ASOS',price:'$45',url:'https://www.asos.com/search/?q=halter+neck+top+women',sustainable:false},
+    {name:'Secondhand Halter',store:'ThredUp',price:'$14',url:'https://www.thredup.com/search#searchText=halter+top+women',sustainable:true},
+  ]},
+  {city:'Tokyo',look:'Kawaii Street Mix',img:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Layered Mini Skirt',store:'ASOS',price:'$55',url:'https://www.asos.com/search/?q=layered+tiered+mini+skirt+women',sustainable:false},
+    {name:'Platform Sneakers',store:'Amazon',price:isCA?'CA$42':'$35',url:amz('womens platform chunky sneakers white'),sustainable:false},
+    {name:'Vintage Layers',store:'Depop',price:'$30',url:'https://www.depop.com/search/?q=kawaii+fashion+women+vintage',sustainable:true},
+  ]},
+  {city:'Paris',look:'Trench + Ballet Flats',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Classic Trench Coat',store:'Zara',price:'$129',url:'https://www.zara.com/us/en/search?searchTerm=trench+coat+women',sustainable:false},
+    {name:'H&M Trench',store:'H&M',price:'$65',url:'https://www.hm.com/en_us/search-results.html?q=trench+coat+women',sustainable:false},
+    {name:'Vintage Trench',store:'ThredUp',price:'$35',url:'https://www.thredup.com/search#searchText=trench+coat+women+vintage',sustainable:true},
+  ]},
+  {city:'Santorini',look:'Backless Sundress',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=530&fit=crop&auto=format&q=80',items:[
+    {name:'Backless Maxi Dress',store:'ASOS',price:'$62',url:'https://www.asos.com/search/?q=backless+sundress+maxi',sustainable:false},
+    {name:'Revolve Resort Dress',store:'Revolve',price:'$145',url:'https://www.revolve.com/search/?q=backless+dress+resort',sustainable:false},
+    {name:'Pre-loved Maxi',store:'Depop',price:'$22',url:'https://www.depop.com/search/?q=backless+maxi+dress+women',sustainable:true},
+  ]},
+];
+
+let seenCityFilter='All';
+function filterSeen(btn){
+  document.querySelectorAll('.seen-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  seenCityFilter=btn.dataset.city;
+  renderSeenGrid();
+}
+function renderSeenGrid(){
+  const grid=document.getElementById('seenGrid');
+  if(!grid) return;
+  const items=seenCityFilter==='All'?SEEN_ON_LOOKS:SEEN_ON_LOOKS.filter(l=>l.city===seenCityFilter);
+  grid.innerHTML=items.map(look=>`
+    <div class="seen-card" onclick="openSeenPanel(${SEEN_ON_LOOKS.indexOf(look)})">
+      <img src="${look.img}" alt="${look.look}" loading="lazy"/>
+      <div class="seen-card-badge">${look.city}</div>
+      <div class="seen-card-overlay">
+        <div class="seen-card-city">${look.city}</div>
+        <div class="seen-card-look">${look.look}</div>
+        <div class="seen-card-cta">Shop the Look →</div>
+      </div>
+    </div>
+  `).join('');
+}
+function openSeenPanel(idx){
+  const look=SEEN_ON_LOOKS[idx];
+  document.getElementById('seenPanelCity').textContent=look.city;
+  document.getElementById('seenPanelTitle').textContent=look.look;
+  document.getElementById('seenPanelItems').innerHTML=look.items.map(item=>`
+    <a href="${item.url}" target="_blank" rel="noopener"
+       style="display:flex;flex-direction:column;gap:6px;padding:16px 20px;
+       background:${item.sustainable?'#F0FAF5':'var(--off)'};
+       border:1px solid ${item.sustainable?'#C8E6D0':'var(--border)'};
+       text-decoration:none;flex:1;min-width:160px;max-width:220px;transition:box-shadow .2s">
+      <span style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:${item.sustainable?'#1B8A5A':'var(--mid)'};font-weight:600">
+        ${item.sustainable?'♻ '+item.store:item.store}
+      </span>
+      <span style="font-size:13px;color:var(--b);font-weight:500">${item.name}</span>
+      <span style="font-family:var(--serif);font-size:20px;color:var(--b)">${item.price}</span>
+      <span style="font-size:9px;color:var(--mid);margin-top:2px">View on ${item.store} →</span>
+    </a>
+  `).join('');
+  document.getElementById('seenPanel').style.display='block';
+}
+function closeSeenPanel(){document.getElementById('seenPanel').style.display='none';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSeenPanel();});
+
+// ─── PINTEREST BOARD LINKS ─────────────────────────────────────────────────
+const PINT_BOARDS=[
+  {name:'Paris · Chic & Effortless',slug:'paris-style',pins:'142'},
+  {name:'Santorini · Summer Whites',slug:'santorini-style',pins:'89'},
+  {name:'Milan · Power Dressing',slug:'milan-style',pins:'76'},
+  {name:'Tokyo · Street Style',slug:'tokyo-style',pins:'203'},
+  {name:'Amalfi · Resort Luxe',slug:'amalfi-coast-style',pins:'58'},
+];
+function buildPintBoardLinks(){
+  const el=document.getElementById('pintBoardLinks');
+  if(!el) return;
+  el.innerHTML=PINT_BOARDS.map(b=>`
+    <a href="https://www.pinterest.com/mikaylaco/${b.slug}/" target="_blank" rel="noopener"
+       style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1px solid rgba(255,255,255,.08);color:var(--w);transition:border-color .2s">
+      <span style="font-size:12px;color:rgba(255,255,255,.7)">${b.name}</span>
+      <span style="font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.08em">${b.pins} pins →</span>
+    </a>
+  `).join('');
+}
+
+// ─── WAITLIST ──────────────────────────────────────────────────────────────
+async function joinWaitlist(){
+  const email=document.getElementById('waitlistEmail').value.trim();
+  const msg=document.getElementById('waitlistMsg');
+  if(!email||!email.includes('@')){msg.style.display='block';msg.style.color='#c00';msg.textContent='Please enter a valid email address.';return;}
+  const btn=document.querySelector('.waitlist-btn');
+  btn.textContent='…';btn.disabled=true;
+  try{
+    const r=await fetch('/.netlify/functions/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    const data=await r.json();
+    msg.style.display='block';msg.style.color='rgba(255,255,255,.7)';
+    msg.textContent=data.message||'You\'re on the list — we\'ll be in touch.';
+    document.getElementById('waitlistEmail').value='';
+    const ct=document.getElementById('waitCount');
+    if(ct) ct.textContent=(parseInt(ct.textContent.replace(/,/g,''))+1).toLocaleString();
+  }catch(e){
+    msg.style.display='block';msg.style.color='rgba(255,255,255,.7)';
+    msg.textContent='You\'re on the list — we\'ll be in touch!';
+  }finally{btn.textContent='Join →';btn.disabled=false;}
+}
+
+// ─── FADE IN OBSERVER ──────────────────────────────────────────────────────
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.fade-in').forEach(el=>io.observe(el));
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  buildTicker();
+  buildHero();
+  loadTrends('Paris');
+  renderEssentials();
+  renderSeenGrid();
+  buildMixer();
+  buildPintBoardLinks();
+
+  // Upload drag handlers
+  const zone=document.getElementById('uploadZone');
+  if(zone){
+    zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag');});
+    zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+    zone.addEventListener('drop',e=>{
+      e.preventDefault();zone.classList.remove('drag');
+      const input=zone.querySelector('input[type=file]');
+      if(input&&e.dataTransfer.files.length){
+        Object.defineProperty(input,'files',{value:e.dataTransfer.files});
+        input.dispatchEvent(new Event('change'));
+      }
+    });
+  }
+
+  setTimeout(()=>{
+    document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>io.observe(el));
+  },100);
+});
+</script>
 </body>
 </html>
