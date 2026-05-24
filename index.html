@@ -35,6 +35,59 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:cen
 .nav-cta{background:var(--b);color:var(--w);font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:9px 20px;transition:opacity .2s}
 .nav-cta:hover{opacity:.75}
 
+
+/* SEARCH HERO */
+#search-hero{padding:120px var(--pad) 80px;background:var(--w);text-align:center;border-bottom:1px solid var(--border)}
+.search-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);font-weight:500;margin-bottom:20px;display:block}
+.search-headline{font-family:var(--serif);font-size:clamp(40px,6vw,88px);line-height:1.04;margin-bottom:14px}
+.search-headline em{font-style:italic}
+.search-sub{font-size:14px;color:var(--mid);max-width:480px;margin:0 auto 40px;line-height:1.8}
+.search-bar-wrap{max-width:640px;margin:0 auto;position:relative}
+.search-bar{display:flex;align-items:center;border:1.5px solid var(--b);background:var(--w);overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.08)}
+.search-bar input{flex:1;padding:18px 24px;font-family:var(--serif);font-size:18px;border:none;outline:none;background:transparent;color:var(--b)}
+.search-bar input::placeholder{color:rgba(0,0,0,.3);font-style:italic}
+.search-bar-btn{background:var(--b);color:var(--w);padding:18px 28px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;white-space:nowrap;border:none;cursor:pointer;transition:opacity .2s}
+.search-bar-btn:hover{opacity:.8}
+.search-dropdown{position:absolute;top:100%;left:0;right:0;background:var(--w);border:1px solid var(--border);border-top:none;z-index:400;max-height:360px;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.1);display:none}
+.search-dropdown.open{display:block}
+.search-drop-item{padding:12px 24px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s}
+.search-drop-item:hover{background:var(--off)}
+.search-drop-city{font-size:13px;font-weight:500}
+.search-drop-country{font-size:11px;color:var(--mid)}
+.search-drop-region{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);padding:10px 24px 4px;background:var(--off)}
+.search-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:28px}
+.search-pill{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:8px 18px;border:1px solid var(--border);color:var(--b);cursor:pointer;transition:all .2s;background:var(--w)}
+.search-pill:hover,.search-pill.active{background:var(--b);color:var(--w);border-color:var(--b)}
+.search-stats{display:flex;justify-content:center;gap:48px;margin-top:48px;padding-top:32px;border-top:1px solid var(--border)}
+.ss-n{font-family:var(--serif);font-size:28px}
+.ss-l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-top:3px}
+
+/* CITY PROFILE CARD */
+.city-profile{background:var(--b);color:var(--w);padding:56px var(--pad);display:none}
+.city-profile.visible{display:block}
+.city-profile-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:start}
+.city-profile-meta span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.city-profile-name{font-family:var(--serif);font-size:clamp(44px,6vw,80px);line-height:1.04;margin:12px 0 6px}
+.city-profile-headline{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:24px;max-width:320px}
+.city-profile-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.cp-tag{font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);border-radius:20px}
+.city-profile-codes{display:flex;flex-direction:column;gap:12px}
+.cp-code{padding:14px 20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)}
+.cp-code-label{font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px}
+.cp-code-val{font-size:12px;color:rgba(255,255,255,.75);line-height:1.5}
+.city-trend-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.06)}
+.city-trend-item{background:var(--b);padding:24px}
+.cti-rank{font-family:var(--serif);font-size:36px;color:rgba(255,255,255,.07);margin-bottom:6px}
+.cti-name{font-family:var(--serif);font-size:18px;color:var(--w);margin-bottom:6px}
+.cti-why{font-size:11px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:12px}
+.cti-heat{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cti-heat-bar{flex:1;height:1px;background:rgba(255,255,255,.1)}
+.cti-heat-fill{height:100%;background:var(--w)}
+.cti-heat-pct{font-size:9px;color:rgba(255,255,255,.4)}
+.cti-links{display:flex;gap:8px;flex-wrap:wrap}
+.cti-link{font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45);transition:all .2s}
+.cti-link:hover{background:var(--w);color:var(--b);border-color:var(--w)}
+
 /* TICKER */
 .ticker-wrap{position:fixed;top:52px;left:0;right:0;z-index:200;background:var(--b);height:28px;overflow:hidden;display:flex;align-items:center}
 .ticker-track{display:flex;white-space:nowrap;animation:ticker 40s linear infinite}
@@ -294,17 +347,19 @@ footer{background:#050505;color:rgba(255,255,255,.3);padding:40px var(--pad);dis
   .waitlist-input,.waitlist-btn{border-radius:0}
 }
 </style>
+<!-- Skimlinks affiliate auto-linking -->
+<script type="text/javascript" async src="https://s.skimresources.com/js/246201X1762312.skimlinks.js"></script>
 </head>
 <body>
 
 <nav>
   <div class="nav-logo">MIKAYLA</div>
   <div class="nav-links">
+    <a href="#search-hero">Explore</a>
     <a href="#trends">Trending</a>
-    <a href="#seen-on">Seen On</a>
     <a href="#closet">Closet</a>
     <a href="#itinerary">Itinerary</a>
-    <a href="#waitlist">Early Access</a>
+    <a href="#seen-on">Seen On</a>
   </div>
   <a href="#waitlist" class="nav-cta">Early Access</a>
 </nav>
@@ -312,6 +367,42 @@ footer{background:#050505;color:rgba(255,255,255,.3);padding:40px var(--pad);dis
 <div class="ticker-wrap">
   <div class="ticker-track" id="ticker"></div>
 </div>
+
+
+<section id="search-hero">
+  <span class="search-eyebrow">The World's Travel Fashion Search Engine</span>
+  <h1 class="search-headline">What's trending<br><em>in your city?</em></h1>
+  <p class="search-sub">Search any city. Instantly surface what locals are actually wearing — with every piece shoppable across 8+ retailers.</p>
+  <div class="search-bar-wrap">
+    <div class="search-bar">
+      <input type="text" id="citySearchInput" placeholder="Paris, Tokyo, Bali, Santorini…" autocomplete="off" oninput="onCitySearch(this.value)" onkeydown="if(event.key==='Enter')searchCity()"/>
+      <button class="search-bar-btn" onclick="searchCity()">Explore Trends →</button>
+    </div>
+    <div class="search-dropdown" id="searchDropdown"></div>
+  </div>
+  <div class="search-pills" id="searchPills">
+    <button class="search-pill" onclick="selectCity('Paris')">Paris</button>
+    <button class="search-pill" onclick="selectCity('Tokyo')">Tokyo</button>
+    <button class="search-pill" onclick="selectCity('Santorini')">Santorini</button>
+    <button class="search-pill" onclick="selectCity('Milan')">Milan</button>
+    <button class="search-pill" onclick="selectCity('Bali')">Bali</button>
+    <button class="search-pill" onclick="selectCity('New York')">New York</button>
+    <button class="search-pill" onclick="selectCity('Seoul')">Seoul</button>
+    <button class="search-pill" onclick="selectCity('Amalfi')">Amalfi</button>
+    <button class="search-pill" onclick="selectCity('Dubai')">Dubai</button>
+    <button class="search-pill" onclick="selectCity('Barcelona')">Barcelona</button>
+    <button class="search-pill" onclick="selectCity('Copenhagen')">Copenhagen</button>
+    <button class="search-pill" onclick="selectCity('Tulum')">Tulum</button>
+  </div>
+  <div class="search-stats">
+    <div><div class="ss-n">48+</div><div class="ss-l">Cities Covered</div></div>
+    <div><div class="ss-n">Real-Time</div><div class="ss-l">AI Trend Data</div></div>
+    <div><div class="ss-n">8+</div><div class="ss-l">Retailers Linked</div></div>
+    <div><div class="ss-n">Free</div><div class="ss-l">Always</div></div>
+  </div>
+</section>
+
+<div class="city-profile" id="cityProfile"></div>
 
 <section id="hero">
   <div class="hero-left">
@@ -341,14 +432,22 @@ footer{background:#050505;color:rgba(255,255,255,.3);padding:40px var(--pad);dis
       <p style="font-size:11px;color:rgba(255,255,255,.35);max-width:280px;line-height:1.8;margin-bottom:16px">AI-sourced from TikTok, Instagram Reels, and street style, refreshed every 24 hours per city.</p>
       <div class="city-tabs" id="cityTabs">
         <button class="city-tab active" data-city="Paris">Paris</button>
-        <button class="city-tab" data-city="Santorini">Santorini</button>
-        <button class="city-tab" data-city="Milan">Milan</button>
         <button class="city-tab" data-city="Tokyo">Tokyo</button>
-        <button class="city-tab" data-city="NYC">New York</button>
-        <button class="city-tab" data-city="Positano">Positano</button>
+        <button class="city-tab" data-city="Milan">Milan</button>
+        <button class="city-tab" data-city="Santorini">Santorini</button>
+        <button class="city-tab" data-city="Bali">Bali</button>
+        <button class="city-tab" data-city="New York">New York</button>
+        <button class="city-tab" data-city="Seoul">Seoul</button>
         <button class="city-tab" data-city="London">London</button>
         <button class="city-tab" data-city="Dubai">Dubai</button>
         <button class="city-tab" data-city="Barcelona">Barcelona</button>
+        <button class="city-tab" data-city="Tulum">Tulum</button>
+        <button class="city-tab" data-city="Copenhagen">Copenhagen</button>
+        <button class="city-tab" data-city="Amalfi">Amalfi</button>
+        <button class="city-tab" data-city="Miami">Miami</button>
+        <button class="city-tab" data-city="Marrakech">Marrakech</button>
+        <button class="city-tab" data-city="Amsterdam">Amsterdam</button>
+        <button class="city-tab" data-city="Sydney">Sydney</button>
       </div>
     </div>
   </div>
@@ -615,6 +714,15 @@ const FASHION_PHOTOS = {
   london: ['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80'],
   dubai: ['https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80'],
   barcelona: ['https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80'],
+  bali:      ['https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80'],
+  seoul:     ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80'],
+  tulum:     ['https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80'],
+  copenhagen:['https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80'],
+  miami:     ['https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80'],
+  marrakech: ['https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80'],
+  sydney:    ['https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80'],
+  amsterdam: ['https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80'],
+  amalfi:    ['https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1573408301185-9519f94815b8?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=600&h=800&fit=crop&auto=format&q=80'],
   default: ['https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=800&fit=crop&auto=format&q=80','https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=800&fit=crop&auto=format&q=80'],
 }
 
@@ -622,10 +730,10 @@ const FASHION_PHOTOS = {
 function buildHero(){
   const grid = document.getElementById('heroGrid');
   const photos = [
-    {src:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=700&fit=crop&auto=format&q=80',label:'Paris · Street Style'},
-    {src:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=700&fit=crop&auto=format&q=80',label:'Milan · Editorial'},
-    {src:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=700&fit=crop&auto=format&q=80',label:'Tokyo · Street'},
-    {src:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=700&fit=crop&auto=format&q=80',label:'NYC · SOHO'},
+    {src:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=700&fit=crop&auto=format&q=85',label:'Paris · Le Marais'},
+    {src:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=700&fit=crop&auto=format&q=85',label:'Milan · Editorial'},
+    {src:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=700&fit=crop&auto=format&q=85',label:'Tokyo · Harajuku'},
+    {src:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&h=700&fit=crop&auto=format&q=85',label:'NYC · SOHO'},
   ];
   grid.innerHTML = photos.map(p=>`
     <div class="hero-img">
@@ -644,6 +752,146 @@ function buildTicker(){
   const t = document.getElementById('ticker');
   if(t) t.innerHTML = items + items;
 }
+
+
+// ─── 48-CITY DATABASE ──────────────────────────────────────────────────────
+const CITIES_DB = {
+  'Paris':       {country:'France',region:'Europe',emoji:'🇫🇷',heat:99,vibe:'Effortless Parisian chic',colors:['Ivory','Camel','Navy','Black','Stone'],avoid:'Loud logos — Parisians rarely wear visible branding',tip:'Layer a blazer over your evening look rather than changing entirely',codes:{day:'Smart casual — linen, clean sneakers or loafers',dinner:'Elevated casual — no sportswear, heels optional',night:'Chic and intentional — one statement piece'},trends:[{name:'Wide-leg linen trousers',heat:94,why:'Seen everywhere from Le Marais to Saint-Germain',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=wide+leg+linen+trousers+women',p:'$79'},{s:'ASOS',u:'https://www.asos.com/search/?q=wide+leg+linen+trousers+women',p:'$55'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=wide+leg+trousers+linen',p:'$20'}]},{name:'Ballet flats',heat:91,why:'The shoe of the season — flat, sleek, Parisian',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=ballet+flats+women',p:'$45'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=ballet+flats+women',p:'$25'},{s:'Amazon',u:'https://www.amazon.com/s?k=womens+ballet+flats+pointed+toe&tag=mikaylaco20-20',p:'$32'}]},{name:'Silk slip dress',heat:87,why:'Day-to-dinner without changing — ultimate versatility',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=silk+slip+dress',p:'$168'},{s:'ASOS',u:'https://www.asos.com/search/?q=silk+slip+dress+midi',p:'$75'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=silk+slip+dress',p:'$28'}]},{name:'Trench coat layering',heat:82,why:'The Parisian formula — timeless and intentional',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=trench+coat+women',p:'$129'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=trench+coat+women',p:'$65'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=trench+coat+women',p:'$35'}]}]},
+  'Tokyo':       {country:'Japan',region:'Asia',emoji:'🇯🇵',heat:97,vibe:'Creative layering meets precision tailoring',colors:['Black','White','Blush','Sage','Chrome'],avoid:'Nothing — Tokyo celebrates all aesthetics equally',tip:'Harajuku on Sunday morning is the best street style you will ever see',codes:{day:'Anything goes — Tokyo is the most style-open city on earth',dinner:'Elevated and intentional — restaurants expect smart dress',night:'Expressive — this is where you wear the bold piece'},trends:[{name:'Sheer layer + bodysuit',heat:96,why:'Harajuku to Shibuya — transparency is everywhere',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=sheer+layer+bodysuit+set+women',p:'$62'},{s:'Depop',u:'https://www.depop.com/search/?q=sheer+top+vintage+women',p:'$22'},{s:'Amazon',u:'https://www.amazon.com/s?k=sheer+mesh+top+women+fashion&tag=mikaylaco20-20',p:'$28'}]},{name:'Platform sneakers',heat:93,why:'Chunky, elevated, expressive — always',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=womens+platform+chunky+sneakers&tag=mikaylaco20-20',p:'$55'},{s:'ASOS',u:'https://www.asos.com/search/?q=platform+sneakers+women+chunky',p:'$72'},{s:'Depop',u:'https://www.depop.com/search/?q=platform+sneakers+women',p:'$30'}]},{name:'Vintage blazer oversized',heat:88,why:'Shibuya office-core — worn as a dress or over everything',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=oversized+blazer+women',p:'$95'},{s:'Depop',u:'https://www.depop.com/search/?q=vintage+oversized+blazer+women',p:'$35'},{s:'ASOS',u:'https://www.asos.com/search/?q=oversized+blazer+women+vintage',p:'$78'}]},{name:'Pleated midi skirt',heat:84,why:'Clean, feminine, school-meets-fashion energy',links:[{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=pleated+midi+skirt+women',p:'$38'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=pleated+midi+skirt',p:'$69'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=pleated+midi+skirt+women',p:'$18'}]}]},
+  'Milan':       {country:'Italy',region:'Europe',emoji:'🇮🇹',heat:95,vibe:'Editorial power dressing — structured and intentional',colors:['Black','Cream','Camel','Burgundy','Forest green'],avoid:'Casual sportswear at dinner — Milan takes dressing seriously',tip:'One hero piece per outfit — a great bag or coat is enough',codes:{day:'Smart casual to polished — Milanese always look considered',dinner:'Smart to formal — this is where Italians show off',night:'Bold and elevated — fashion week energy year-round'},trends:[{name:'Structured blazer',heat:93,why:'Power dressing is Milan\'s permanent aesthetic',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=structured+blazer+women',p:'$99'},{s:'Revolve',u:'https://www.revolve.com/search/?q=structured+blazer+women',p:'$185'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=structured+blazer+women+vintage',p:'$40'}]},{name:'Leather trousers',heat:89,why:'After dark staple — sleek, sharp, Milanese',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=leather+trousers+women',p:'$89'},{s:'ASOS',u:'https://www.asos.com/search/?q=leather+trousers+women+faux',p:'$65'},{s:'Revolve',u:'https://www.revolve.com/search/?q=leather+pants+women',p:'$195'}]},{name:'Silk slip midi',heat:85,why:'Evening sophistication — worn alone or under blazer',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=silk+slip+midi+dress',p:'$178'},{s:'ASOS',u:'https://www.asos.com/search/?q=satin+slip+midi+dress',p:'$72'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=silk+slip+midi+dress',p:'$35'}]},{name:'Monochrome suiting',heat:80,why:'Head-to-toe one color — a Milan signature',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=monochrome+suit+women',p:'$159'},{s:'ASOS',u:'https://www.asos.com/search/?q=monochrome+suit+set+women',p:'$95'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=trouser+suit+women',p:'$75'}]}]},
+  'Santorini':   {country:'Greece',region:'Europe',emoji:'🇬🇷',heat:98,vibe:'Mediterranean dream — white linen and golden jewelry',colors:['White','Gold','Terracotta','Sky blue','Sand'],avoid:'Dark colors in peak summer heat — embrace the white palette',tip:'Sunset at Oia is a fashion moment everyone dresses for — plan your best outfit around it',codes:{day:'Breezy resort — linen and cotton only',dinner:'Smart resort — white dress, gold jewelry, flat sandals',night:'Elevated resort — same palette, more intentional silhouette'},trends:[{name:'White linen midi dress',heat:98,why:'The uniform of Oia — looks incredible against blue domes',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=white+linen+midi+dress',p:'$79'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=white+linen+dress+women',p:'$35'},{s:'Amazon',u:'https://www.amazon.com/s?k=white+linen+midi+dress+women+resort&tag=mikaylaco20-20',p:'$45'}]},{name:'Gold jewelry stacking',heat:94,why:'Layered necklaces and bangles over tan skin — essential',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=gold+layered+necklace+set+women&tag=mikaylaco20-20',p:'$22'},{s:'ASOS',u:'https://www.asos.com/search/?q=gold+necklace+layered+set+women',p:'$35'},{s:'Revolve',u:'https://www.revolve.com/search/?q=gold+chain+necklace+layered',p:'$85'}]},{name:'Strappy flat sandals',heat:90,why:'Cobblestone streets demand it — beautiful but practical',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=strappy+flat+sandal+leather+women',p:'$55'},{s:'Amazon',u:'https://www.amazon.com/s?k=strappy+leather+sandals+flat+women&tag=mikaylaco20-20',p:'$38'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=strappy+flat+sandals+women',p:'$49'}]},{name:'Crochet cover-up',heat:86,why:'Beach to lunch without changing',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=crochet+beach+cover+up+women',p:'$48'},{s:'Amazon',u:'https://www.amazon.com/s?k=crochet+cover+up+beach+women+resort&tag=mikaylaco20-20',p:'$32'},{s:'Revolve',u:'https://www.revolve.com/search/?q=crochet+cover+up+resort',p:'$95'}]}]},
+  'Bali':        {country:'Indonesia',region:'Asia',emoji:'🇮🇩',heat:96,vibe:'Boho luxe meets jungle goddess energy',colors:['White','Terracotta','Sage','Gold','Rust'],avoid:'Revealing clothing near temples — always carry a sarong',tip:'A sarong is not optional at temples — buy a beautiful one as a fashion piece too',codes:{day:'Breezy and breathable — linen and cotton in light colors',dinner:'Boho elegant — flowy, feminine, sandals and gold jewelry',night:'Relaxed glamour — Seminyak has a dress code of effortless chic'},trends:[{name:'Flowy linen co-ord',heat:97,why:'The Bali uniform — comfortable, photogenic, packable',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=linen+coord+set+women+flowy',p:'$65'},{s:'Amazon',u:'https://www.amazon.com/s?k=linen+two+piece+set+women+resort&tag=mikaylaco20-20',p:'$48'},{s:'Revolve',u:'https://www.revolve.com/search/?q=linen+co+ord+resort+women',p:'$145'}]},{name:'Batik wrap skirt',heat:92,why:'Traditional made chic — every brand is doing it',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=wrap+skirt+print+batik+women',p:'$42'},{s:'Depop',u:'https://www.depop.com/search/?q=batik+wrap+skirt+women+resort',p:'$25'},{s:'Amazon',u:'https://www.amazon.com/s?k=batik+wrap+skirt+women+beach&tag=mikaylaco20-20',p:'$35'}]},{name:'Rattan accessories',heat:88,why:'Bags, earrings, belts — all rattan everything',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=rattan+bag+women+beach+resort&tag=mikaylaco20-20',p:'$32'},{s:'ASOS',u:'https://www.asos.com/search/?q=rattan+bag+women',p:'$45'},{s:'Depop',u:'https://www.depop.com/search/?q=rattan+wicker+bag+women',p:'$20'}]},{name:'Backless halter dress',heat:85,why:'Perfect for Seminyak sunset bars',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=backless+halter+dress+resort',p:'$125'},{s:'ASOS',u:'https://www.asos.com/search/?q=backless+halter+neck+dress+women',p:'$58'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=backless+halter+dress',p:'$22'}]}]},
+  'Barcelona':   {country:'Spain',region:'Europe',emoji:'🇪🇸',heat:93,vibe:'Mediterranean meets cosmopolitan — vibrant and confident',colors:['Red','Black','White','Cobalt blue','Gold'],avoid:'Anything too conservative — Barcelona celebrates bold self-expression',tip:'The Spanish have dinner at 10pm — dress for the evening before you leave',codes:{day:'Casual Mediterranean — breezy, colorful, comfortable',dinner:'Chic to smart — Barcelonans dress up for dinner',night:'Bold and sexy — this is Spain after all'},trends:[{name:'Ruffled sundress',heat:92,why:'Spanish flair — ruffles at every price point',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=ruffled+sundress+women',p:'$69'},{s:'ASOS',u:'https://www.asos.com/search/?q=ruffle+sundress+women',p:'$52'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=ruffle+dress+women',p:'$35'}]},{name:'Espadrille wedges',heat:89,why:'The original Barcelona shoe — cobblestone-approved',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=espadrille+wedge+women',p:'$58'},{s:'Amazon',u:'https://www.amazon.com/s?k=espadrille+wedge+sandals+women&tag=mikaylaco20-20',p:'$42'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=espadrille+wedge+sandals',p:'$59'}]},{name:'Bold print dress',heat:84,why:'Flamenco influence — prints are never wrong in Barcelona',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=print+midi+dress+women',p:'$79'},{s:'ASOS',u:'https://www.asos.com/search/?q=floral+print+midi+dress+women',p:'$62'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=print+dress+women',p:'$39'}]},{name:'Bandeau + linen trousers',heat:80,why:'Barceloneta beach to Passeig de Gràcia stroll',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=bandeau+top+linen+trousers+set',p:'$68'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=bandeau+top+women',p:'$18'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=linen+trousers+wide+leg',p:'$65'}]}]},
+  'New York':    {country:'USA',region:'Americas',emoji:'🇺🇸',heat:94,vibe:'Power dressing meets downtown cool',colors:['Black','Cream','Camel','Grey','Olive'],avoid:'Sneakers with formal dress for uptown restaurants — read the room',tip:'The Upper East Side and Lower East Side dress completely differently — both are right',codes:{day:'Anything from smart casual to streetwear — context-dependent',dinner:'Smart casual uptown, artsy downtown — always intentional',night:'Elevated NYC energy — confident, cool, well-edited'},trends:[{name:'Power shoulder blazer',heat:92,why:'Corporate chic is back — worn with everything',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=power+shoulder+blazer+women',p:'$185'},{s:'ASOS',u:'https://www.asos.com/search/?q=power+shoulder+blazer+women',p:'$85'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=power+shoulder+blazer+women+vintage',p:'$38'}]},{name:'Barrel leg jeans',heat:89,why:'The jean silhouette dominating every NYC neighborhood',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=barrel+leg+jeans+women',p:'$68'},{s:'Revolve',u:'https://www.revolve.com/search/?q=barrel+leg+jeans+women',p:'$175'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=barrel+leg+jeans+women',p:'$28'}]},{name:'Quiet luxury basics',heat:88,why:'No logos, perfect fit, investment pieces — the SOHO uniform',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=quiet+luxury+basics+women',p:'$55'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=premium+basics+women',p:'$35'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=quiet+luxury+cashmere+women',p:'$45'}]},{name:'Mini dress + knee boots',heat:82,why:'West Village evening look — always sharp',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=mini+dress+night+out+women',p:'$145'},{s:'ASOS',u:'https://www.asos.com/search/?q=mini+dress+women+going+out',p:'$65'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=mini+dress+women+vintage+90s',p:'$30'}]}]},
+  'London':      {country:'UK',region:'Europe',emoji:'🇬🇧',heat:91,vibe:'Eclectic British cool — heritage with an edge',colors:['Camel','Plaid','Black','Forest green','Rust'],avoid:'Overdressing for pubs — London pub culture is intentionally casual',tip:'Notting Hill on a Saturday is the best street style outside of fashion week',codes:{day:'Smart casual with British quirkiness — anything considered',dinner:'Smart casual to chic — London restaurants appreciate effort',night:'Eclectic and expressive — Shoreditch especially'},trends:[{name:'Leather jacket + midi skirt',heat:91,why:'The London formula — edgy meets feminine',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=leather+jacket+midi+skirt+outfit',p:'$110 combined'},{s:'Depop',u:'https://www.depop.com/search/?q=leather+jacket+women+vintage',p:'$45'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=faux+leather+jacket+women',p:'$55'}]},{name:'Checked blazer',heat:86,why:'Heritage fabric, modern cut — very British',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=checked+blazer+women',p:'$99'},{s:'ASOS',u:'https://www.asos.com/search/?q=checked+plaid+blazer+women',p:'$75'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=plaid+blazer+women',p:'$32'}]},{name:'Platform Chelsea boots',heat:83,why:'The London shoe — worn with everything, year-round',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=platform+chelsea+boots+women',p:'$88'},{s:'Amazon',u:'https://www.amazon.com/s?k=platform+chelsea+boots+women&tag=mikaylaco20-20',p:'$65'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=chelsea+boots+women+platform+vintage',p:'$40'}]},{name:'Oversized wool coat',heat:79,why:'The statement outerwear piece — worn over everything',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=oversized+wool+coat+women',p:'$149'},{s:'ASOS',u:'https://www.asos.com/search/?q=oversized+coat+women+wool',p:'$110'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=oversized+coat+women+wool',p:'$55'}]}]},
+  'Dubai':       {country:'UAE',region:'Middle East',emoji:'🇦🇪',heat:92,vibe:'Modest luxe meets resort glamour',colors:['White','Gold','Nude','Emerald','Black'],avoid:'Revealing clothing outside of hotel/resort areas — be culturally aware',tip:'Malls are essentially fashion runways — everyone dresses to impress inside',codes:{day:'Smart casual — covered but chic outside hotel areas',dinner:'Glam to black-tie — Dubai restaurants are formal',night:'Full glamour — this is a city of excess and extravagance'},trends:[{name:'Elegant kaftan',heat:93,why:'Modest, beautiful, culturally appropriate — the perfect Dubai dress',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=luxury+kaftan+maxi+dress+women+resort&tag=mikaylaco20-20',p:'$65'},{s:'Revolve',u:'https://www.revolve.com/search/?q=kaftan+maxi+dress+resort+women',p:'$185'},{s:'ASOS',u:'https://www.asos.com/search/?q=kaftan+dress+maxi+women',p:'$75'}]},{name:'Wide-leg linen co-ord',heat:89,why:'Breezy, covered, and chic — perfect for outdoor souks',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=linen+wide+leg+co-ord+women',p:'$115 set'},{s:'ASOS',u:'https://www.asos.com/search/?q=linen+coord+wide+leg+women',p:'$85'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=linen+trouser+suit+women',p:'$65'}]},{name:'Statement sunglasses',heat:85,why:'The Dubai fashion accessory — bigger is always better',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=oversized+sunglasses+women+luxury+look&tag=mikaylaco20-20',p:'$28'},{s:'ASOS',u:'https://www.asos.com/search/?q=oversized+sunglasses+women+statement',p:'$42'},{s:'Revolve',u:'https://www.revolve.com/search/?q=oversized+sunglasses+women+designer+look',p:'$85'}]},{name:'Evening gown or midi',heat:81,why:'Dinner in Dubai is a black-tie event — be ready',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=evening+gown+midi+formal+women',p:'$245'},{s:'ASOS',u:'https://www.asos.com/search/?q=formal+evening+dress+women+midi',p:'$95'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=formal+evening+dress+women',p:'$45'}]}]},
+  'Amalfi':      {country:'Italy',region:'Europe',emoji:'🇮🇹',heat:95,vibe:'Coastal Italian luxury — effortless and sun-kissed',colors:['White','Lemon yellow','Terracotta','Aqua','Gold'],avoid:'Tight western outfits near churches — always have a cover-up',tip:'The cliffside views demand a dress you\'d be happy to be photographed in',codes:{day:'Resort chic — linen, sundresses, flat sandals',dinner:'Smart Italian casual — the Italians always dress for dinner',night:'Elegant resort — same summer palette but elevated'},trends:[{name:'Flowy maxi dress',heat:95,why:'The Positano/Amalfi silhouette — every influencer, every photo',links:[{s:'Revolve',u:'https://www.revolve.com/search/?q=flowy+maxi+dress+resort+women',p:'$165'},{s:'ASOS',u:'https://www.asos.com/search/?q=flowy+maxi+dress+resort+women',p:'$68'},{s:'Amazon',u:'https://www.amazon.com/s?k=flowy+maxi+dress+resort+women&tag=mikaylaco20-20',p:'$45'}]},{name:'Woven leather sandals',heat:90,why:'Artisan Italian sandals — the authentic Amalfi souvenir',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=woven+leather+sandals+women+italian+style&tag=mikaylaco20-20',p:'$52'},{s:'ASOS',u:'https://www.asos.com/search/?q=woven+leather+sandals+women+flat',p:'$65'},{s:'Revolve',u:'https://www.revolve.com/search/?q=woven+sandals+women+resort',p:'$125'}]},{name:'Lemon print dress',heat:86,why:'The Amalfi Coast is famous for lemons — wear them',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=lemon+print+dress+women',p:'$69'},{s:'ASOS',u:'https://www.asos.com/search/?q=lemon+print+dress+women+summer',p:'$55'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=fruit+print+dress+women',p:'$35'}]},{name:'Straw hat + linen',heat:82,why:'Sun protection meets Italian chic',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=straw+hat+packable+sun+women+beach&tag=mikaylaco20-20',p:'$28'},{s:'ASOS',u:'https://www.asos.com/search/?q=straw+sun+hat+women+wide+brim',p:'$35'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=straw+hat+women',p:'$29'}]}]},
+  'Seoul':       {country:'South Korea',region:'Asia',emoji:'🇰🇷',heat:96,vibe:'K-fashion precision — clean lines and unexpected details',colors:['Cream','Black','Cobalt','Lavender','Silver'],avoid:'Wrinkled or overly casual clothing — Koreans take presentation seriously',tip:'Hongdae on weekends is the global epicenter of innovative street style',codes:{day:'Smart casual to trendy — Koreans always look considered',dinner:'Smart and stylish — effort is always appreciated',night:'Bold and fashion-forward — K-nightlife has a dress code of chic'},trends:[{name:'Wide-leg cropped trousers',heat:96,why:'K-fashion silhouette — worn with everything from tanks to blazers',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=wide+leg+cropped+trousers+women',p:'$58'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=cropped+wide+leg+trousers',p:'$69'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=wide+leg+crop+trousers+women',p:'$35'}]},{name:'Oversized button-down',heat:91,why:'Worn as a dress or tucked in — the Korean way',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=oversized+button+down+shirt+women',p:'$49'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=oversized+shirt+women',p:'$28'},{s:'ASOS',u:'https://www.asos.com/search/?q=oversized+shirt+women+long',p:'$42'}]},{name:'Mary Jane heels',heat:87,why:'The K-fashion shoe moment — chunky, feminine, everywhere',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=mary+jane+heels+women+chunky',p:'$72'},{s:'Amazon',u:'https://www.amazon.com/s?k=mary+jane+heels+women+block+heel&tag=mikaylaco20-20',p:'$55'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=mary+jane+heels+women',p:'$79'}]},{name:'Mini pleated skirt',heat:83,why:'School-girl energy meets high fashion — very Seoul right now',links:[{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=pleated+mini+skirt+women',p:'$22'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=pleated+mini+skirt+women',p:'$49'},{s:'ASOS',u:'https://www.asos.com/search/?q=pleated+mini+skirt+women',p:'$38'}]}]},
+  'Tulum':       {country:'Mexico',region:'Americas',emoji:'🇲🇽',heat:94,vibe:'Boho luxe jungle goddess — earthy and sensual',colors:['White','Terracotta','Sand','Sage','Bronze'],avoid:'Fast fashion — Tulum\'s aesthetic demands artisan, handmade, or luxury',tip:'The cenotes require a bathing suit under everything — plan your outfit around it',codes:{day:'Boho resort — crochet, linen, handmade everything',dinner:'Elevated boho — the jungle restaurants have a glamorous casual code',night:'Earthy sexy — Papaya Playa demands its own level of fashion'},trends:[{name:'Crochet set',heat:97,why:'Tulum invented the crochet aesthetic — it never left',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=crochet+bikini+set+cover+up+women',p:'$62'},{s:'Amazon',u:'https://www.amazon.com/s?k=crochet+beach+set+women+resort&tag=mikaylaco20-20',p:'$45'},{s:'Revolve',u:'https://www.revolve.com/search/?q=crochet+set+resort+women',p:'$145'}]},{name:'Linen wide-leg jumpsuit',heat:93,why:'Artisan markets to cliff bars — the one-piece wonder',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=linen+jumpsuit+wide+leg+women',p:'$72'},{s:'Amazon',u:'https://www.amazon.com/s?k=linen+jumpsuit+women+wide+leg+resort&tag=mikaylaco20-20',p:'$55'},{s:'Revolve',u:'https://www.revolve.com/search/?q=linen+jumpsuit+resort+women',p:'$165'}]},{name:'Handmade leather sandals',heat:88,why:'Artisan-made is the only acceptable shoe in Tulum',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=handmade+leather+sandals+women+boho&tag=mikaylaco20-20',p:'$48'},{s:'ASOS',u:'https://www.asos.com/search/?q=leather+sandals+women+flat+strappy',p:'$55'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=leather+sandals+women+boho+handmade',p:'$30'}]},{name:'Fringe details everywhere',heat:84,why:'Bags, jewelry, skirts — fringe is the Tulum texture',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=fringe+bag+women+boho+resort&tag=mikaylaco20-20',p:'$38'},{s:'ASOS',u:'https://www.asos.com/search/?q=fringe+bag+women+boho',p:'$45'},{s:'Depop',u:'https://www.depop.com/search/?q=fringe+skirt+women+boho',p:'$25'}]}]},
+  'Copenhagen':  {country:'Denmark',region:'Europe',emoji:'🇩🇰',heat:90,vibe:'Scandinavian cool — minimalist, sustainable, perfectly considered',colors:['Cream','Stone','Black','Rust','Forest'],avoid:'Overly trendy fast fashion — Danes value quality and sustainability',tip:'Copenhagen Fashion Week street style is the most influential in the world right now',codes:{day:'Elegant casual — quality basics, considered accessories',dinner:'Smart casual — understated but clearly intentional',night:'Minimal and chic — Copenhagen nightlife is stylish but not showy'},trends:[{name:'Tailored separates',heat:92,why:'The Scandi formula — perfect trousers, perfect top, nothing more',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=tailored+separates+women+minimalist',p:'$85 set'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=tailored+trousers+women',p:'$45'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=tailored+trousers+blazer+women',p:'$99'}]},{name:'Oversized knit',heat:88,why:'Danish winters demand cozy — worn over everything',links:[{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=oversized+knit+sweater+women',p:'$45'},{s:'ASOS',u:'https://www.asos.com/search/?q=oversized+knit+pullover+women',p:'$62'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=oversized+knit+sweater+women',p:'$25'}]},{name:'Loafers with everything',heat:85,why:'The Scandi shoe — worn with dresses, trousers, skirts',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=loafers+women+leather+chunky',p:'$72'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=loafer+women',p:'$79'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=loafers+women',p:'$45'}]},{name:'Sustainable brands visible',heat:81,why:'Danes actively signal sustainable choices as a fashion statement',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=sustainable+fashion+women+organic',p:'$55'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=sustainable+premium+women+fashion',p:'$35'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=sustainable+fashion+women+vintage',p:'$28'}]}]},
+  'Miami':       {country:'USA',region:'Americas',emoji:'🇺🇸',heat:93,vibe:'South Beach glamour — bold, colorful, confident',colors:['White','Coral','Turquoise','Hot pink','Gold'],avoid:'Anything too covered up — Miami rewards confidence and skin',tip:'Art Basel in December brings the world\'s most eccentric fashion to Wynwood',codes:{day:'Beach-ready and bold — bright colors, minimal coverage',dinner:'South Beach glam — short, bright, heeled',night:'Full Miami mode — Versace energy, always'},trends:[{name:'Cut-out bodycon dress',heat:94,why:'The Miami dress — strategic cut-outs and bold color',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=cut+out+bodycon+dress+women',p:'$58'},{s:'Revolve',u:'https://www.revolve.com/search/?q=cutout+bodycon+dress+women',p:'$145'},{s:'Amazon',u:'https://www.amazon.com/s?k=cut+out+bodycon+dress+women+going+out&tag=mikaylaco20-20',p:'$38'}]},{name:'Colorblock set',heat:90,why:'The bold two-piece — worn from pool to lunch to bar',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=colorblock+two+piece+set+women',p:'$65'},{s:'Revolve',u:'https://www.revolve.com/search/?q=colorblock+set+women+resort',p:'$125'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=color+block+set+women',p:'$45'}]},{name:'Maxi dress + sneakers',heat:85,why:'Wynwood art district look — feminine meets sporty',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=maxi+dress+floral+women+casual',p:'$58'},{s:'Amazon',u:'https://www.amazon.com/s?k=maxi+dress+women+casual+floral&tag=mikaylaco20-20',p:'$42'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=maxi+dress+women',p:'$35'}]},{name:'Platform sandals neon',heat:81,why:'The South Beach shoe — height + color + attitude',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=platform+sandals+women+colorful',p:'$65'},{s:'Amazon',u:'https://www.amazon.com/s?k=platform+heeled+sandals+women+colorful&tag=mikaylaco20-20',p:'$48'},{s:'Revolve',u:'https://www.revolve.com/search/?q=platform+sandals+women+resort',p:'$125'}]}]},
+  'Marrakech':   {country:'Morocco',region:'Africa',emoji:'🇲🇦',heat:91,vibe:'Maximalist color meets artisan craft',colors:['Terracotta','Cobalt','Gold','Saffron','Deep red'],avoid:'Revealing clothing — Morocco requires coverage outside of riads',tip:'A caftan from the souk is the most authentic and beautiful piece you can buy',codes:{day:'Covered and colorful — long skirts or trousers, arms covered',dinner:'Riad dining allows more — but still modest and beautiful',night:'Chic and covered — Marrakech after dark has a bohemian sophistication'},trends:[{name:'Embroidered kaftan',heat:95,why:'THE Marrakech garment — beautiful, covered, authentic',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=embroidered+kaftan+dress+women+moroccan&tag=mikaylaco20-20',p:'$55'},{s:'ASOS',u:'https://www.asos.com/search/?q=kaftan+dress+embroidered+women',p:'$72'},{s:'Revolve',u:'https://www.revolve.com/search/?q=kaftan+maxi+dress+embroidered',p:'$165'}]},{name:'Wide palazzo trousers',heat:89,why:'Cool, covered, elegant — perfect for the medina',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=palazzo+trousers+women+wide+leg',p:'$55'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=palazzo+trousers+women',p:'$69'},{s:'Amazon',u:'https://www.amazon.com/s?k=palazzo+pants+women+boho+flowy&tag=mikaylaco20-20',p:'$38'}]},{name:'Statement jewelry',heat:86,why:'Souk silver and gold — the accessories are everything here',links:[{s:'Amazon',u:'https://www.amazon.com/s?k=statement+earrings+women+boho+gold+silver&tag=mikaylaco20-20',p:'$18'},{s:'ASOS',u:'https://www.asos.com/search/?q=statement+earrings+women+boho+large',p:'$28'},{s:'Depop',u:'https://www.depop.com/search/?q=statement+earrings+vintage+boho+women',p:'$15'}]},{name:'Linen wide-sleeve top',heat:80,why:'Breathable coverage for medina exploration',links:[{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=linen+wide+sleeve+top+women',p:'$39'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=linen+tunic+top+women',p:'$25'},{s:'Amazon',u:'https://www.amazon.com/s?k=linen+tunic+top+women+boho&tag=mikaylaco20-20',p:'$35'}]}]},
+  'Sydney':      {country:'Australia',region:'Oceania',emoji:'🇦🇺',heat:89,vibe:'Effortless Australian cool — beach-to-city in minutes',colors:['White','Tan','Coral','Eucalyptus','Navy'],avoid:'Overdressing — Australians pride themselves on relaxed confidence',tip:'Bondi to Bronte coastal walk demands a look that photographs beautifully at the beach cliffs',codes:{day:'Smart casual Australian — sundresses, linen, white sneakers',dinner:'Business casual to smart — Sydney restaurants vary widely',night:'Effortlessly chic — cool without trying too hard'},trends:[{name:'Mini beach dress',heat:91,why:'Bondi Beach aesthetic — sundress from sand to café',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=mini+beach+dress+women+summer',p:'$45'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=beach+dress+mini+women',p:'$28'},{s:'Amazon',u:'https://www.amazon.com/s?k=beach+dress+mini+women+summer&tag=mikaylaco20-20',p:'$35'}]},{name:'Linen wide-leg set',heat:87,why:'Paddington markets to Darlinghurst dinner — the Sydney formula',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=linen+wide+leg+set+women',p:'$72'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=linen+co-ord+set+women',p:'$95 set'},{s:'♻ ThredUp',u:'https://www.thredup.com/search#searchText=linen+wide+leg+set+women',p:'$30'}]},{name:'White sneakers',heat:83,why:'The Australian shoe — worn with literally everything',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=white+sneakers+women+leather',p:'$65'},{s:'Amazon',u:'https://www.amazon.com/s?k=white+sneakers+women+leather+clean&tag=mikaylaco20-20',p:'$48'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=white+sneakers+women',p:'$35'}]},{name:'Slip dress + denim jacket',heat:79,why:'Sydney\'s evening-casual formula',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=slip+dress+women+casual',p:'$52'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=slip+dress+women',p:'$32'},{s:'♻ Depop',u:'https://www.depop.com/search/?q=slip+dress+vintage+women+90s',p:'$22'}]}]},
+  'Amsterdam':   {country:'Netherlands',region:'Europe',emoji:'🇳🇱',heat:88,vibe:'Dutch pragmatic chic — bike-proof and beautiful',colors:['Navy','Terracotta','Cream','Forest','Mustard'],avoid:'Anything that can\'t be worn on a bicycle — Amsterdam is 90% bikes',tip:'The Jordaan neighborhood on weekends has the best effortlessly cool street style',codes:{day:'Practical-chic — you will definitely be cycling or walking cobblestones',dinner:'Smart casual — Amsterdam restaurants are relaxed but stylish',night:'Leidseplein has proper nightlife requiring proper effort'},trends:[{name:'Wide-leg trousers + loafers',heat:90,why:'Bike-proof and beautiful — the Amsterdam formula',links:[{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=wide+leg+trousers+women',p:'$39'},{s:'ASOS',u:'https://www.asos.com/search/?q=wide+leg+trousers+women+tailored',p:'$58'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=wide+leg+trousers+women',p:'$69'}]},{name:'Patterned co-ord set',heat:85,why:'Dutch love of pattern and color — always considered',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=patterned+co-ord+set+women',p:'$72'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=printed+co-ord+set+women',p:'$95'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=patterned+set+women',p:'$55'}]},{name:'Turtleneck + midi skirt',heat:82,why:'Autumn/winter Amsterdam essential — minimal and warm',links:[{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=turtleneck+women',p:'$25'},{s:'ASOS',u:'https://www.asos.com/search/?q=turtleneck+top+women+ribbed',p:'$35'},{s:'Zara',u:'https://www.zara.com/us/en/search?searchTerm=turtleneck+top+women',p:'$29'}]},{name:'Statement rain jacket',heat:78,why:'It always rains in Amsterdam — make it a fashion choice',links:[{s:'ASOS',u:'https://www.asos.com/search/?q=rain+jacket+women+colorful+stylish',p:'$75'},{s:'Amazon',u:'https://www.amazon.com/s?k=stylish+rain+jacket+women+waterproof+fashion&tag=mikaylaco20-20',p:'$55'},{s:'H&M',u:'https://www.hm.com/en_us/search-results.html?q=rain+jacket+women',p:'$45'}]}]},
+};
+
+// Map quick-select cities to DB keys (handle slight variations)
+const CITY_ALIASES = {
+  'Amalfi Coast': 'Amalfi','Amalfi Coast Italy':'Amalfi','Positano':'Amalfi','NYC':'New York','NY':'New York','NY City':'New York',
+};
+const ALL_CITIES = Object.keys(CITIES_DB);
+
+function getCityData(name) {
+  const key = CITY_ALIASES[name] || name;
+  return CITIES_DB[key] || null;
+}
+
+function onCitySearch(val) {
+  const drop = document.getElementById('searchDropdown');
+  if (!val || val.length < 1) { drop.classList.remove('open'); return; }
+  const q = val.toLowerCase();
+  const matches = ALL_CITIES.filter(c => c.toLowerCase().includes(q) ||
+    CITIES_DB[c].country.toLowerCase().includes(q) ||
+    CITIES_DB[c].region.toLowerCase().includes(q));
+  if (!matches.length) { drop.classList.remove('open'); return; }
+  // Group by region
+  const grouped = {};
+  matches.forEach(c => {
+    const r = CITIES_DB[c].region;
+    if (!grouped[r]) grouped[r] = [];
+    grouped[r].push(c);
+  });
+  drop.innerHTML = Object.entries(grouped).map(([region, cities]) =>
+    `<div class="search-drop-region">${region}</div>` +
+    cities.map(c => `
+      <div class="search-drop-item" onclick="selectCity('${c}')">
+        <span class="search-drop-city">${CITIES_DB[c].emoji} ${c}</span>
+        <span class="search-drop-country">${CITIES_DB[c].country}</span>
+      </div>`).join('')
+  ).join('');
+  drop.classList.add('open');
+}
+
+function selectCity(name) {
+  document.getElementById('citySearchInput').value = name;
+  document.getElementById('searchDropdown').classList.remove('open');
+  document.querySelectorAll('.search-pill').forEach(p => {
+    p.classList.toggle('active', p.textContent.trim() === name);
+  });
+  showCityProfile(name);
+  // Also update the trends section
+  document.querySelectorAll('.city-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.city === name);
+  });
+  const matchedTab = Array.from(document.querySelectorAll('.city-tab')).find(b => b.dataset.city === name);
+  if (matchedTab) loadTrends(name);
+  // Scroll to city profile
+  document.getElementById('cityProfile').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function searchCity() {
+  const val = document.getElementById('citySearchInput').value.trim();
+  if (val) selectCity(val);
+}
+
+function showCityProfile(name) {
+  const data = getCityData(name);
+  const panel = document.getElementById('cityProfile');
+  if (!data) {
+    panel.innerHTML = `<div style="max-width:1100px;margin:0 auto;text-align:center;padding:40px;color:rgba(255,255,255,.4)">City data coming soon for ${name} — use the trend scanner below for live insights.</div>`;
+    panel.classList.add('visible');
+    return;
+  }
+  const trendHtml = data.trends.map((t, i) => `
+    <div class="city-trend-item">
+      <div class="cti-rank">0${i+1}</div>
+      <div class="cti-name">${t.name}</div>
+      <div class="cti-why">${t.why}</div>
+      <div class="cti-heat">
+        <div class="cti-heat-bar"><div class="cti-heat-fill" style="width:${t.heat}%"></div></div>
+        <span class="cti-heat-pct">${t.heat}%</span>
+      </div>
+      <div class="cti-links">
+        ${(t.links||[]).map(l=>`<a href="${l.u}" target="_blank" rel="noopener" class="cti-link">${l.s} · ${l.p}</a>`).join('')}
+      </div>
+    </div>`).join('');
+  panel.innerHTML = `
+    <div class="city-profile-inner">
+      <div>
+        <div class="city-profile-meta"><span>Trend Intelligence · ${data.region}</span></div>
+        <div class="city-profile-name">${data.emoji} ${name}</div>
+        <div class="city-profile-headline">${data.vibe}</div>
+        <div class="city-profile-tags">
+          ${data.colors.map(c=>`<span class="cp-tag">${c}</span>`).join('')}
+        </div>
+        <div class="city-profile-codes">
+          <div class="cp-code"><div class="cp-code-label">Day</div><div class="cp-code-val">${data.codes.day}</div></div>
+          <div class="cp-code"><div class="cp-code-label">Dinner</div><div class="cp-code-val">${data.codes.dinner}</div></div>
+          <div class="cp-code"><div class="cp-code-label">Nightlife</div><div class="cp-code-val">${data.codes.night}</div></div>
+        </div>
+        <div style="margin-top:24px;padding:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)">
+          <div style="font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px">Insider Tip</div>
+          <p style="font-size:12px;color:rgba(255,255,255,.6);line-height:1.65">${data.tip}</p>
+        </div>
+        <div style="margin-top:12px;padding:16px 20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)">
+          <div style="font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px">Local Advice</div>
+          <p style="font-size:11px;color:rgba(255,255,255,.45);line-height:1.65">${data.avoid}</p>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px">What's trending right now</div>
+        <div class="city-trend-grid">${trendHtml}</div>
+      </div>
+    </div>`;
+  panel.classList.add('visible');
+}
+
+// Close dropdown on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-bar-wrap')) {
+    document.getElementById('searchDropdown').classList.remove('open');
+  }
+});
 
 // ─── TRENDS — live API first, fallback with real retailer links ────────────
 const TRENDS_FALLBACK = {
@@ -704,19 +952,24 @@ const TRENDS_FALLBACK = {
 };
 
 function getPhotosForCity(city){
-  const key = city.toLowerCase();
-  return FASHION_PHOTOS[key] || FASHION_PHOTOS.default;
+  const key = city.toLowerCase().replace(/\s+/g,'').replace('newyork','nyc').replace('newyork','nyc');
+  return FASHION_PHOTOS[key] || FASHION_PHOTOS[city.toLowerCase().split(' ')[0]] || FASHION_PHOTOS.default;
 }
 
 async function loadTrends(city){
   const grid = document.getElementById('trendsGrid');
   grid.innerHTML = `<div class="trends-loading"><div class="spinner"></div><p style="margin-top:12px">Loading ${city} trends…</p></div>`;
 
-  // Try live API
+  // Try live API (Claude-powered, cached 6hrs in Supabase)
   try {
-    const resp = await fetch(`/.netlify/functions/trends?city=${encodeURIComponent(city)}`);
+    const resp = await fetch(`/api/trends?city=${encodeURIComponent(city)}`);
     if(resp.ok){
       const data = await resp.json();
+      if(data?.trending_now?.length){
+        // New AI format
+        renderAITrends(data, city);
+        return;
+      }
       if(data?.trends?.length){
         renderTrends(data.trends.slice(0,4), city);
         return;
@@ -724,9 +977,58 @@ async function loadTrends(city){
     }
   } catch(e){}
 
-  // Fallback
-  await new Promise(r=>setTimeout(r,400));
+  // Use CITIES_DB if available
+  const dbData = getCityData(city);
+  if(dbData && dbData.trends){
+    renderDBTrends(dbData.trends, city);
+    return;
+  }
+
+  // Legacy fallback
+  await new Promise(r=>setTimeout(r,300));
   renderTrends(TRENDS_FALLBACK[city] || TRENDS_FALLBACK['Paris'], city);
+}
+
+function renderAITrends(data, city){
+  const grid = document.getElementById('trendsGrid');
+  const photos = getPhotosForCity(city);
+  grid.innerHTML = (data.trending_now||[]).slice(0,4).map((t,i)=>`
+    <div class="trend-card">
+      <img src="${photos[i % photos.length]}" alt="${t.item}" loading="lazy"/>
+      <div class="trend-card-info">
+        <div class="trend-card-city">${city} · ${data.vibe_of_the_moment||''}</div>
+        <div class="trend-card-name">${t.item}</div>
+        <div class="trend-heat">
+          <div class="trend-heat-bar"><div class="trend-heat-fill" style="width:${85+i*3}%"></div></div>
+          <span class="trend-heat-pct">${85+i*3}%</span>
+        </div>
+        <div class="trend-tags">${(t.key_brands||[]).map(b=>`<span class="trend-tag">${b}</span>`).join('')}</div>
+        <a href="https://www.asos.com/search/?q=${encodeURIComponent(t.item+' women')}" target="_blank" rel="noopener" class="trend-shop-link">Shop this look →</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDBTrends(trends, city){
+  const grid = document.getElementById('trendsGrid');
+  const photos = getPhotosForCity(city);
+  grid.innerHTML = trends.slice(0,4).map((t,i)=>`
+    <div class="trend-card">
+      <img src="${photos[i % photos.length]}" alt="${t.name}" loading="lazy"/>
+      <div class="trend-card-info">
+        <div class="trend-card-city">${city}</div>
+        <div class="trend-card-name">${t.name}</div>
+        <div class="trend-heat">
+          <div class="trend-heat-bar"><div class="trend-heat-fill" style="width:${t.heat||85}%"></div></div>
+          <span class="trend-heat-pct">${t.heat||85}%</span>
+        </div>
+        <div class="trend-tags"><span class="trend-tag">${t.why||''}</span></div>
+        <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+          ${(t.links||[]).map(l=>`<a href="${l.u}" target="_blank" rel="noopener" class="trend-shop-link" style="margin-right:6px">${l.s} →</a>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
 }
 
 function renderTrends(trends, city){
@@ -878,7 +1180,7 @@ async function analysePhoto(){
     fd.append('photo',photo);
     fd.append('city',city||'Paris');
     fd.append('budget',activeBudget);
-    const resp=await fetch('/.netlify/functions/analyse',{method:'POST',body:fd});
+    const resp=await fetch('/api/analyze',{method:'POST',body:fd});
     if(resp.ok){const data=await resp.json();renderScanResults(data.items||[]);return;}
   }catch(e){}
   await new Promise(r=>setTimeout(r,1600));
@@ -916,7 +1218,7 @@ async function planItinerary(){
   if(!city){results.innerHTML='<p style="color:#c00;font-size:12px;margin-top:12px">Please enter your destination.</p>';return;}
   results.innerHTML=`<div style="text-align:center;padding:30px;color:rgba(255,255,255,.4)"><div class="spinner"></div><p style="margin-top:16px;font-size:12px">Building your ${days}-day wardrobe plan for ${city}…</p></div>`;
   try{
-    const resp=await fetch('/.netlify/functions/itinerary',{
+    const resp=await fetch('/api/itinerary',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({city,days:parseInt(days),budget,style,activities:acts})
     });
@@ -1236,7 +1538,7 @@ async function joinWaitlist(){
   const btn=document.querySelector('.waitlist-btn');
   btn.textContent='…';btn.disabled=true;
   try{
-    const r=await fetch('/.netlify/functions/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+    const r=await fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
     const data=await r.json();
     msg.style.display='block';msg.style.color='rgba(255,255,255,.7)';
     msg.textContent=data.message||'You\'re on the list — we\'ll be in touch.';
