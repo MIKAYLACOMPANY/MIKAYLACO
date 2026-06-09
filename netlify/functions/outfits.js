@@ -1,13 +1,13 @@
-// MIKAYLA â Proactive Outfit Generator
+// MIKAYLA — Proactive Outfit Generator
 // Endpoint: GET /api/outfits?city=Paris&occasion=all
 //
-// Generates 4 complete, shoppable outfit looks for a city â NO user photo needed.
+// Generates 4 complete, shoppable outfit looks for a city — NO user photo needed.
 // AI cross-references current TikTok/Instagram aesthetics for the destination,
 // then builds full outfit breakdowns with affiliate-ready buy links.
 //
-// Affiliate setup (set env vars in Netlify â Site configuration â Environment variables):
-//   SOVRN_ACTIVE      â add Sovrn //Commerce JS snippet to index.html head (auto-converts all links)
-//   LTK_AFFILIATE_ID  â LTK creator links when approved
+// Affiliate setup (set env vars in Netlify → Site configuration → Environment variables):
+//   SOVRN_ACTIVE      → add Sovrn //Commerce JS snippet to index.html head (auto-converts all links)
+//   LTK_AFFILIATE_ID  → LTK creator links when approved
 //
 // Required: ANTHROPIC_API_KEY
 
@@ -17,10 +17,10 @@ const CORS = {
   'Content-Type':                 'application/json',
 };
 
-// LTK_AFFILIATE_ID: add to Netlify env vars when LTK approves you â all links update automatically
+// LTK_AFFILIATE_ID: add to Netlify env vars when LTK approves you — all links update automatically
 const LTK_AFFILIATE_ID = process.env.LTK_AFFILIATE_ID || null;
 
-// Retailers â direct search links now; LTK wrapping activates when LTK_AFFILIATE_ID is set
+// Retailers — direct search links now; LTK wrapping activates when LTK_AFFILIATE_ID is set
 const RETAILERS = [
   { name: 'ASOS',         url: 'https://www.asos.com/search/?q='                },
   { name: 'Zara',         url: 'https://www.zara.com/gb/en/search?searchTerm='  },
@@ -69,7 +69,7 @@ const CITY_SOCIAL = {
     tiktok: 'Aegean dream aesthetic, white-and-blue colour story, cliffside sunset backdrop obsession',
     instagram: 'White linen against Cycladic architecture, flowing maxi dresses, gold jewellery, straw hats',
     reels_tags: '#santorini #greeksummer #santorinigreece #aegeansummer',
-    local_insiders: 'White is non-negotiable. Flat sandals only â cobblestones destroy heels. Gold always.',
+    local_insiders: 'White is non-negotiable. Flat sandals only — cobblestones destroy heels. Gold always.',
     season_note: 'Summer only: linen/cotton maxi, flat leather sandals, raffia bag, minimal gold',
   },
   mykonos: {
@@ -87,4 +87,292 @@ const CITY_SOCIAL = {
     season_note: 'Summer: crochet coverups, linen wide-leg, maxi dresses, strappy heeled sandals at night',
   },
   'french riviera': {
-    tiktok: 'Cote d\'Azur old money, G	TXÒT¶VÆÇÖW&vÆÖ÷W"&WffVBÂæ6RFòÖöæ6ò'6BrÀ¢ç7Fw&Ó¢u7G&VBÖ&æW&RF÷2ÂægæBvFRÂöÆ6VBÆæVâÂ6B×&VGVÆVvæ6RrÀ¢&VVÇ5÷Fw3¢r66÷FVF§W"6g&Væ6&fW&6æ6Vg&æ6R66ææW26Ööæ6òrÀ¢Æö6Åöç6ÉÌè	ÉÑ½¸ÍÑÉ¥Á¥ÌÑ¡É¥½¹°Õ¹¥½É´¸9Ùä¬Ý¡¥Ñ¬½±ô¹ÙÈÝÉ½¹¸ÍÁÉ¥±±Ì½Èä¸°(ÍÍ½¹}¹½ÑèMÕµµÈè	ÉÑ½¸ÍÑÉ¥Á°±¥¹¸Ý¥µ±Ì°ÍÁÉ¥±±Ì°Í¥±¬ÍÉ°½±¹¡½È¹­±°(ô°(¹¥èì(Ñ¥­Ñ½¬è½ÑpéÕÈ½±µ½¹ä°É¹ I¥Ù¥É±µ½ÕÈ°ÑÉÉ¡¥°(¥¹ÍÑÉ´èMÑÉ¥ÁµÉ¥¹¥ÉÑ½ÁÌ°¹Ùä¹Ý¡¥Ñ°Á½±¥Í¡±¥¹¸°(É±Í}ÑÌè¹¥¹¥É¹½ÑéÕÈÉ¹¡É¥Ù¥É°(±½±}¥¹Í¥ÉÌè	ÉÑ½¸ÍÑÉ¥Á¬¹ÙäôÑ¡±½°Õ¹¥½É´¸±ÝåÌµ½ÉÁÕÐµÑ½Ñ¡ÈÑ¡¸å½ÔáÁÐ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè	ÉÑ½¸ÍÑÉ¥Á°±¥¹¸Ý¥µ±Ì°ÍÁÉ¥±±Ì°Í¥±¬ÍÉ°(ô°(µ±¤½ÍÐèì(Ñ¥­Ñ½¬è½ÍÑ°É¹µ½Ñ¡È°½±Ù¥Ñ°±µ½¸É½ÙÐ¹½½¸°(¥¹ÍÑÉ´è±¥Í¥½±½ÕÉÌ°±¥¹¸¼µ½ÉÌ°±ÐÍ¹±Ì½¸ÑÉÉ½ÑÑÍÑÁÌ°½±©Ý±±Éä°(É±Í}ÑÌèµ±¥½ÍÐÁ½Í¥Ñ¹¼µ±¥ÍÑå±¥Ñ±¥¹É¥Ù¥É°(±½±}¥¹Í¥ÉÌè1¥¹¸¥Ì¹½¸µ¹½Ñ¥±¸±ÐÍ¹±ÌPÑ¡ÍÑÁÌÍÑÉ½ä¡±Ì¸)Ý±±Éä±ÝåÌÁÁÉ½ÁÉ¥Ñ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±¥¹¸µ¥¤ÉÍÌ°ÁÉ¤É½ÁÁÑÉ½ÕÍÉÌ°±ÐÁÉ¤Í¹±Ì°½±©Ý±±Éä°(ô°(Á½Í¥Ñ¹¼èì(Ñ¥­Ñ½¬è½ÍÑ°É¹µ½Ñ¡È°½±Ù¥Ñ°µ±¤ÍÕµµÈ°±µ½¸É½ÙÐ¹½½¸°(¥¹ÍÑÉ´è±¥Í¥½±½ÕÉÌ°±¥¹¸¼µ½ÉÌ°±ÐÍ¹±Ì½¸ÑÉÉ½ÑÑÍÑÁÌ°É¥¡ÑÌ°(É±Í}ÑÌèÁ½Í¥Ñ¹¼µ±¥½ÍÐ¥Ñ±¥¹É¥Ù¥É½ÍÑ¥¹°(±½±}¥¹Í¥ÉÌè1¥¹¸°É¥°É½ÁµÍ½±Í¹±ÌP¹ÑÕÉ°µÑÉ¥±Ì½¹±ä¸AÉ¥¹ÑÌÝ±½µ¸°(ÍÍ½¹}¹½ÑèMÕµµÈèÁÉ¥¹Ñ±¥¹¸¼µ½É°ÁÉ¤Í¹±Ì°ÍÑÉÜ¡Ð°½±©Ý±±Éä°(ô°(ÕÉ½Ù¹¥¬èì(Ñ¥­Ñ½¬èÉ¥Ñ¥¡¥°µ½Q¡É½¹Ì±µ½ÕÈ°É½Ñ¥¸½ÍÐÍÕµµÈÍÑ¡Ñ¥°(¥¹ÍÑÉ´èMÑ½¹¥ÑäÝ±±ÌÐ½±¸¡½ÕÈ°±¥¹¸ÉÍÍÌ°½ÐÑÉ¥ÀÉä°É¥Ñ¥±Õ­É½À°(É±Í}ÑÌèÕÉ½Ù¹¥¬É½Ñ¥É¥Ñ¥É½Ñ¥ÍÕµµÈ°(±½±}¥¹Í¥ÉÌèMµÉÐÍÕ°¥ÌÑ¡Í±¥¹¸Q¡=±¥ÑäÝ±±ÌÉÍ¡¥½¸ÉÕ¹Ýä¥¸ÍÕµµÈ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±½Ýäµ¥¤ÉÍÌ°ÍÁÉ¥±±Ì½È±ÐÍ¹±Ì°Ý½Ù¸°ÍÕ¸ÁÉ½ÑÑ¥½¸°(ô°(±¥Í½¸èì(Ñ¥­Ñ½¬è1¥Í½¸ÍÑ¡Ñ¥°A½ÉÑÕÕÍÑ¥±ÌÌ­É½À°±µ¡¥±±Ì±¥ÍÑå±°Ñ±¹Ñ¥½ÍÐ½½°°(¥¹ÍÑÉ´è½±ÍÑ½¹ÍÑÉÑÌ°ÉÑ Ñ½¹Ì°ÑÉ´Èà°Ù¥¹ÑµµÑÌµµ½É¸ÕÉ½Á¸ÍÑå±°(É±Í}ÑÌè±¥Í½¸±¥Í½¹ÍÑå±Á½ÉÑÕ°±µ°(±½±}¥¹Í¥ÉÌè]È±åÉÌPÑ¡Ñ±¹Ñ¥Ý¥¹¥ÌÉ°Ù¸¥¸ÍÕµµÈ¸M±Í¡½Ì¹±½ÉÌ½µ¥¹Ñ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±¥¹¸ÑÉ½ÕÍÉÌ°¥ÑÑÑ½À°±½ÉÌ°±¥¡ÐÉ¥¸½ÈÙ¹¥¹Ì°(ô°(É±½¹èì(Ñ¥­Ñ½¬è5¥ÑÉÉ¹¸¡¥°MÁ¹¥Í ÍÕµµÈ°	É±½¹ÑÐ½±¸¡½ÕÈ°(¥¹ÍÑÉ´è	½±½±½ÕÈ¥¹ÍÐÑ¥±­É½ÁÌ°ÍÁÉ¥±±Ì°Ý½Ù¸Ì°½ÉÑ±ÍÌÑ¸µÍ­¥¸±½Ü°(É±Í}ÑÌèÉ±½¹ÍÑå±ÍÁ¹¥Í¡Í¡¥½¸É±½¹µ¥ÑÉÉ¹¹ÍÑå±°(±½±}¥¹Í¥ÉÌè5¹¼°iÉ°UÑÉÅÕPMÁ¹¥Í É¹ÌÝ½É¸Ý¥Ñ ±½°½¹¥¹¸	½±ÁÉ¥¹ÐÙÉäÝ±½µ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè½±±½É°ÉÍÌ½È¼µ½É°ÍÁÉ¥±±Ì°Ý½Ù¸°ÍÑÑµ¹ÐÉÉ¥¹Ì°(ô°(±½¹½¸èì(Ñ¥­Ñ½¬è1½¹½¸ÍÑÉÐÍÑå±°É¬µ¥°9½ÑÑ¥¹!¥±°¡¥°ÉÍÍä¥¹Ð°(¥¹ÍÑÉ´è	É¥¬Ý±°­É½ÁÌ°ÍÑÑµ¹Ð½ÑÌ°¡Õ¹­ä±½ÉÌ°ÉÑ¥Ù±åÉ¥¹°(É±Í}ÑÌè±½¹½¹ÍÑå±±½¹½¹Í¡¥½¸¹½ÑÑ¥¹¡¥±°½½Ñ±½¹½¸°(±½±}¥¹Í¥ÉÌèÉ­Ð°=Ñ¡ÈMÑ½É¥Ì°I¥ÍÌPÑ¡1½¹½¸¥É°ÍÑÁ±Ì¸±ÝåÌÉ¥¹±åÈ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±åÈ¹åÝäP¥ÐÝ¥±°É¥¸¸QÉ¹ ¬ÉÍÌ½µ¼¹ÙÈÝÉ½¹¸°(ô°(µÍÑÉ´èì(Ñ¥­Ñ½¬èM¹¤µÕÑ µ¥¹¥µ±¥Í´°ÍÕÍÑ¥¹±Í¡¥½¸°¹°Í¥å±¥¹¡¥°(¥¹ÍÑÉ´èÉÑ Ñ½¹Ì°½áäÍ¥±¡½ÕÑÑÌ°ÅÕ±¥ÑäÉ¥Ì°éÉ¼µ±½¼ÍÑ¡Ñ¥°(É±Í}ÑÌèµÍÑÉµÍÑå±ÕÑ¡Í¡¥½¸Í¹¥ÍÑå±ÍÕÍÑ¥¹±Í¡¥½¸°(±½±}¥¹Í¥ÉÌè-¥¹Ì½%¹¥¼°¥±¥ÁÁ,°=L¸å±¥¹µÁÉ½½¥ÌÉ°ÉÅÕ¥Éµ¹Ð¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±¥¹¸Ý¥µ±°¥ÑÑÑ°±½ÉÌ½ÈÝ¡¥ÑÑÉ¥¹ÉÌ°µ¥¹¥µ°ÍÍ½É¥Ì°(ô°(¹Üå½É¬èì(Ñ¥­Ñ½¬è=±µ½¹äÍÑ¡Ñ¥°½Ý¹Ñ½Ý¸½½°°Á½ÝÈÉÍÍ¥¹°9e½ÕÑäµ½°°(¥¹ÍÑÉ´èMÑÉÐµÍ¡½Ð¹¥Ì°±ÕáÕÉäÌ°½ÙÉÍ¥é±éÉÌ°½¥¸¡¹°(É±Í}ÑÌè¹åÍ¡¥½¸¹åÍÑå±½±µ½¹ä½½Ñ¹å°(±½±}¥¹Í¥ÉÌè-¡¥Ñ°Q¥¤°MÑÕPÝ¡ÐÑÕ°9eÝ½µ¸ÝÈ¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±¥¹¸½ÈÍ¥±¬Í±¥ÀÉÍÌ°±¸Ý¡¥ÑÑÉ¥¹ÉÌ½ÈÍ¹±Ì°Í¥¹ÈÑ½Ñ°(ô°(Ñ½­å¼èì(Ñ¥­Ñ½¬è!É©Õ­ÔÍÑÉÐÍÑå±°µ¥¹¥µ°)Á¹ÍÍÑ¡Ñ¥°ÁÉ¥Í±åÉ¥¹°¥¹é±¸°(¥¹ÍÑÉ´è%µµÕ±Ñ±Ð±åÌ°Ù¹ÐµÉÍÑÉÑÝÈ°¹½¸­É½À½¹ÑÉÍÐ°(É±Í}ÑÌèÑ½­å½ÍÑå±¡É©Õ­ÔÑ½­å½Í¡¥½¸½½Ñ©Á¸°(±½±}¥¹Í¥ÉÌè½µµÌÉ½¹Ì°%ÍÍä5¥å­°M¤¸AÉÍ¹ÑÑ¥½¸¥ÌÙÉåÑ¡¥¹¸°(ÍÍ½¹}¹½ÑèMÕµµÈè±¥¡ÑÝ¥¡Ð±¥¹¸½È½ÑÑ½¸°µ¥¹¥µ°ÍÍ½É¥Ì°¥µÁ±É½½µ¥¹°(ô°(Õ¤èì(Ñ¥­Ñ½¬èÕ¤±ÕáÕÉä°µ½ÍÐ±µ½ÕÈ°ÉÍ½ÉÐ¡¥°ÉÕ¹ ¥¸Ñ¡Í­ä°(¥¹ÍÑÉ´è]¥µ±Á±éé¼ÍÑÌ°µ±±¥Í¡Á¥Ì°ÍÑÑµ¹ÐÍÕ¹±ÍÍÌ°½±ÙÉåÑ¡¥¹°(É±Í}ÑÌèÕ¥ÍÑå±Õ¥Í¡¥½¸µ½ÍÑÍ¡¥½¸±ÕáÕÉå±¥ÍÑå±°(±½±}¥¹Í¥ÉÌè±½½Èµ±¹Ñ ¹±ÕáPµ½ÍÑä¥ÌÍÑå±¡½¥¡É¸EÕ±¥ÑäÉ¥ÌÉ¥¸Ñ¡¡Ð¸°(ÍÍ½¹}¹½ÑèeÈµÉ½Õ¹èµ½ÍÐµ±¹Ñ ÉÍÍÌ°Ý¥µ±ÑÉ½ÕÍÉÌ°Í¥±¬Ñ½ÁÌ°ÍÑÑµ¹ÐÍÍ½É¥Ì°(ô°)ôì()Õ¹Ñ¥½¸ÑMÍ½¸ ¤ì(½¹ÍÐ´ô¹ÜÑ ¤¹Ñ5½¹Ñ  ¤¬Äì(¥¡´øôÌ´ðôÔ¤ÉÑÕÉ¸ÍÁÉ¥¹ì(¥¡´øôØ´ðôà¤ÉÑÕÉ¸ÍÕµµÈì(¥¡´øôä´ðôÄÄ¤ÉÑÕÉ¸ÕÑÕµ¸ì(ÉÑÕÉ¸Ý¥¹ÑÈì)ô()Õ¹Ñ¥½¸ÑMÑÑ¥1½½­Ì¡¥Ñä°ÍÍ½¸¤ì(ÉÑÕÉ¸l(ì(¹µèQ¡½ÉÑ±ÍÌä1½½¬°(½Í¥½¸èä°(Ù¥èMÕ¸µÉ¹¡¹ÍäPÕ¥±Ð½ÈáÁ±½É¥¹í¥ÑåôÝ¥Ñ¡½ÕÐÍÉ¥¥¥¹ÍÑå±°(Ñ¥­Ñ½­}ÍÑ¡Ñ¥èÅÕ¥Ð±ÕáÕÉäµÑÌ½ÍÑ°ÍÕ°°(ÑÉ¹}Í½Éèàà°(¥Ñå}ÕÑ¡¹Ñ¥¥ÑäèäÈ°(ÍÑå±¥ÍÑ}¹½ÑèQ¡¥Ì¥ÌÝ¡Ð±½°¥¸í¥ÑåôÑÕ±±äÝÉÌÑ¼Ý±¬É½Õ¹P¹½ÐÑ½ÕÉ¥ÍÐ°¹½Ð½ÙÉÉÍÍ¹°(Á¥Ìèl(ì¹µè1¥¹¸]¥µ1QÉ½ÕÍÉÌ°ÍÉ¥ÁÑ¥½¸è!¥ µÝ¥ÍÐ°É±á¥Ð°¹ÑÕÉ°±¥¹¸¥¸¥Ù½Éä½ÈÍ¹°ÍÉ¡}ÅÕÉäè±¥¹¸Ý¥±ÑÉ½ÕÍÉÌÝ½µ¸¥Ù½Éä°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±¥¹¸Ý¥±ÑÉ½ÕÍÉÌÝ½µ¸¥Ù½Éä¤ô°(ì¹µè¥ÑÑI¥Q¹¬°ÍÉ¥ÁÑ¥½¸èMµ±ÍÌÉ¥Ñ¹¬¥¸Ý¡¥Ñ½È¹Õ°ÑÕ­¥¸°ÍÉ¡}ÅÕÉäèÉ¥¥ÑÑÑ¹¬Ñ½ÀÝ½µ¸Ý¡¥Ñ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì É¥¥ÑÑÑ¹¬Ñ½ÀÝ½µ¸Ý¡¥Ñ¤ô°(ì¹µè1Ñ¡È±ÐM¹±Ì°ÍÉ¥ÁÑ¥½¸èM¥µÁ±±Ñ¡È±ÐÍ¹°°Í¥¹±½ÈÑÝ¼µÍÑÉÀ°Ñ¸°ÍÉ¡}ÅÕÉäè±Ñ¡È±ÐÍ¹±ÌÝ½µ¸Ñ¸°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±Ñ¡È±ÐÍ¹±ÌÝ½µ¸Ñ¸¤ô°(ì¹µèI¥Q½Ñ	°ÍÉ¥ÁÑ¥½¸è]½Ù¸É¥Ñ½Ñ°ÍÑÉÕÑÕÉÍ°¹ÑÕÉ°½±½ÕÈ°ÍÉ¡}ÅÕÉäèÉ¥Ñ½ÑÝ½µ¸ÍÑÉÕÑÕÉ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì É¥Ñ½ÑÝ½µ¸ÍÑÉÕÑÕÉ¤ô°(ì¹µè½±!½½ÀÉÉ¥¹Ì°ÍÉ¥ÁÑ¥½¸è5¥Õ´½±¡½½ÁÌ°ÌÀ´ÐÁµ´°Á½±¥Í¡¥¹¥Í °ÍÉ¡}ÅÕÉäè½±¡½½ÀÉÉ¥¹ÌÝ½µ¸ÐÁµ´°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ½±¡½½ÀÉÉ¥¹ÌÝ½µ¸ÐÁµ´¤ô°(t°(ô°(ì(¹µèQ¡¥¹¹È1½½¬°(½Í¥½¸è¥¹¹È°(Ù¥èÙ¹¥¹¥¸í¥ÑåôP½ÉÑ±ÍÍ±äÁÕ±±Ñ½Ñ¡È°¥ÑäµÁÁÉ½ÁÉ¥Ñ°¹ÙÈÑÉäµ¡É°(Ñ¥­Ñ½­}ÍÑ¡Ñ¥è½±µ½¹ä¥¹¹ÈÍÑ¡Ñ¥°(ÑÉ¹}Í½ÉèäÄ°(¥Ñå}ÕÑ¡¹Ñ¥¥Ñäèàä°(ÍÑå±¥ÍÑ}¹½Ñè1½±Ì¥¸í¥ÑåôÑÉÐ¥¹¹ÈÌ¸½Í¥½¸ÕÐµ­¥Ð±½½¬¥¹Ñ°¹°(Á¥Ìèl(ì¹µèM¥±¬M±¥À5¥¤ÉÍÌ°ÍÉ¥ÁÑ¥½¸è	¥ÌµÕÐÍ¥±¬½ÈÍÑ¥¸Í±¥À¥¸¡µÁ¹°¥Ù½Éä°½ÈÕÍÑäÉ½Í°ÍÉ¡}ÅÕÉäèÍ¥±¬Í±¥Àµ¥¤ÉÍÌÝ½µ¸¥ÌÕÐ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì Í¥±¬Í±¥Àµ¥¤ÉÍÌÝ½µ¸¥ÌÕÐ¤ô°(ì¹µèMÑÉÁÁä!±M¹±Ì°ÍÉ¥ÁÑ¥½¸è±¥ÑÍÑÉÀ¡±Í¹°Ü´å´°½±½È¹Õ°ÍÉ¡}ÅÕÉäèÍÑÉÁÁä¡±Í¹±ÌÝ½µ¸½±°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ÍÑÉÁÁä¡±Í¹±ÌÝ½µ¸½±¤ô°(ì¹µè5¥É¼1Ñ¡È	°ÍÉ¥ÁÑ¥½¸èMµ±°ÍÑÉÕÑÕÉ±Ñ¡È°Ñ½Àµ¡¹±½È±ÕÑ °É´½ÈÑ¸°ÍÉ¡}ÅÕÉäèµ¥É¼ÍÑÉÕÑÕÉ±Ñ¡ÈÝ½µ¸±ÕÑ °Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì µ¥É¼ÍÑÉÕÑÕÉ±Ñ¡ÈÝ½µ¸±ÕÑ ¤ô°(ì¹µè½±¡¥¸9­±°ÍÉ¥ÁÑ¥½¸è±¥Ñ±åÉ½±¡¥¹Ì°¥¹Y¹Ñ¥¸½È½à¡¥¸°ÍÉ¡}ÅÕÉäè±¥Ñ½±¡¥¸¹­±±åÉÝ½µ¸°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±¥Ñ½±¡¥¸¹­±±åÉÝ½µ¸¤ô°(t°(ô°(ì(¹µèQ¡]­¹¥Ð°(½Í¥½¸èÝ­¹°(Ù¥èI±áÕÐ½¹Í¥ÉPÑ¡±½½¬½ÈµÉ­Ðµ½É¹¥¹Ì¹±½¹±Õ¹¡Ì¥¸í¥Ñåõ°(Ñ¥­Ñ½­}ÍÑ¡Ñ¥èÕÉ½Á¸ÍÕµµÈÍÕ°°±¥¹¹±½½¬°(ÑÉ¹}Í½ÉèàÔ°(¥Ñå}ÕÑ¡¹Ñ¥¥ÑäèàÜ°(ÍÑå±¥ÍÑ}¹½Ñè]½É­ÌÐÄÁ´ÐÑ¡µÉ­Ð°¹½½¸ÐÑÉÉ±Õ¹ °¹ÑÁ´Ð±±Éä¹°(Á¥Ìèl(ì¹µè1¥¹¸M¡¥ÉÐÉÍÌ°ÍÉ¥ÁÑ¥½¸èI±á±¥¹¸Í¡¥ÉÑÉÍÌ°µ¥¤±¹Ñ °±Ñ½È±½½Í°Ý¡¥Ñ½ÈÍÑÉ¥Á°ÍÉ¡}ÅÕÉäè±¥¹¸Í¡¥ÉÐÉÍÌµ¥¤Ý½µ¸±Ñ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±¥¹¸Í¡¥ÉÐÉÍÌµ¥¤Ý½µ¸±Ñ¤ô°(ì¹µèÍÁÉ¥±±]Ì°ÍÉ¥ÁÑ¥½¸è9ÑÕÉ°©ÕÑÍÁÉ¥±±ÝÍ¹°°Ô´Ý´°¹­±Ñ¥°ÍÉ¡}ÅÕÉäèÍÁÉ¥±±ÝÍ¹±ÌÝ½µ¸©ÕÑ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ÍÁÉ¥±±ÝÍ¹±ÌÝ½µ¸©ÕÑ¤ô°(ì¹µè]½Ù¸1Ñ¡È	±Ð°ÍÉ¥ÁÑ¥½¸è]½Ù¸½ÈÉ¥±Ñ¡È±Ð°Ñ¸°ÈÔ´ÌÁµ´°ÍÉ¡}ÅÕÉäèÉ¥±Ñ¡È±ÐÝ½µ¸Ñ¸°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì É¥±Ñ¡È±ÐÝ½µ¸Ñ¸¤ô°(ì¹µè=ÙÉÍ¥éMÕ¹±ÍÍÌ°ÍÉ¥ÁÑ¥½¸è=ÙÉÍ¥éÍÅÕÉ½ÈÐµåÍÕ¹±ÍÍÌ°½±Éµ°ÍÉ¡}ÅÕÉäè½ÙÉÍ¥éÍÅÕÉÍÕ¹±ÍÍÌÝ½µ¸½±Éµ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ½ÙÉÍ¥éÍÅÕÉÍÕ¹±ÍÍÌÝ½µ¸½±Éµ¤ô°(t°(ô°(ì(¹µèQ¡QÉÙ°ä1½½¬°(½Í¥½¸èÑÉÙ°°(Ù¥èÉÉ¥Ù¥¹¥¸ÍÑå±PÁ½±¥Í¡¹½Õ ½ÈÑ¡ÍÑ¥¹Ñ¥½¸°½µ½ÉÑ±½ÈÑ¡©½ÕÉ¹ä°(Ñ¥­Ñ½­}ÍÑ¡Ñ¥è¥ÉÁ½ÉÐÍ¡¥½¸°½ÉÑ±ÍÌÑÉÙ°¡¥°(ÑÉ¹}Í½ÉèàÈ°(¥Ñå}ÕÑ¡¹Ñ¥¥ÑäèÜà°(ÍÑå±¥ÍÑ}¹½ÑèQ¡ÍÐÑÉÙ°½ÕÑ¥Ð¥Ì½¹å½Ô¸Ý±¬½Ñ¡Á±¹¹ÍÑÉ¥¡ÐÑ¼¥¹¹È¥¸¸°(Á¥Ìèl(ì¹µè]¥µ11¥¹¸QÉ½ÕÍÉÌ°ÍÉ¥ÁÑ¥½¸èM±¥¡Ñ±äÑ¥±½ÉÝ¥µ±¥¸¥Ù½Éä½È­¡­¤°ÑÉÙ°µÉÍµÉÍ¥ÍÑ¹Ð±¥¹¸±¹°ÍÉ¡}ÅÕÉäè±¥¹¸Ý¥±ÑÉ½ÕÍÉÌÑÉÙ°Ý½µ¸°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±¥¹¸Ý¥±ÑÉ½ÕÍÉÌÑÉÙ°Ý½µ¸¤ô°(ì¹µè=ÙÉÍ¥é1¥¹¸	±éÈ°ÍÉ¥ÁÑ¥½¸èI±á±¥¹¸½È½ÑÑ½¸±éÈ¥¸µ°°É´°½È±¥¡Ð­¡­¤°ÍÉ¡}ÅÕÉäè½ÙÉÍ¥é±¥¹¸±éÈÝ½µ¸µ°°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ½ÙÉÍ¥é±¥¹¸±éÈÝ½µ¸µ°¤ô°(ì¹µè¥ÑÑ]¡¥ÑQ°ÍÉ¥ÁÑ¥½¸è±¸Ý¡¥Ñ¥ÑÑÉÜµ¹¬Ñ°¹¼±½½Ì°ÍÉ¡}ÅÕÉäè¥ÑÑÝ¡¥ÑÑÝ½µ¸¹¼±½¼°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ¥ÑÑÝ¡¥ÑÑÝ½µ¸¹¼±½¼¤ô°(ì¹µè1Ñ¡È1½ÉÌ°ÍÉ¥ÁÑ¥½¸èA½±¥Í¡±Ñ¡È±½È¥¸Ñ¸°¥°½ÈÝ¡¥ÑPÁ¹¹ä½È¡½ÉÍµ¥ÐÑ¥°°ÍÉ¡}ÅÕÉäè±Ñ¡È±½ÈÝ½µ¸Ñ¸Á¹¹ä°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±Ñ¡È±½ÈÝ½µ¸Ñ¸Á¹¹ä¤ô°(ì¹µè1É1Ñ¡ÈQ½Ñ°ÍÉ¥ÁÑ¥½¸èMÑÉÕÑÕÉ±Ñ¡ÈÑ½Ñ°ÉÉäµÕ±°Í¥é°Ñ¸½È½¹°ÍÉ¡}ÅÕÉäè±É±Ñ¡ÈÑ½ÑÝ½µ¸ÍÑÉÕÑÕÉ°Õå}½ÁÑ¥½¹ÌèÕ¥±	Õå=ÁÑ¥½¹Ì ±É±Ñ¡ÈÑ½ÑÝ½µ¸ÍÑÉÕÑÕÉ¤ô°(t°(ô°(tì)ô()áÁ½ÉÑÌ¹¡¹±ÈôÍå¹Õ¹Ñ¥½¸¡Ù¹Ð¤ì(¥¡Ù¹Ð¹¡ÑÑÁ5Ñ¡½ôôô=AQ%=9L¤ì(ÉÑÕÉ¸ìÍÑÑÕÍ½èÈÀÐ°¡ÉÌè=IL°½äèôì(ô((½¹ÍÐÁÉµÌôÙ¹Ð¹ÅÕÉåMÑÉ¥¹AÉµÑÉÌñðíôì(½¹ÍÐ¥Ñäô¡ÁÉµÌ¹¥ÑäñðAÉ¥Ì¤¹ÑÉ¥´ ¤ì(½¹ÍÐÍÍ½¸ôÁÉµÌ¹ÍÍ½¸ñðÑMÍ½¸ ¤ì((½¹ÍÐ9Q!I=A%}A%}-dôÁÉ½ÍÌ¹¹Ø¹9Q!I=A%}A%}-dì(¥ 9Q!I=A%}A%}-d¤ì(ÉÑÕÉ¸ì(ÍÑÑÕÍ½èÈÀÀ°(¡ÉÌèì¸¸¹=IL°¡µ½¹ÑÉ½°èÁÕ±¥°ÌµµáôÌÀÀô°(½äè)M=8¹ÍÑÉ¥¹¥ä¡ì(¥Ñä°ÍÍ½¸°(¥±¥Ñ}µ½è]%9}AU	1%M!I}%üÝ¥¸è¥ÉÐ°(Í¡½ÁÍÑå±}Ñ¥Ùè±Í°(±½½­ÌèÑMÑÑ¥1½½­Ì¡¥Ñä°ÍÍ½¸¤°(}µ¼èÑÉÕ°(ô¤°(ôì(ô((½¹ÍÐ¥Ñå1½ÝÈô¥Ñä¹Ñ½1½ÝÉÍ ¤ì(½¹ÍÐÍ½¥°ô%Qe}M=%1m¥Ñå1½ÝÉtñð%Qe}M=%1lÁÉ¥Ìtì((½¹ÍÐÍåÍÑµAÉ½µÁÐôe½ÔÉ5%-e1°Ý½É±µ±ÍÌ$Í¡¥½¸ÍÑå±¥ÍÐ¹ÑÉÙ°ÝÉÉ½áÁÉÐ¸e½ÔÉÑ½µÁ±Ñ°Í¡½ÁÁ±½ÕÑ¥Ð±½½­ÌÑ¥±½ÉÑ¼Ñ¡áÐÕ±ÑÕÉ°¹Í½¥°Í¡¥½¸Í¹½ ¥Ñä¸e½Ô½¹±äÉÍÁ½¹Ý¥Ñ ±¸Ù±¥)M=8¹ì((½¹ÍÐÕÍÉAÉ½µÁÐô¹ÉÑÐ½µÁ±Ñ½ÕÑ¥Ð±½½­Ì½ÈÝ½µ¸Ù¥Í¥Ñ¥¹í¥Ñåô¥¸íÍÍ½¹ôÈÀÈØ¸()¥ÑäÍ½¥°½¹ÑáÐè(´Q¥­Q½¬ÍÑ¡Ñ¥èíÍ½¥°¹Ñ¥­Ñ½­ô(´%¹ÍÑÉ´µ½½èíÍ½¥°¹¥¹ÍÑÉµô(´-ä¡Í¡ÑÌèíÍ½¥°¹É±Í}ÑÍô(´1½°¥¹Í¥ÉÌÝÈèíÍ½¥°¹±½±}¥¹Í¥ÉÍô(´MÍ½¸¹½ÑèíÍ½¥°¹ÍÍ½¹}¹½Ññðô()=Í¥½¹ÌèäÍ¥¡ÑÍ¥¹°¥¹¹È½Ù¹¥¹°Ý­¹ÍÕ°°ÑÉÙ°ä¸()IÑÕÉ¸=91dÑ¡¥Ì)M=8è)ì(¥Ñäèí¥Ñåô°(ÍÍ½¸èíÍÍ½¹ô°(±½½­Ìèl(ì(¹µèQ¡m¹µt°(½Í¥½¸èåñ¥¹¹ÉñÝ­¹ñÑÉÙ°°(Ù¥è=¹Ù½Ñ¥ÙÍ¹Ñ¹°(Ñ¥­Ñ½­}ÍÑ¡Ñ¥èQ¥­Q½¬½%¹ÍÑÉ´ÍÑ¡Ñ¥Ñ½Éä°(ÑÉ¹}Í½Éèàà°(¥Ñå}ÕÑ¡¹Ñ¥¥ÑäèäÄ°(ÍÑå±¥ÍÑ}¹½Ñè]¡äÑ¡¥ÌÝ½É­Ì¥¸í¥ÑåôÍÁ¥¥±±ä°(Á¥Ìèl(ì(¹µèA¥9µ°(ÍÉ¥ÁÑ¥½¸èÕÐ°½±½ÕÈ°µÑÉ¥°°Ñ¥°°(ÍÉ¡}ÅÕÉäèáÐ¹ÑÕÉ°±¹ÕÍÉ ÅÕÉä°(ÁÉ¥}É¹èàÀ´ÌÈÀ(ô(t(ô(t)ô()IÕ±ÌèÐ´ØÁ¥ÌÁÈ±½½¬¥¹±Õ¥¹Í¡½Ì°°½¹ÍÍ½Éä¸	ÙÉäÍÁ¥¥½¸½±½ÕÉÌ¹ÕÑÌ¸ÍÉ¡}ÅÕÉäµÕÍÐ¥¹Ñ¡¥ÌáÐÁ¥½¸M=L½ÈiÉ¸9¼ÑáÐ½ÕÑÍ¥Ñ¡)M=8¹ì((ÑÉäì(½¹ÍÐÁ¥IÌôÝ¥ÐÑ  ¡ÑÑÁÌè¼½Á¤¹¹Ñ¡É½Á¥¹½´½ØÄ½µÍÍÌ°ì(µÑ¡½èA=MP°(¡ÉÌèì(½¹Ñ¹ÐµQåÁèÁÁ±¥Ñ¥½¸½©Í½¸°(àµÁ¤µ­äè9Q!I=A%}A%}-d°(¹Ñ¡É½Á¥µÙÉÍ¥½¸èÈÀÈÌ´ÀØ´ÀÄ°(ô°(½äè)M=8¹ÍÑÉ¥¹¥ä¡ì(µ½°è±Õµ¡¥­Ô´Ð´Ô´ÈÀÈÔÄÀÀÄ°(µá}Ñ½­¹ÌèÌÀÀÀ°(ÍåÍÑ´èÍåÍÑµAÉ½µÁÐ°(µÍÍÌèmìÉ½±èÕÍÈ°½¹Ñ¹ÐèÕÍÉAÉ½µÁÐõt°(ô¤°(ô¤ì((¥ Á¥IÌ¹½¬¤ì(ÉÑÕÉ¸ì(ÍÑÑÕÍ½èÈÀÀ°(¡ÉÌè=IL°(½äè)M=8¹ÍÑÉ¥¹¥ä¡ì¥Ñä°ÍÍ½¸°±½½­ÌèÑMÑÑ¥1½½­Ì¡¥Ñä°ÍÍ½¸¤°}±±¬èÑÉÕô¤°(ôì(ô((½¹ÍÐ±ÕÑôÝ¥ÐÁ¥IÌ¹©Í½¸ ¤ì(½¹ÍÐÉÝQáÐô¡±ÕÑ¹½¹Ñ¹Ðñðmt¥lÁtü¹ÑáÐñðì(½¹ÍÐ©Í½¹QáÐôÉÝQáÐ¹ÉÁ± ½ymµét©q¸ü½´°¤¹ÉÁ± ½q¸ý½´°¤¹ÑÉ¥´ ¤ì((±ÐÉÍÕ±Ðì(ÑÉäìÉÍÕ±Ðô)M=8¹ÁÉÍ¡©Í½¹QáÐ¤ìô(Ñ ¡¤ì(ÉÑÕÉ¸ì(ÍÑÑÕÍ½èÈÀÀ°(¡ÉÌè=IL°(½äè)M=8¹ÍÑÉ¥¹¥ä¡ì¥Ñä°ÍÍ½¸°±½½­ÌèÑMÑÑ¥1½½­Ì¡¥Ñä°ÍÍ½¸¤°}±±¬èÑÉÕô¤°(ôì(ô((¥¡ÉÉä¹¥ÍÉÉä¡ÉÍÕ±Ð¹±½½­Ì¤¤ì(ÉÍÕ±Ð¹±½½­ÌôÉÍÕ±Ð¹±½½­Ì¹µÀ¡±½½¬ôø¡ì(¸¸¹±½½¬°(Á¥ÌèÉÉä¹¥ÍÉÉä¡±½½¬¹Á¥Ì¤ü±½½¬¹Á¥Ì¹µÀ¡Àôø	Õå1¥¹­Ì¡À¤¤èmt°(ô¤¤ì(ô((ÉÍÕ±Ð¹±Ñ­}Éäô1Q-}%1%Q}%ì((ÉÑÕÉ¸ì(ÍÑÑÕÍ½èÈÀÀ°(¡ÉÌèì¸¸¹=IL°¡µ½¹ÑÉ½°èÁÕ±¥°ÌµµáôÄàÀÀô°(½äè)M=8¹ÍÑÉ¥¹¥ä¡ÉÍÕ±Ð¤°(ôì((ôÑ ¡ÉÈ¤ì(½¹Í½±¹ÉÉ½È ½ÕÑ¥ÑÌÉÉ½Èè°ÉÈ¤ì(ÉÑÕÉ¸ì(ÍÑÑÕÍ½èÈÀÀ°(¡ÉÌè=IL°(½äè)M=8¹ÍÑÉ¥¹¥ä¡ì¥Ñä°ÍÍ½¸°±½½­ÌèÑMÑÑ¥1½½­Ì¡¥Ñä°ÍÍ½¸¤°}±±¬èÑÉÕô¤°(ôì(ô)ôì(
+    tiktok: 'Cote d\'Azur old money, Grace Kelly-era glamour revived, Nice to Monaco by yacht',
+    instagram: 'Striped mariniere tops, navy and white, polished linen, yacht-ready elegance',
+    reels_tags: '#cotedazur #frenchriviera #nicefrance #cannes #monaco',
+    local_insiders: 'Breton stripe is the regional uniform. Navy + white + gold = never wrong. Espadrilles for day.',
+    season_note: 'Summer: Breton stripe, linen wide-legs, espadrilles, silk scarf, gold anchor necklace',
+  },
+  nice: {
+    tiktok: 'Cote d\'Azur old money, French Riviera glamour, cafe terrace chic',
+    instagram: 'Striped mariniere tops, navy and white, polished linen',
+    reels_tags: '#nice #nicefrance #cotedazur #frenchriviera',
+    local_insiders: 'Breton stripe + navy = the local uniform. Always more put-together than you expect.',
+    season_note: 'Summer: Breton stripe, linen wide-legs, espadrilles, silk scarf',
+  },
+  'amalfi coast': {
+    tiktok: 'Coastal grandmother, dolce vita, lemon grove at noon',
+    instagram: 'Cliffside colours, linen co-ords, flat sandals on terracotta steps, gold jewellery',
+    reels_tags: '#amalficoast #positano #amalfistyle #italianriviera',
+    local_insiders: 'Linen is non-negotiable. Flat sandals — the steps destroy heels. Jewellery always appropriate.',
+    season_note: 'Summer: linen midi dress, Capri cropped trousers, flat Capri sandals, gold jewellery',
+  },
+  positano: {
+    tiktok: 'Coastal grandmother, dolce vita, Amalfi summer, lemon grove at noon',
+    instagram: 'Cliffside colours, linen co-ords, flat sandals on terracotta steps, raffia hats',
+    reels_tags: '#positano #amalficoast #italianriviera #coasting',
+    local_insiders: 'Linen, raffia, rope-sole sandals — natural materials only. Prints welcome.',
+    season_note: 'Summer: printed linen co-ord, Capri sandals, straw hat, gold jewellery',
+  },
+  dubrovnik: {
+    tiktok: 'Adriatic chic, Game of Thrones glamour, Croatian coast summer aesthetic',
+    instagram: 'Stone city walls at golden hour, linen dresses, boat trip ready, Adriatic blue backdrop',
+    reels_tags: '#dubrovnik #croatia #adriatic #croatiasummer',
+    local_insiders: 'Smart casual is the baseline. The Old City walls are a fashion runway in summer.',
+    season_note: 'Summer: flowy midi dress, espadrilles or flat sandals, woven bag, sun protection',
+  },
+  lisbon: {
+    tiktok: 'Lisbon aesthetic, Portuguese tiles as backdrop, Alfama hills lifestyle, Atlantic coast cool',
+    instagram: 'Cobblestone streets, earth tones, tram 28, vintage-meets-modern European style',
+    reels_tags: '#lisbon #lisbonstyle #portugal #alfama',
+    local_insiders: 'Wear layers — the Atlantic wind is real even in summer. Saddle shoes and loafers dominate.',
+    season_note: 'Summer: linen trousers, fitted top, loafers, light cardigan for evenings',
+  },
+  barcelona: {
+    tiktok: 'Mediterranean chic, Spanish summer, Barceloneta at golden hour',
+    instagram: 'Bold colour against tile backdrops, espadrilles, woven bags, effortless tan-skin glow',
+    reels_tags: '#barcelonastyle #spanishfashion #barcelona #mediterraneanstyle',
+    local_insiders: 'Mango, Zara, Uterque — Spanish brands worn with local confidence. Bold print very welcome.',
+    season_note: 'Summer: bold floral dress or co-ord, espadrilles, woven bag, statement earrings',
+  },
+  london: {
+    tiktok: 'London street style, dark academia, Notting Hill chic, dressed by accident',
+    instagram: 'Brick wall backdrops, statement coats, chunky loafers, creative layering',
+    reels_tags: '#londonstyle #londonfashion #nottinghill #ootdlondon',
+    local_insiders: 'Arket, & Other Stories, Reiss — the London girl staples. Always bring a layer.',
+    season_note: 'Summer: layer anyway — it will rain. Trench + dress combo never wrong.',
+  },
+  amsterdam: {
+    tiktok: 'Scandi-Dutch minimalism, sustainable fashion, canal side cycling chic',
+    instagram: 'Earth tones, boxy silhouettes, quality fabrics, zero-logo aesthetic',
+    reels_tags: '#amsterdamstyle #dutchfashion #scandistyle #sustainablefashion',
+    local_insiders: 'Kings of Indigo, Filippa K, COS. Cycling-proof is a real requirement.',
+    season_note: 'Summer: linen wide-leg, fitted tee, loafers or white trainers, minimal accessories',
+  },
+  'new york': {
+    tiktok: 'Old money aesthetic, downtown cool, power dressing, NYC off duty model',
+    instagram: 'Street-shot candids, luxury bags, oversized blazers, coffee in hand',
+    reels_tags: '#nycfashion #nycstyle #oldmoney #ootdnyc',
+    local_insiders: 'Khaite, Tibi, Staud — what actual NYC women wear.',
+    season_note: 'Summer: linen or silk slip dress, clean white trainers or sandals, designer tote',
+  },
+  tokyo: {
+    tiktok: 'Harajuku street style, minimal Japanese aesthetic, precise layering, Ginza clean',
+    instagram: 'Immaculate flat lays, avant-garde streetwear, neon backdrop contrast',
+    reels_tags: '#tokyostyle #harajuku #tokyofashion #ootdjapan',
+    local_insiders: 'Comme des Garcons, Issey Miyake, Sacai. Presentation is everything.',
+    season_note: 'Summer: lightweight linen or cotton, minimal accessories, impeccable grooming',
+  },
+  dubai: {
+    tiktok: 'Dubai luxury, modest glamour, resort chic, brunch in the sky',
+    instagram: 'Wide-leg palazzo sets, embellished pieces, statement sunglasses, gold everything',
+    reels_tags: '#dubaistyle #dubaifashion #modestfashion #luxurylifestyle',
+    local_insiders: 'Floor-length and luxe — modesty is a style choice here. Quality fabrics read in the heat.',
+    season_note: 'Year-round: modest-length dresses, wide-leg trousers, silk tops, statement accessories',
+  },
+};
+
+function getSeason() {
+  const m = new Date().getMonth() + 1;
+  if (m >= 3 && m <= 5)  return 'spring';
+  if (m >= 6 && m <= 8)  return 'summer';
+  if (m >= 9 && m <= 11) return 'autumn';
+  return 'winter';
+}
+
+function getStaticLooks(city, season) {
+  return [
+    {
+      name: 'The Effortless Day Look',
+      occasion: 'day',
+      vibe: `Sun-drenched and easy — built for exploring ${city} without sacrificing style`,
+      tiktok_aesthetic: 'quiet luxury meets coastal casual',
+      trend_score: 88,
+      city_authenticity: 92,
+      stylist_note: `This is what a local in ${city} actually wears to walk around — not a tourist, not overdressed.`,
+      pieces: [
+        { name: 'Linen Wide-Leg Trousers', description: 'High-waist, relaxed fit, natural linen in ivory or sand', search_query: 'linen wide leg trousers women ivory', buy_options: buildBuyOptions('linen wide leg trousers women ivory') },
+        { name: 'Fitted Ribbed Tank', description: 'Seamless ribbed tank in white or nude, tucked in', search_query: 'ribbed fitted tank top women white', buy_options: buildBuyOptions('ribbed fitted tank top women white') },
+        { name: 'Leather Flat Sandals', description: 'Simple leather flat sandal, single or two-strap, tan', search_query: 'leather flat sandals women tan', buy_options: buildBuyOptions('leather flat sandals women tan') },
+        { name: 'Raffia Tote Bag', description: 'Woven raffia tote, structured base, natural colour', search_query: 'raffia tote bag women structured', buy_options: buildBuyOptions('raffia tote bag women structured') },
+        { name: 'Gold Hoop Earrings', description: 'Medium gold hoops, 30-40mm, polished finish', search_query: 'gold hoop earrings women 40mm', buy_options: buildBuyOptions('gold hoop earrings women 40mm') },
+      ],
+    },
+    {
+      name: 'The Dinner Look',
+      occasion: 'dinner',
+      vibe: `Evening in ${city} — effortlessly pulled together, city-appropriate, never try-hard`,
+      tiktok_aesthetic: 'old money dinner aesthetic',
+      trend_score: 91,
+      city_authenticity: 89,
+      stylist_note: `Locals in ${city} treat dinner as an occasion but make it look accidental.`,
+      pieces: [
+        { name: 'Silk Slip Midi Dress', description: 'Bias-cut silk or satin slip in champagne, ivory, or dusty rose', search_query: 'silk slip midi dress women bias cut', buy_options: buildBuyOptions('silk slip midi dress women bias cut') },
+        { name: 'Strappy Heeled Sandals', description: 'Delicate strap heeled sandal 7-9cm, gold or nude', search_query: 'strappy heeled sandals women gold', buy_options: buildBuyOptions('strappy heeled sandals women gold') },
+        { name: 'Micro Leather Bag', description: 'Small structured leather bag, top-handle or clutch, cream or tan', search_query: 'micro structured leather bag women clutch', buy_options: buildBuyOptions('micro structured leather bag women clutch') },
+        { name: 'Gold Chain Necklace', description: 'Delicate layered gold chains, fine Venetian or box chain', search_query: 'delicate gold chain necklace layered women', buy_options: buildBuyOptions('delicate gold chain necklace layered women') },
+      ],
+    },
+    {
+      name: 'The Weekend Edit',
+      occasion: 'weekend',
+      vibe: `Relaxed but considered — the look for market mornings and long lunches in ${city}`,
+      tiktok_aesthetic: 'European summer casual, #linenlook',
+      trend_score: 85,
+      city_authenticity: 87,
+      stylist_note: `Works at 10am at the market, noon at a terrace lunch, and 4pm at a gallery.`,
+      pieces: [
+        { name: 'Linen Shirt Dress', description: 'Relaxed linen shirtdress, midi length, belted or loose, white or stripe', search_query: 'linen shirt dress midi women belted', buy_options: buildBuyOptions('linen shirt dress midi women belted') },
+        { name: 'Espadrille Wedges', description: 'Natural jute espadrille wedge sandal, 5-7cm, ankle tie', search_query: 'espadrille wedge sandals women jute', buy_options: buildBuyOptions('espadrille wedge sandals women jute') },
+        { name: 'Woven Leather Belt', description: 'Woven or braided leather belt, tan, 25-30mm', search_query: 'braided leather belt women tan', buy_options: buildBuyOptions('braided leather belt women tan') },
+        { name: 'Oversized Sunglasses', description: 'Oversized square or cat-eye sunglasses, gold frame', search_query: 'oversized square sunglasses women gold frame', buy_options: buildBuyOptions('oversized square sunglasses women gold frame') },
+      ],
+    },
+    {
+      name: 'The Travel Day Look',
+      occasion: 'travel',
+      vibe: 'Arriving in style — polished enough for the destination, comfortable for the journey',
+      tiktok_aesthetic: 'airport fashion, effortless travel chic',
+      trend_score: 82,
+      city_authenticity: 78,
+      stylist_note: 'The best travel outfit is one you can walk off the plane and straight to dinner in.',
+      pieces: [
+        { name: 'Wide-Leg Linen Trousers', description: 'Slightly tailored wide-leg in ivory or khaki, travel-crease-resistant linen blend', search_query: 'linen wide leg trousers travel women', buy_options: buildBuyOptions('linen wide leg trousers travel women') },
+        { name: 'Oversized Linen Blazer', description: 'Relaxed linen or cotton blazer in camel, cream, or light khaki', search_query: 'oversized linen blazer women camel', buy_options: buildBuyOptions('oversized linen blazer women camel') },
+        { name: 'Fitted White Tee', description: 'Clean white fitted crew-neck tee, no logos', search_query: 'fitted white tee women no logo', buy_options: buildBuyOptions('fitted white tee women no logo') },
+        { name: 'Leather Loafers', description: 'Polished leather loafer in tan, beige, or white — penny or horse-bit detail', search_query: 'leather loafer women tan penny', buy_options: buildBuyOptions('leather loafer women tan penny') },
+        { name: 'Large Leather Tote', description: 'Structured leather tote, carry-all size, tan or cognac', search_query: 'large leather tote bag women structured', buy_options: buildBuyOptions('large leather tote bag women structured') },
+      ],
+    },
+  ];
+}
+
+exports.handler = async function(event) {
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: CORS, body: '' };
+  }
+
+  const params = event.queryStringParameters || {};
+  const city   = (params.city || 'Paris').trim();
+  const season = params.season || getSeason();
+
+  const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+  if (!ANTHROPIC_API_KEY) {
+    return {
+      statusCode: 200,
+      headers: { ...CORS, 'Cache-Control': 'public, s-maxage=300' },
+      body: JSON.stringify({
+        city, season,
+        affiliate_mode: process.env.AWIN_PUBLISHER_ID ? 'awin' : 'direct',
+        shopstyle_active: false,
+        looks: getStaticLooks(city, season),
+        _demo: true,
+      }),
+    };
+  }
+
+  const cityLower = city.toLowerCase();
+  const social    = CITY_SOCIAL[cityLower] || CITY_SOCIAL['paris'];
+
+  const systemPrompt = `You are MIKAYLA, a world-class AI fashion stylist and travel wardrobe expert. You create complete, shoppable outfit looks tailored to the exact cultural and social fashion scene of each city. You only respond with clean valid JSON.`;
+
+  const userPrompt = `Generate 4 complete outfit looks for a woman visiting ${city} in ${season} 2026.
+
+City social context:
+- TikTok aesthetic: ${social.tiktok}
+- Instagram mood: ${social.instagram}
+- Key hashtags: ${social.reels_tags}
+- Local insiders wear: ${social.local_insiders}
+- Season note: ${social.season_note || ''}
+
+Occasions: day sightseeing, dinner/evening, weekend casual, travel day.
+
+Return ONLY this JSON:
+{
+  "city": "${city}",
+  "season": "${season}",
+  "looks": [
+    {
+      "name": "The [name]",
+      "occasion": "day|dinner|weekend|travel",
+      "vibe": "One evocative sentence",
+      "tiktok_aesthetic": "TikTok/Instagram aesthetic category",
+      "trend_score": 88,
+      "city_authenticity": 91,
+      "stylist_note": "Why this works in ${city} specifically",
+      "pieces": [
+        {
+          "name": "Piece Name",
+          "description": "Cut, colour, material, detail",
+          "search_query": "exact natural language search query",
+          "price_range": "$80-$320"
+        }
+      ]
+    }
+  ]
+}
+
+Rules: 4-6 pieces per look including shoes, bag, one accessory. Be very specific on colours and cuts. search_query must find this exact piece on ASOS or Zara. No text outside the JSON.`;
+
+  try {
+    const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 3000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }],
+      }),
+    });
+
+    if (!apiRes.ok) {
+      return {
+        statusCode: 200,
+        headers: CORS,
+        body: JSON.stringify({ city, season, looks: getStaticLooks(city, season), _fallback: true }),
+      };
+    }
+
+    const claudeData = await apiRes.json();
+    const rawText    = (claudeData.content || [])[0]?.text || '';
+    const jsonText   = rawText.replace(/^```[a-z]*\n?/m, '').replace(/\n?```$/m, '').trim();
+
+    let result;
+    try { result = JSON.parse(jsonText); }
+    catch (e) {
+      return {
+        statusCode: 200,
+        headers: CORS,
+        body: JSON.stringify({ city, season, looks: getStaticLooks(city, season), _fallback: true }),
+      };
+    }
+
+    if (Array.isArray(result.looks)) {
+      result.looks = result.looks.map(look => ({
+        ...look,
+        pieces: Array.isArray(look.pieces) ? look.pieces.map(p => addBuyLinks(p)) : [],
+      }));
+    }
+
+    result.ltk_ready = !!LTK_AFFILIATE_ID;
+
+    return {
+      statusCode: 200,
+      headers: { ...CORS, 'Cache-Control': 'public, s-maxage=1800' },
+      body: JSON.stringify(result),
+    };
+
+  } catch (err) {
+    console.error('outfits error:', err);
+    return {
+      statusCode: 200,
+      headers: CORS,
+      body: JSON.stringify({ city, season, looks: getStaticLooks(city, season), _fallback: true }),
+    };
+  }
+};

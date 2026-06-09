@@ -1,4 +1,4 @@
-// MIKAYLA â AI Outfit Analyzer
+// MIKAYLA — AI Outfit Analyzer
 // Endpoint: POST /api/analyze
 // Body: { imageUrl?, imageBase64?, mediaType?, city? }
 //
@@ -56,7 +56,7 @@ const CITY_CONTEXT = {
   nice:             'Nice 2026: Breton stripe is the local uniform. Navy and white always appropriate. Tags: #nice #cotedazur.',
   'amalfi coast':   'Amalfi Coast 2026: coastal grandmother + dolce vita. Linen non-negotiable, flat sandals only. Tags: #amalficoast.',
   positano:         'Positano 2026: dolce vita. Linen co-ords, flat Capri sandals, raffia. Natural materials. Tags: #positano.',
-  dubrovnik:        'Dubrovnik 2026: Adriatic chic. Smart casual â Old City walls are a fashion runway. Tags: #dubrovnik.',
+  dubrovnik:        'Dubrovnik 2026: Adriatic chic. Smart casual — Old City walls are a fashion runway. Tags: #dubrovnik.',
   lisbon:           'Lisbon 2026: Portuguese tile aesthetic. Wear layers, Atlantic wind real. Loafers dominate. Tags: #lisbon.',
   barcelona:        'Barcelona 2026: Mediterranean chic, bold colour. Espadrilles, woven bags, bold prints. Tags: #barcelonastyle.',
   amsterdam:        'Amsterdam 2026: Scandi-Dutch minimalism. Earth tones, boxy silhouettes, cycling-proof. Tags: #amsterdamstyle.',
@@ -77,10 +77,27 @@ exports.handler = async function(event) {
 
   const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
   if (!ANTHROPIC_API_KEY) {
+    const demoCity = (() => { try { return JSON.parse(event.body || '{}').city || 'Paris'; } catch(e) { return 'Paris'; } })();
     return {
-      statusCode: 503,
+      statusCode: 200,
       headers: CORS_HEADERS,
-      body: JSON.stringify({ error: 'AI analysis not configured. Add ANTHROPIC_API_KEY to Netlify environment variables.' }),
+      body: JSON.stringify({
+        _demo: true,
+        overall_vibe: 'Your look has been received — AI analysis coming soon',
+        aesthetic_label: 'Style in progress',
+        overall_rating: 'Chic',
+        rating_reason: 'AI-powered outfit analysis will be live shortly.',
+        trend_relevance: {
+          city: demoCity,
+          score: 85,
+          verdict: 'Full city trend analysis will activate once AI is configured.',
+          key_trend_alignment: ['Quiet Luxury', 'Euro Summer'],
+          what_locals_notice: 'AI trend scoring coming soon',
+        },
+        pieces: [],
+        missing_pieces: [],
+        city_styling_tip: 'AI-powered styling tips will appear here once fully activated.',
+      }),
     };
   }
 
@@ -100,7 +117,7 @@ exports.handler = async function(event) {
   const cityKey     = city.toLowerCase().replace(/\s+/g, ' ').trim();
   const cityContext = CITY_CONTEXT[cityKey] || CITY_CONTEXT[cityKey.replace(/ /g, '_')] || `${city} 2026: current local fashion trends.`;
 
-  const systemPrompt = `You are MIKAYLA â a world-class AI fashion stylist and visual style analyst. You identify every clothing piece, shoe, bag, and accessory in outfit photos with expert precision, then rate their trend relevance for the specific city provided.
+  const systemPrompt = `You are MIKAYLA — a world-class AI fashion stylist and visual style analyst. You identify every clothing piece, shoe, bag, and accessory in outfit photos with expert precision, then rate their trend relevance for the specific city provided.
 
 Current trend intelligence for ${city}: ${cityContext}
 
@@ -110,7 +127,7 @@ Respond ONLY with clean valid JSON. No markdown, no explanation outside the JSON
 
 Return ONLY this exact JSON (no other text):
 {
-  "overall_vibe": "One evocative sentence â make it feel like a fashion editor wrote it",
+  "overall_vibe": "One evocative sentence — make it feel like a fashion editor wrote it",
   "aesthetic_label": "The TikTok/Instagram aesthetic this outfit fits e.g. 'quiet luxury', 'coastal grandmother', 'old money'",
   "trend_relevance": {
     "city": "${city}",
@@ -126,7 +143,7 @@ Return ONLY this exact JSON (no other text):
       "description": "Oversized camel double-breasted blazer, notched lapels, falls to hip",
       "color": "camel",
       "material_guess": "wool blend",
-      "style_notes": "Relaxed fit, structured shoulders â the silhouette doing all the work",
+      "style_notes": "Relaxed fit, structured shoulders — the silhouette doing all the work",
       "brand_guess": "Looks like Toteme, Sandro, or Mango",
       "trend_score": 91,
       "trend_note": "Why this specific piece is or isn't on trend in ${city}",
@@ -134,9 +151,9 @@ Return ONLY this exact JSON (no other text):
       "search_query_luxury": "camel oversized blazer Toteme Sandro women",
       "search_query_mid": "camel oversized blazer women relaxed fit",
       "search_query_budget": "camel blazer women oversized",
-      "price_luxury": "$280â$850",
-      "price_mid": "$80â$200",
-      "price_budget": "$35â$80"
+      "price_luxury": "$280–$850",
+      "price_mid": "$80–$200",
+      "price_budget": "$35–$80"
     }
   ],
   "missing_pieces": [
@@ -147,21 +164,21 @@ Return ONLY this exact JSON (no other text):
       "search_query_luxury": "luxury version search",
       "search_query_mid": "mid version search",
       "search_query_budget": "budget version search",
-      "price_range": "$40â$180",
+      "price_range": "$40–$180",
       "priority": "high"
     }
   ],
-  "city_styling_tip": "What a local in ${city} would do differently â specific and actionable",
+  "city_styling_tip": "What a local in ${city} would do differently — specific and actionable",
   "overall_rating": "Chic|Nearly There|Needs Work",
   "rating_reason": "One honest sentence explaining the rating"
 }
 
 Rules:
 - Identify EVERY visible item including jewellery, belt, hat, sunglasses
-- Be very specific on cuts, colours, and materials â vague descriptions don't help
-- trend_score is 0â100 integer
+- Be very specific on cuts, colours, and materials — vague descriptions don't help
+- trend_score is 0–100 integer
 - search_query_luxury should name luxury brands; search_query_budget should use generic terms
-- Give exactly 1â3 missing_pieces
+- Give exactly 1–3 missing_pieces
 - overall_rating must be exactly one of: Chic, Nearly There, Needs Work`;
 
   try {

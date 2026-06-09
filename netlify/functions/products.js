@@ -319,6 +319,7 @@ function getDemoProducts(category, city, limit) {
   const pool    = DEMO_PRODUCTS[category] || DEMO_PRODUCTS.accessories;
   const vibe    = CITY_VIBES[cityKey] || CITY_VIBES.default;
 
+  // Score: city match (3pts), vibe keyword match (2pts), fallback (1pt)
   const scored = pool.map(p => {
     let score = 1;
     if (p.city.includes(cityKey))                        score += 3;
