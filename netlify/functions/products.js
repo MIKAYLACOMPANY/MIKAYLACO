@@ -147,7 +147,7 @@ const DEMO_PRODUCTS = {
     },
     {
       id:'dr4', name:'Column Slip Dress', brand:'Totême', price:395,
-      image:'https://images.unsplash.com/photo-1566479179817-4a0e744c4d7e?w=600&h=800&fit=crop&q=85',
+      image:'https://images.unsplash.com/photo-1485518882345-15568b007407?w=600&h=800&fit=crop&q=85',
       affiliate:'https://www.net-a-porter.com/en-us/search?q=column+slip+dress',
       city:['new_york','milan','paris'], vibe:'minimalist'
     },
@@ -240,7 +240,7 @@ const DEMO_PRODUCTS = {
     },
     {
       id:'a2', name:'Oversized Sunglasses', brand:'Celine', price:450,
-      image:'https://images.unsplash.com/photo-1473496169904-658ba7574b0d?w=600&h=800&fit=crop&q=85',
+      image:'https://images.unsplash.com/photo-1522156373667-4c7234bbd804?w=600&h=800&fit=crop&q=85',
       affiliate:'https://www.farfetch.com/shopping/women/search/items.aspx?q=oversized+sunglasses+women',
       city:['paris','milan','positano'], vibe:'luxury'
     },

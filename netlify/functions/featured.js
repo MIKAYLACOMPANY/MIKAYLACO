@@ -28,7 +28,7 @@ const CITY_PHOTOS = {
     '1515886657613-9f3515b0c78f', // editorial fashion, model
     '1502716119720-b23a93e5fe1b', // Paris, fashion, woman
     '1531746020798-e6953c6e8e04', // satin slip style, editorial
-    '1566479179817-4a0e744c4d7e', // elegant evening, column dress
+    '1485518882345-15568b007407', // elegant evening, column dress
   ],
   santorini: [
     '1522156373667-4c7234bbd804', // linen/flowing dress, warm tones
@@ -60,10 +60,10 @@ const CITY_PHOTOS = {
   ],
   'french riviera': [
     '1515372039744-b8f02a3ae446', // silk midi, elegant
-    '1566479179817-4a0e744c4d7e', // column dress, evening
+    '1485518882345-15568b007407', // column dress, evening
     '1531746020798-e6953c6e8e04', // satin slip, chic
     '1483985988355-763728e1935b', // editorial, sophisticated
-    '1473496169904-658ba7574b0d', // accessories, sunglasses
+    '1522156373667-4c7234bbd804', // accessories, sunglasses
   ],
   positano: [
     '1522156373667-4c7234bbd804', // flowing, linen
@@ -75,7 +75,7 @@ const CITY_PHOTOS = {
   rome: [
     '1553062407-98eeb64c6a62',    // structured, Italian
     '1483985988355-763728e1935b', // sophisticated, editorial
-    '1566479179817-4a0e744c4d7e', // elegant, evening
+    '1485518882345-15568b007407', // elegant, evening
     '1531746020798-e6953c6e8e04', // chic, satin
     '1518049362265-d5b2a6467637', // shoes/loafers, cobblestone
   ],
@@ -83,14 +83,14 @@ const CITY_PHOTOS = {
     '1558618666-fcd25c85cd64',    // Milan editorial, fashion week
     '1553062407-98eeb64c6a62',    // power dressing, structured
     '1483985988355-763728e1935b', // camel coat, tailored
-    '1566479179817-4a0e744c4d7e', // monochrome, evening
+    '1485518882345-15568b007407', // monochrome, evening
     '1515886657613-9f3515b0c78f', // editorial model
   ],
   london: [
     '1571513722275-4b41940f54b8', // blazer, boots, structured
     '1483985988355-763728e1935b', // trench coat, editorial
     '1553062407-98eeb64c6a62',    // structured, city
-    '1566479179817-4a0e744c4d7e', // evening, polished
+    '1485518882345-15568b007407', // evening, polished
     '1539109136881-3be0616acf4b', // layered, editorial
   ],
   amsterdam: [
@@ -108,7 +108,7 @@ const CITY_PHOTOS = {
     '1518049362265-d5b2a6467637', // comfortable shoes
   ],
   dubrovnik: [
-    '1566479179817-4a0e744c4d7e', // elegant dress, evening
+    '1485518882345-15568b007407', // elegant dress, evening
     '1522156373667-4c7234bbd804', // flowing, warm
     '1595777457583-95e059d581b8', // black, sophisticated
     '1531746020798-e6953c6e8e04', // satin, chic
@@ -116,7 +116,7 @@ const CITY_PHOTOS = {
   ],
   'new york': [
     '1571513722275-4b41940f54b8', // blazer, boots, NYC energy
-    '1566479179817-4a0e744c4d7e', // column dress, Manhattan
+    '1485518882345-15568b007407', // column dress, Manhattan
     '1553062407-98eeb64c6a62',    // structured tote, loafers
     '1539109136881-3be0616acf4b', // editorial, street style
     '1595777457583-95e059d581b8', // black dress, NYC night
@@ -129,18 +129,18 @@ const CITY_PHOTOS = {
     '1553062407-98eeb64c6a62',    // minimal, considered
   ],
   dubai: [
-    '1566479179817-4a0e744c4d7e', // elegant, evening
+    '1485518882345-15568b007407', // elegant, evening
     '1595777457583-95e059d581b8', // sophisticated, black
     '1531746020798-e6953c6e8e04', // satin, luxury
     '1515372039744-b8f02a3ae446', // midi, modest elegant
-    '1473496169904-658ba7574b0d', // accessories, sunglasses
+    '1522156373667-4c7234bbd804', // accessories, sunglasses
   ],
   nice: [
     '1522156373667-4c7234bbd804', // linen, sunny
     '1515372039744-b8f02a3ae446', // silk midi, french
     '1583845112203-29329902332e', // floral, summer
     '1469334031218-e382a71b716b', // relaxed, riviera
-    '1473496169904-658ba7574b0d', // sunglasses, chic
+    '1522156373667-4c7234bbd804', // sunglasses, chic
   ],
   'amalfi coast': [
     '1522156373667-4c7234bbd804', // linen, coastal
@@ -155,7 +155,7 @@ const DEFAULT_PHOTOS = [
   '1483985988355-763728e1935b',
   '1515886657613-9f3515b0c78f',
   '1553062407-98eeb64c6a62',
-  '1566479179817-4a0e744c4d7e',
+  '1485518882345-15568b007407',
   '1531746020798-e6953c6e8e04',
 ];
 
@@ -444,7 +444,7 @@ exports.handler = async function(event) {
     return { statusCode: 200, headers, body: JSON.stringify(result) };
 
   } catch (err) {
-    console.error('featured.js error:', err.message);
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'Could not load featured look', detail: err.message }) };
+    console.error('featured.js error (serving static fallback):', err.message);
+    return { statusCode: 200, headers, body: JSON.stringify(staticFeaturedFallback(city)) };
   }
 };
