@@ -41,6 +41,61 @@ const OCCASION_NOTES = {
   evening:   'dinner, cocktails, or events — elevated and occasion-appropriate',
 };
 
+function fallbackCloset(body) {
+  const action = body.action;
+  const items = Array.isArray(body.items) ? body.items : [];
+  if (action === 'identify') {
+    return {
+      type: 'Uploaded Piece',
+      color: 'Tap to edit colour',
+      material: 'Add material',
+      style_tags: ['personal wardrobe'],
+      categories: ['casual', 'travel'],
+      versatility_score: 7,
+      styling_tip: 'Add the colour and category so MIKAYLA can match this piece more precisely.',
+      emoji: '👗',
+      demo: true,
+    };
+  }
+  if (action === 'build') {
+    return {
+      outfits: items.length ? [{
+        id: 'closet-edit-1',
+        name: 'Your First Closet Edit',
+        category: 'travel',
+        item_indices: items.slice(0, 4).map((_, index) => index),
+        description: 'A first combination using the pieces already in your closet.',
+        styling_note: 'Adjust each item’s colour and category to unlock more precise combinations.',
+        city_ready: Boolean(body.city),
+        mood: 'Personal Edit',
+      }] : [],
+      demo: true,
+    };
+  }
+  if (action === 'pack') {
+    return {
+      destination: body.city || 'Your destination',
+      trip_days: body.days || 5,
+      style_brief: 'Start with the most versatile pieces in your wardrobe, then change the mood with shoes, bags, and jewellery.',
+      outfits: items.length ? [{
+        id: 'travel-1',
+        name: 'Arrival Look',
+        category: 'travel',
+        item_indices: items.slice(0, 4).map((_, index) => index),
+        description: 'A comfortable first look made from your existing pieces.',
+        styling_note: 'Keep one polished layer accessible for arrival.',
+        mood: 'Easy Arrival',
+        occasion: 'travel day',
+      }] : [],
+      pack_list_indices: items.map((_, index) => index),
+      missing_pieces: [],
+      packing_tip: 'Repeat the base pieces and let accessories distinguish each day.',
+      demo: true,
+    };
+  }
+  return { error: 'Unknown action. Use: identify | build | pack' };
+}
+
 // ── Main handler ──────────────────────────────────────────────────────────────
 exports.handler = async function(event) {
   const headers = {
@@ -56,15 +111,19 @@ exports.handler = async function(event) {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'POST required' }) };
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return { statusCode: 500, headers, body: JSON.stringify({ error: 'ANTHROPIC_API_KEY not configured' }) };
-  }
-
   let body;
   try { body = JSON.parse(event.body); }
   catch (_) { return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
   const { action } = body;
+  if (!process.env.ANTHROPIC_API_KEY) {
+    const fallback = fallbackCloset(body);
+    return {
+      statusCode: fallback.error ? 400 : 200,
+      headers,
+      body: JSON.stringify(fallback),
+    };
+  }
 
   try {
     if (action === 'identify') {

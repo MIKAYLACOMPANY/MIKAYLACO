@@ -11,9 +11,7 @@
 (function() {
   'use strict';
 
-  var API_BASE = window.location.hostname === 'localhost'
-    ? 'http://localhost:8888/api'
-    : '/api';
+  var API_BASE = '/api';
 
   // ── Utility ─────────────────────────────────────────────────────────────────
   function $(id) { return document.getElementById(id); }

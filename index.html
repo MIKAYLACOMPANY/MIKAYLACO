@@ -1676,6 +1676,18 @@
     .stl-empty-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--black); margin-bottom:10px; }
     .stl-empty-sub { font-size:12px; color:var(--mid); max-width:340px; margin:0 auto; line-height:1.7; }
   </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/mikayla.css">
+    <meta name="description" content="MIKAYLA reads the dress code of any city and turns it into a personal, shoppable travel wardrobe.">
+    <link rel="canonical" href="https://www.mikaylaco.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MIKAYLA — Every city has its own dress code.">
+    <meta property="og:description" content="City-specific fashion intelligence for every place on your itinerary.">
+    <meta property="og:image" content="https://www.mikaylaco.com/public/og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.mikaylaco.com/public/og.png">
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
@@ -1741,8 +1753,8 @@
 
       <div class="benefit-item fade-in">
         <span class="benefit-icon">&#x23F1;&#xFE0F;</span>
-        <div class="benefit-title">Real-Time</div>
-        <div class="benefit-desc">Sourced from the last 60 days. What people are wearing there, right now — not last season.</div>
+        <div class="benefit-title">Current Signals</div>
+        <div class="benefit-desc">Public trend signals and current editorial coverage, interpreted for the city you are visiting.</div>
       </div>
 
       <div class="benefit-item fade-in">
@@ -2125,11 +2137,11 @@
             <div>
               <div class="section-label">AI Trend Intelligence</div>
               <h2 class="section-title">Trending Looks</h2>
-              <p class="section-desc" style="max-width:480px;">What people are actually wearing in your destination right now — pulled from TikTok and Instagram, built into complete shoppable outfits. No photo upload needed.</p>
+              <p class="section-desc" style="max-width:480px;">A current city edit synthesised from public trend signals, creator references, and fashion coverage—built into complete shoppable outfits.</p>
             </div>
             <div class="tl-social-badge">
               <span class="tl-live-dot"></span>
-              <span id="tlSourceLabel">TikTok + Instagram — Paris</span>
+              <span id="tlSourceLabel">Current city edit — Paris</span>
             </div>
           </div>
 
@@ -2143,7 +2155,7 @@
 
           <div class="tl-loading" id="tlLoading">
             <div class="tl-spinner"></div>
-            <div class="tl-loading-text" id="tlLoadingText">Reading social trends…</div>
+            <div class="tl-loading-text" id="tlLoadingText">Reading current signals…</div>
           </div>
 
           <div class="tl-looks-grid" id="tlLooksGrid"></div>
@@ -2158,7 +2170,7 @@
       <div>
         <p class="eyebrow">Real Style. Real Cities.</p>
         <h2 class="section-title" id="discoveryTitle">What people are<br />actually <em>wearing there.</em></h2>
-        <div id="cityLiveBadge" style="margin-top:16px;display:none;"><span class="city-live-badge"><span class="city-live-dot"></span><span id="cityLiveName">Paris</span> — Live</span></div>
+        <div id="cityLiveBadge" style="margin-top:16px;display:none;"><span class="city-live-badge"><span class="city-live-dot"></span><span id="cityLiveName">Paris</span> — Source edit</span></div>
         <div class="city-scan-tag" id="cityScanTag"></div>
       </div>
     </div>
@@ -3924,7 +3936,7 @@
         updateDiscovery(cityKey, cityDisplay, cityData);
 
         // Try AI recommendation first; fall back to local data if key not set
-        var apiBase2 = window.location.hostname === 'localhost' ? 'http://localhost:8888/api' : '/api';
+        var apiBase2 = '/api';
         var daysNum  = parseInt((tripDays||'').replace(/[^0-9]/g,''),10) || 4;
 
         goStep(4);
@@ -3995,7 +4007,7 @@
           '<div style="font-family:Cormorant SC,serif;font-size:22px;letter-spacing:0.12em;margin-bottom:4px;">' + escHtml(cityDisplay) + '</div>' +
           '<div style="font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.08em;">' + escHtml(startDate) + ' &middot; ' + escHtml(budget) + '</div>' +
         '</div>' +
-        '<div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);">AI ✓</div>' +
+        '<div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);">CITY EDIT</div>' +
       '</div>' +
       (data.packing_philosophy ? '<div style="border:1px solid var(--border);padding:20px 24px;margin-bottom:24px;font-family:Cormorant Garamond,serif;font-size:18px;font-style:italic;line-height:1.6;color:var(--dark);">' + escHtml(data.packing_philosophy) + '</div>' : '') +
       '<div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-bottom:12px;">Your Outfits</div>' +
@@ -4048,7 +4060,7 @@
   function updateDiscovery(cityKey, cityDisplay, data) {
     // Update section header
     const title = document.getElementById('discoveryTitle');
-    if (title) title.innerHTML = 'What people are wearing<br />in <em>' + cityDisplay + '</em> right now.';
+    if (title) title.innerHTML = 'The style signals shaping<br /><em>' + cityDisplay + '</em> right now.';
 
     // Show live badge
     const badge = document.getElementById('cityLiveBadge');
@@ -4057,7 +4069,7 @@
 
     // Update scan tag
     const scanTag = document.getElementById('cityScanTag');
-    if (scanTag) scanTag.textContent = 'Sources: ' + (data.sources || '') + ' · ' + (data.hashtags || '');
+    if (scanTag) scanTag.textContent = 'Open reference sources: ' + (data.sources || '') + ' · ' + (data.hashtags || '');
 
     // Update source grid links to reflect selected city
     const citySlug = cityDisplay.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -4075,7 +4087,7 @@
     // Update influencer strip
     const label = document.getElementById('inflStripLabel');
     const scroll = document.getElementById('inflScroll');
-    if (label) label.textContent = 'Top style voices spotted in ' + cityDisplay + ' — last 60 days';
+    if (label) label.textContent = 'Creator and editorial references for ' + cityDisplay;
     if (scroll && data.influencers) {
       scroll.innerHTML = '';
       data.influencers.forEach((inf, idx) => {
@@ -5427,7 +5439,7 @@ initOutfitStudio();
     var MW_KEY    = 'mikayla_wardrobe_v2';
     var MW_OUTFIT = 'mikayla_outfits_v2';
     var mwState   = { items: [], outfits: [], activeTab: 'all' };
-    var apiBase   = window.location.hostname === 'localhost' ? 'http://localhost:8888/api' : '/api';
+    var apiBase   = '/api';
 
     // ── Persist ──────────────────────────────────────────────────────────────
     function mwSave() {
@@ -6189,6 +6201,7 @@ initOutfitStudio();
   });
 </script>
 <script src="/mikayla-api.js"></script>
+<script src="/assets/mikayla.js"></script>
 <script>
 // ── Shop This Look — AI Outfit Analyzer ─────────────────────────────────────
 (function() {
@@ -6275,7 +6288,7 @@ initOutfitStudio();
     var payload = { city: city };
     if (stlState.imageBase64) { payload.imageBase64 = stlState.imageBase64; payload.mediaType = stlState.mediaType; }
     else { payload.imageUrl = urlVal; }
-    var apiBase = window.location.hostname === 'localhost' ? 'http://localhost:8888/api' : '/api';
+    var apiBase = '/api';
     setTimeout(function() { stlShowLoading(true, 'Identifying every piece…'); }, 3000);
     setTimeout(function() { stlShowLoading(true, 'Scoring trend relevance…'); }, 6000);
     setTimeout(function() { stlShowLoading(true, 'Building shoppable links…'); }, 9000);
@@ -6439,7 +6452,7 @@ initOutfitStudio();
     if (!grid) return;
 
     var src = document.getElementById('tlSourceLabel');
-    if (src) { src.textContent = (data.social_source || ('TikTok + Instagram \u2014 ' + data.city)); }
+    if (src) { src.textContent = (data.social_source || ('Current city edit \u2014 ' + data.city)); }
 
     var looks = (data.looks || []);
     if (!looks.length) { grid.innerHTML = '<p style="font-family:Raleway,sans-serif;font-size:13px;color:var(--light);padding:20px 0;">No looks available — check back soon.</p>'; return; }
@@ -6512,9 +6525,9 @@ initOutfitStudio();
 
     if (grid)    { grid.innerHTML = ''; }
     if (loading) { loading.style.display = 'block'; }
-    if (loadTxt) { loadTxt.textContent   = 'Reading TikTok + Instagram trends for ' + city + '\u2026'; }
+    if (loadTxt) { loadTxt.textContent   = 'Reading current public signals for ' + city + '\u2026'; }
 
-    var apiBase = window.location.hostname === 'localhost' ? 'http://localhost:8888/api' : '/api';
+    var apiBase = '/api';
     var params  = '?city=' + encodeURIComponent(city) + '&occasion=' + encodeURIComponent(occasion || 'all');
 
     fetch(apiBase + '/outfits' + params)
@@ -6542,7 +6555,7 @@ initOutfitStudio();
   window.MIKAYLA_loadTrendingLooks = function(city) {
     tlState.city = city;
     var src = document.getElementById('tlSourceLabel');
-    if (src) { src.textContent = 'TikTok + Instagram \u2014 ' + city; }
+    if (src) { src.textContent = 'Current city edit \u2014 ' + city; }
     tlLoad(city, tlState.occasion);
   };
 
@@ -6558,7 +6571,7 @@ initOutfitStudio();
     var startCity  = (activePill && activePill.textContent.trim()) || 'Paris';
     tlState.city   = startCity;
     var src = document.getElementById('tlSourceLabel');
-    if (src) { src.textContent = 'TikTok + Instagram \u2014 ' + startCity; }
+    if (src) { src.textContent = 'Current city edit \u2014 ' + startCity; }
     tlLoad(startCity, 'all');
   });
 
@@ -6569,7 +6582,7 @@ initOutfitStudio();
 // ── FEATURED LOOK OF THE DAY ───────────────────────────────────────────────────
 (function() {
 
-  var apiBase = window.location.hostname === 'localhost' ? 'http://localhost:8888/api' : '/api';
+  var apiBase = '/api';
   var flState = { city: 'Paris', loading: false, loaded: false };
 
   // ── Date label ────────────────────────────────────────────────────────────
