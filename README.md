@@ -35,9 +35,11 @@ The existing Vercel project can continue deploying from the GitHub `main` branch
 
 - `ANTHROPIC_API_KEY` — live outfit, itinerary, and image analysis.
 - `ANTHROPIC_MODEL` / `ANTHROPIC_FAST_MODEL` — current model IDs used by the main and lightweight AI workflows.
-- `AWIN_PUBLISHER_ID` / `AWIN_API_TOKEN` — affiliate product feeds.
+- `AWIN_PUBLISHER_ID` / `AWIN_API_TOKEN` — optional future affiliate product feeds.
 - `PINTEREST_ACCESS_TOKEN` / `PINTEREST_BOARD_ID` — approved access to the live MIKAYLA inspiration board. Adding or removing Pins from this board updates the on-site feed.
-- `AWIN_PUBLISHER_ID` and the retailer merchant IDs — convert the existing visual-shopping links into tracked affiliate deep links without changing the interface.
+- `AWIN_PUBLISHER_ID` and the retailer merchant IDs — later convert the existing direct retailer searches into tracked affiliate deep links without changing the interface.
+
+The current release uses direct retailer search links. It does not represent any active affiliate relationship or commission arrangement.
 - `SUPABASE_URL` / `SUPABASE_KEY` — account-backed closet and trip storage.
 - `RESEND_API_KEY` — waitlist and access email delivery.
 

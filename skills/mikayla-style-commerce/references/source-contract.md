@@ -6,7 +6,7 @@
 - Public creator or editorial pages linked rather than copied into a private dataset.
 - Licensed social-data providers under their permitted use.
 - User uploads with explicit consent for the requested analysis.
-- Retailer or affiliate-network product feeds.
+- Retailer feeds, direct retailer searches, or approved affiliate-network product feeds.
 
 ## Restricted practices
 
@@ -46,10 +46,12 @@ Each result should include:
 
 If a live catalogue is unavailable, show retailer search options without fabricated product cards.
 
-## Affiliate disclosure
+## Shopping relationship language
 
-Place a concise disclosure near shoppable results:
+When no affiliate program is active, label the results as direct retailer searches. Do not use a commission disclosure or `sponsored` link attribute.
+
+When affiliate tracking is active, place a concise disclosure near shoppable results:
 
 “MIKAYLA may earn a commission when you shop through selected links. Recommendations are based on style fit, not commission.”
 
-Use `rel="sponsored nofollow noopener"` on affiliate links.
+Use `rel="sponsored nofollow noopener"` only on affiliate links.

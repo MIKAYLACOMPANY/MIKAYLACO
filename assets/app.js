@@ -127,20 +127,6 @@
     button.setAttribute("aria-expanded", "false");
   }
 
-  function renderHome() {
-    var container = document.getElementById("home-feed");
-    if (!container) return;
-    container.innerHTML = state.signals.slice(0, 4).map(editorialCard).join("");
-    bindLookCards(container);
-  }
-
-  function editorialCard(item) {
-    return '<button class="editorial-card" type="button" data-look-id="' + escapeHTML(item.id) + '">' +
-      '<span class="editorial-card-image"><img loading="lazy" src="' + escapeHTML(item.image) + '" alt="' + escapeHTML(item.title + " in " + item.city) + '"><span>' + escapeHTML(item.city) + '</span></span>' +
-      '<span class="editorial-card-copy"><b>' + escapeHTML(item.title) + '</b><small>' + escapeHTML(item.signal) + '</small></span>' +
-    '</button>';
-  }
-
   function renderDiscover() {
     renderCityFilters();
     var title = document.getElementById("discover-city-title");
@@ -206,13 +192,13 @@
       pieces.map(function (piece) {
         var query = item.city + " women " + piece;
         return '<div class="drawer-piece"><h3>' + escapeHTML(piece) + '</h3><div class="drawer-actions">' +
-          '<a href="' + escapeHTML(shopLink("farfetch", query, item.id)) + '" target="_blank" rel="sponsored nofollow noopener"><small>Luxury</small><b>Farfetch ↗</b></a>' +
-          '<a href="' + escapeHTML(shopLink("revolve", query, item.id)) + '" target="_blank" rel="sponsored nofollow noopener"><small>Contemporary</small><b>Revolve ↗</b></a>' +
-          '<a href="' + escapeHTML(shopLink("asos", query, item.id)) + '" target="_blank" rel="sponsored nofollow noopener"><small>Accessible</small><b>ASOS ↗</b></a>' +
+          '<a href="' + escapeHTML(shopLink("farfetch", query, item.id)) + '" target="_blank" rel="noopener"><small>Luxury</small><b>Farfetch ↗</b></a>' +
+          '<a href="' + escapeHTML(shopLink("revolve", query, item.id)) + '" target="_blank" rel="noopener"><small>Contemporary</small><b>Revolve ↗</b></a>' +
+          '<a href="' + escapeHTML(shopLink("asos", query, item.id)) + '" target="_blank" rel="noopener"><small>Accessible</small><b>ASOS ↗</b></a>' +
         '</div></div>';
       }).join("") +
       '<a class="drawer-lens" href="https://lens.google.com/uploadbyurl?url=' + encodeURIComponent(item.image) + '" target="_blank" rel="noopener">Search this image with Google Lens ↗</a>' +
-      '<p class="affiliate-disclosure">MIKAYLA may earn a commission from selected links. The original visual remains connected to its source.</p></div>';
+      '<p class="shopping-note">Shopping results currently open direct retailer searches. The original visual remains connected to its source.</p></div>';
     backdrop.hidden = false;
     drawer.classList.add("is-open");
     drawer.setAttribute("aria-hidden", "false");
@@ -247,7 +233,6 @@
     } catch (_) {
       state.signals = feed.slice();
     }
-    renderHome();
     renderDiscover();
   }
 
@@ -305,9 +290,9 @@
           (piece.trend_score ? '<small>' + escapeHTML(piece.trend_score) + '% city fit</small>' : "") + '</header>' +
           '<p>' + escapeHTML(piece.style_notes || piece.trend_note || "Shop the silhouette and styling effect at the price level that suits you.") + '</p>' +
           '<div class="tier-links">' +
-            '<a href="' + escapeHTML(shopLink("farfetch", query, "visual")) + '" target="_blank" rel="sponsored nofollow noopener"><small>Luxury</small><b>Investment edit ↗</b></a>' +
-            '<a href="' + escapeHTML(shopLink("revolve", query, "visual")) + '" target="_blank" rel="sponsored nofollow noopener"><small>Contemporary</small><b>Modern edit ↗</b></a>' +
-            '<a href="' + escapeHTML(shopLink("asos", query, "visual")) + '" target="_blank" rel="sponsored nofollow noopener"><small>Accessible</small><b>Budget edit ↗</b></a>' +
+            '<a href="' + escapeHTML(shopLink("farfetch", query, "visual")) + '" target="_blank" rel="noopener"><small>Luxury</small><b>Investment edit ↗</b></a>' +
+            '<a href="' + escapeHTML(shopLink("revolve", query, "visual")) + '" target="_blank" rel="noopener"><small>Contemporary</small><b>Modern edit ↗</b></a>' +
+            '<a href="' + escapeHTML(shopLink("asos", query, "visual")) + '" target="_blank" rel="noopener"><small>Accessible</small><b>Budget edit ↗</b></a>' +
           '</div></article>';
       }).join("");
   }
@@ -409,7 +394,7 @@
       : "") +
       gaps.map(function (gap) {
         var query = gap.search_query || gap.item;
-        return '<p class="gap-line">Suggested gap · ' + escapeHTML(gap.item) + ' <a href="' + escapeHTML(shopLink("revolve", query, "itinerary")) + '" target="_blank" rel="sponsored nofollow noopener">Shop options ↗</a></p>';
+        return '<p class="gap-line">Suggested gap · ' + escapeHTML(gap.item) + ' <a href="' + escapeHTML(shopLink("revolve", query, "itinerary")) + '" target="_blank" rel="noopener">Shop options ↗</a></p>';
       }).join("");
   }
 
@@ -654,7 +639,6 @@
   }
 
   function init() {
-    renderHome();
     renderCloset();
     renderStudio();
     updateClosetCounts();
@@ -693,9 +677,13 @@
       loadSignals(state.selectedCity);
     });
 
-    document.querySelector("[data-featured-look]").addEventListener("click", function () {
-      var item = state.signals.find(function (signal) { return signal.id === "milan-burgundy"; }) || state.signals[0];
-      if (item) openDrawer(item);
+    document.querySelectorAll("[data-city-jump]").forEach(function (link) {
+      link.addEventListener("click", function () {
+        var city = link.dataset.cityJump;
+        state.selectedCity = city;
+        document.getElementById("discover-city").value = city;
+        loadSignals(city);
+      });
     });
 
     document.getElementById("visual-file").addEventListener("change", async function () {

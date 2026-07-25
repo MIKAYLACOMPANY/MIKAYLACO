@@ -48,12 +48,13 @@
           </form>
           <p class="quiet-note">Public creator references, current editorial context, and live partner data when configured.</p>
         </div>
-        <div class="hero-visual" aria-label="Current city style reference">
-          <button class="hero-image-button" type="button" data-featured-look>
-            <img src="https://i.pinimg.com/736x/11/e5/35/11e535e26aefb953075ba318ea690ccf.jpg" alt="Milan street style reference featuring burgundy leather and a tonal look">
-            <span><b>Milan</b><small>Open the oxblood edit</small></span>
-          </button>
-          <div class="hero-index" aria-hidden="true">01 / City intelligence</div>
+        <div class="hero-campaign" aria-label="MIKAYLA editorial campaign">
+          <div class="campaign-meta"><span>MIKAYLA / 01</span><span>Travel, interpreted through style</span></div>
+          <div class="campaign-title">
+            <small>Fit in while standing out</small>
+            <strong>Dress<br><em>the City.</em></strong>
+          </div>
+          <div class="campaign-footer"><span>Paris</span><span>Milan</span><span>Tokyo</span><span>Everywhere next</span></div>
         </div>
       </div>
 
@@ -64,15 +65,18 @@
         <span>Complete looks</span>
       </div>
 
-      <section class="home-edit section-pad" aria-labelledby="home-edit-title">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">The current edit</p>
-            <h2 id="home-edit-title">What they’re wearing <em>there.</em></h2>
-          </div>
-          <a class="text-link" href="#discover">Explore every city <span>→</span></a>
+      <section class="city-index section-pad" aria-labelledby="city-index-title">
+        <div>
+          <p class="eyebrow">The world, edited city by city</p>
+          <h2 id="city-index-title">Start with the place.<br><em>Build the wardrobe from there.</em></h2>
         </div>
-        <div class="editorial-grid" id="home-feed"></div>
+        <div class="city-index-list" aria-label="Featured destinations">
+          <a href="#discover" data-city-jump="Paris"><span>01</span>Paris</a>
+          <a href="#discover" data-city-jump="Milan"><span>02</span>Milan</a>
+          <a href="#discover" data-city-jump="Tokyo"><span>03</span>Tokyo</a>
+          <a href="#discover" data-city-jump="London"><span>04</span>London</a>
+          <a href="#discover" data-city-jump="Santorini"><span>05</span>Santorini</a>
+        </div>
       </section>
 
       <section class="journey-section section-pad" aria-labelledby="journey-title">
@@ -121,7 +125,7 @@
         <div class="filter-row" id="city-filters" aria-label="Filter city"></div>
       </div>
       <div class="masonry-feed section-pad" id="discover-feed" aria-live="polite"></div>
-      <p class="affiliate-disclosure section-pad">MIKAYLA may earn a commission when you shop through selected links. Recommendations are based on style fit, not commission.</p>
+      <p class="shopping-note section-pad">Shopping results currently open direct retailer searches. Affiliate tracking can be added later without changing the experience.</p>
     </section>
 
     <section class="view" data-view="visual-shop" aria-labelledby="visual-title">
@@ -155,7 +159,7 @@
           </div>
         </div>
       </div>
-      <p class="affiliate-disclosure section-pad">MIKAYLA may earn a commission when you shop through selected links. Recommendations are based on style fit, not commission.</p>
+      <p class="shopping-note section-pad">Shopping results currently open direct retailer searches. Prices and availability are confirmed on the retailer’s website.</p>
     </section>
 
     <section class="view" data-view="plan" aria-labelledby="plan-title">
@@ -260,7 +264,7 @@
       <a href="#studio">Studio</a>
       <a href="./privacy.html">Privacy</a>
     </nav>
-    <p class="footer-disclosure">MIKAYLA may earn commission from selected shopping links. Creator and editorial references remain connected to their original source.</p>
+    <p class="footer-disclosure">Creator and editorial references remain connected to their original source. Shopping links currently open direct retailer searches.</p>
   </footer>
 
   <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>

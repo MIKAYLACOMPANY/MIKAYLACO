@@ -38,7 +38,7 @@ Use five plain-language journeys:
 - Closet
 - Studio
 
-Keep secondary content such as About, Journal, Privacy, affiliate disclosure, and data controls in the footer or account area.
+Keep secondary content such as About, Journal, Privacy, shopping relationship disclosure when relevant, and data controls in the footer or account area.
 
 ## Completion gate
 

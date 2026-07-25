@@ -56,7 +56,7 @@ if (fs.existsSync(htmlPath)) {
   for (const [label, pattern] of journeys) {
     if (!pattern.test(html)) errors.push(`Primary journey missing from index.html: ${label}`);
   }
-  if (!/affiliate|commission/i.test(html)) errors.push("Affiliate disclosure is missing from index.html");
+  if (!/direct retailer|affiliate|commission/i.test(html)) errors.push("Shopping relationship language is missing from index.html");
 }
 
 if (errors.length) {

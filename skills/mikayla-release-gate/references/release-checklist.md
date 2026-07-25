@@ -51,6 +51,6 @@
 - Images do not cause layout shift.
 - Mobile layouts work at 390 px.
 - Reduced motion is respected.
-- Affiliate disclosure is near shopping content.
+- Shopping relationship language matches the live configuration: direct retailer searches now, affiliate disclosure only when tracking is active.
 - Privacy and deletion controls are discoverable.
 - No API key, token, or email credential is committed.
