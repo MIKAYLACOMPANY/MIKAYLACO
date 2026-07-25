@@ -1,0 +1,18 @@
+const { handler } = require("../netlify/functions/itinerary");
+
+module.exports = async (req, res) => {
+  const event = {
+    httpMethod: req.method,
+    queryStringParameters: req.query || {},
+    body: req.body ? JSON.stringify(req.body) : null,
+    headers: req.headers,
+  };
+  try {
+    const response = await handler(event);
+    Object.entries(response.headers || {}).forEach(([key, value]) => res.setHeader(key, value));
+    res.status(response.statusCode).end(response.body);
+  } catch (error) {
+    console.error("itinerary handler error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
