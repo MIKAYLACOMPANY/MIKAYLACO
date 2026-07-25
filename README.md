@@ -4,12 +4,15 @@ MIKAYLA is a city-specific travel fashion platform: discover what fits the desti
 
 ## Main experiences
 
-- **Discover** — search any city for its style language, creator/Pinterest references, complete looks, accessories, and designer, contemporary, or budget shopping paths.
+- **Discover** — search any city for its style language, sourced creator/Pinterest references, complete looks, accessories, and luxury, contemporary, or accessible shopping paths.
+- **Visual Shop** — upload an outfit for full-look analysis or describe the pieces manually when the live vision model is not configured.
 - **Plan** — use the guided trip builder or upload/paste an itinerary. Named venues become styled occasions.
 - **Closet** — add and categorise clothes the traveller already owns.
-- **Studio** — mix tops, bottoms, shoes, bags, and accessories in separate rows.
+- **Studio** — mix tops, bottoms, shoes, bags, and accessories in separate rows, save the look, and assign it to the itinerary.
 
-The site works without paid API keys using carefully labelled editorial/demo data and a local itinerary parser. Adding the environment variables below enables richer AI analysis, image understanding, product feeds, email, and account storage.
+The site remains useful without paid API keys through clearly labelled curated references, manual visual shopping, local itinerary parsing, local closet storage, and the complete outfit studio. Connected services deepen the same journeys without changing the interface.
+
+The consolidated product brief is in `docs/PRODUCT_SOURCE_OF_TRUTH.md`. Project-local build skills live in `skills/`.
 
 ## Run locally
 
@@ -31,6 +34,7 @@ pnpm run check
 The existing Vercel project can continue deploying from the GitHub `main` branch. Copy the required values from `.env.example` into the Vercel project’s Environment Variables settings. Do not commit real credentials.
 
 - `ANTHROPIC_API_KEY` — live outfit, itinerary, and image analysis.
+- `ANTHROPIC_MODEL` / `ANTHROPIC_FAST_MODEL` — current model IDs used by the main and lightweight AI workflows.
 - `AWIN_PUBLISHER_ID` / `AWIN_API_TOKEN` — affiliate product feeds.
 - `PINTEREST_ACCESS_TOKEN` / `PINTEREST_BOARD_ID` — approved access to the live MIKAYLA inspiration board. Adding or removing Pins from this board updates the on-site feed.
 - `AWIN_PUBLISHER_ID` and the retailer merchant IDs — convert the existing visual-shopping links into tracked affiliate deep links without changing the interface.
@@ -40,3 +44,7 @@ The existing Vercel project can continue deploying from the GitHub `main` branch
 ## Social preview
 
 The branded Open Graph image is stored at `public/og.png`.
+
+## Release gate
+
+`pnpm run check` validates the active application, source feed contract, serverless functions, and static release requirements.

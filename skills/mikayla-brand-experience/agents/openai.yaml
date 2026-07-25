@@ -1,0 +1,4 @@
+interface:
+  display_name: "MIKAYLA Brand Experience"
+  short_description: "Build MIKAYLA’s luxury editorial interface"
+  default_prompt: "Use $mikayla-brand-experience to design a MIKAYLA screen that feels chic, effortless, timeless, and easy to navigate."

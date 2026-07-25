@@ -1,0 +1,4 @@
+interface:
+  display_name: "MIKAYLA Style Commerce"
+  short_description: "Turn city style signals into shoppable edits"
+  default_prompt: "Use $mikayla-style-commerce to turn current city fashion signals into sourced, shoppable, budget-tiered recommendations."

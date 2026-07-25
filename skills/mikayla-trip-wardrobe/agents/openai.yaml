@@ -1,0 +1,4 @@
+interface:
+  display_name: "MIKAYLA Trip Wardrobe"
+  short_description: "Style itineraries from a user’s own closet"
+  default_prompt: "Use $mikayla-trip-wardrobe to create venue-aware trip outfits that reuse the traveler’s closet before recommending purchases."

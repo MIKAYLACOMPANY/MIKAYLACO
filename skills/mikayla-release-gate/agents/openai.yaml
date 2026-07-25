@@ -1,0 +1,4 @@
+interface:
+  display_name: "MIKAYLA Release Gate"
+  short_description: "Audit every MIKAYLA journey before release"
+  default_prompt: "Use $mikayla-release-gate to test the MIKAYLA website across desktop, mobile, accessibility, truthfulness, and core user journeys."

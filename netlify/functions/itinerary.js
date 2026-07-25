@@ -66,7 +66,7 @@ function eventFromLine(line, index, city) {
   };
 }
 
-function demoItinerary(cityHint = "", itineraryText = "") {
+function demoItinerary(cityHint = "", itineraryText = "", closetItems = []) {
   const city = inferDestination(itineraryText, cityHint);
   const lines = String(itineraryText || "").split(/\n+/).map((line) => line.trim()).filter(Boolean);
   const events = (lines.length ? lines : [`${city} city walk`, "Dinner reservation", "Museum visit", "Cocktails"])
@@ -86,7 +86,9 @@ function demoItinerary(cityHint = "", itineraryText = "") {
     dates: "Your upcoming trip",
     days: schedule.length,
     total_occasions: events.length,
-    capsule_note: "A compact wardrobe built around repeatable tailoring, one evening piece, and accessories that change the mood.",
+    capsule_note: closetItems.length
+      ? `A closet-first edit beginning with ${closetItems.length} owned ${closetItems.length === 1 ? "piece" : "pieces"}, then adding only the gaps needed for the itinerary.`
+      : "A compact wardrobe built around repeatable tailoring, one evening piece, and accessories that change the mood.",
     schedule,
     demo: true,
   };
@@ -108,13 +110,14 @@ exports.handler = async function handler(event) {
     city = "",
     budget = "mixed",
     rewear = 2,
+    closet_items = [],
   } = body;
 
   if (!itinerary_text && !image_base64 && !document_base64) {
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "Add itinerary text, an image, or a PDF" }) };
   }
   if (!process.env.ANTHROPIC_API_KEY) {
-    return { statusCode: 200, headers: CORS, body: JSON.stringify(demoItinerary(city, itinerary_text)) };
+    return { statusCode: 200, headers: CORS, body: JSON.stringify(demoItinerary(city, itinerary_text, closet_items)) };
   }
 
   try {
@@ -134,7 +137,12 @@ PREFERENCES:
 - Budget: ${budget}
 - Maximum rewear per piece: ${rewear}
 
-For each named venue or activity, infer its atmosphere, relative formality, cultural expectations, likely time context, and practical requirements. Build a complete head-to-toe outfit including shoes, bag, and accessories. Reuse the capsule intelligently. Do not claim to have read private social posts or live reviews.
+OWNED CLOSET:
+${closet_items.length
+  ? closet_items.map((item) => `- ${item.id}: ${item.type || "piece"}${item.color ? `, ${item.color}` : ""}${item.material ? `, ${item.material}` : ""}`).join("\n")
+  : "- No owned pieces supplied"}
+
+For each named venue or activity, infer its atmosphere, relative formality, cultural expectations, likely time context, and practical requirements. Build a complete head-to-toe outfit including shoes, bag, and accessories. Use owned closet pieces first, reference them by their exact IDs, and recommend a purchase only for a genuine gap. Reuse the capsule intelligently. Do not claim to have read private social posts or live reviews.
 
 Return only valid JSON:
 {
@@ -154,7 +162,8 @@ Return only valid JSON:
       "outfit": {
         "description": "complete outfit including accessories",
         "stylist_note": "why this works for this exact venue",
-        "pieces": [{"item":"piece","rewear_id":"id","is_rewear":false}]
+        "pieces": [{"item":"piece","owned_item_id":"exact closet id or null","is_owned":false,"rewear_id":"id","is_rewear":false}],
+        "gaps": [{"item":"only a genuine missing piece","reason":"why the owned closet cannot cover it","search_query":"product search"}]
       }
     }]
   }]
@@ -162,7 +171,7 @@ Return only valid JSON:
     });
 
     const message = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: process.env.ANTHROPIC_MODEL || "claude-sonnet-5",
       max_tokens: 3500,
       messages: [{ role: "user", content }],
     });
@@ -173,6 +182,6 @@ Return only valid JSON:
     return { statusCode: 200, headers: CORS, body: JSON.stringify(result) };
   } catch (error) {
     console.error("itinerary error:", error.message);
-    return { statusCode: 200, headers: CORS, body: JSON.stringify(demoItinerary(city, itinerary_text)) };
+    return { statusCode: 200, headers: CORS, body: JSON.stringify(demoItinerary(city, itinerary_text, closet_items)) };
   }
 };

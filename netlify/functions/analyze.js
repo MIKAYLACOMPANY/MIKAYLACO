@@ -190,7 +190,7 @@ Rules:
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-opus-4-6',
+        model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5',
         max_tokens: 3000,
         system: systemPrompt,
         messages: [{ role: 'user', content: [imageBlock, { type: 'text', text: userPrompt }] }],

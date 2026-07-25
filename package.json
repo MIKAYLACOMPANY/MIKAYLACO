@@ -4,7 +4,7 @@
   "description": "MIKAYLA travel fashion intelligence",
   "scripts": {
     "dev": "node scripts/dev-server.js",
-    "check": "node --check assets/mikayla.js && node --check assets/mikayla-feed.js && node --check scripts/dev-server.js && node --check api/shop-link.js && node --check api/style-signals.js && node --check netlify/functions/itinerary.js && node --check netlify/functions/closet.js"
+    "check": "node --check assets/app.js && node --check assets/mikayla-feed.js && node --check scripts/dev-server.js && node --check api/shop-link.js && node --check api/style-signals.js && node --check netlify/functions/analyze.js && node --check netlify/functions/itinerary.js && node --check netlify/functions/closet.js && node skills/mikayla-style-commerce/scripts/audit-signals.mjs assets/mikayla-feed.js && node skills/mikayla-release-gate/scripts/audit-static.mjs ."
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

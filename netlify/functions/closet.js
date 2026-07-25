@@ -168,7 +168,7 @@ Return ONLY valid JSON — no markdown, no explanation, no code blocks.
 }`;
 
   const response = await client.messages.create({
-    model:      'claude-opus-4-6',
+    model:      process.env.ANTHROPIC_MODEL || 'claude-sonnet-5',
     max_tokens: 600,
     messages: [{
       role: 'user',
@@ -237,7 +237,7 @@ Return ONLY valid JSON — no markdown, no explanation:
 }`;
 
   const response = await client.messages.create({
-    model:      'claude-haiku-4-5-20251001',
+    model:      process.env.ANTHROPIC_FAST_MODEL || 'claude-haiku-4-5-20251001',
     max_tokens: 2000,
     messages: [{ role: 'user', content: prompt }],
   });
@@ -294,7 +294,7 @@ Return ONLY valid JSON:
 }`;
 
   const response = await client.messages.create({
-    model:      'claude-haiku-4-5-20251001',
+    model:      process.env.ANTHROPIC_FAST_MODEL || 'claude-haiku-4-5-20251001',
     max_tokens: 2000,
     messages: [{ role: 'user', content: prompt }],
   });
