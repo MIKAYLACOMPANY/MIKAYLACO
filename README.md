@@ -4,7 +4,7 @@ MIKAYLA is a city-specific travel fashion platform: discover what fits the desti
 
 ## Main experiences
 
-- **Discover** — search any city for its style language, complete looks, accessories, and exact or lower-price shopping paths.
+- **Discover** — search any city for its style language, creator/Pinterest references, complete looks, accessories, and designer, contemporary, or budget shopping paths.
 - **Plan** — use the guided trip builder or upload/paste an itinerary. Named venues become styled occasions.
 - **Closet** — add and categorise clothes the traveller already owns.
 - **Studio** — mix tops, bottoms, shoes, bags, and accessories in separate rows.
@@ -32,7 +32,8 @@ The existing Vercel project can continue deploying from the GitHub `main` branch
 
 - `ANTHROPIC_API_KEY` — live outfit, itinerary, and image analysis.
 - `AWIN_PUBLISHER_ID` / `AWIN_API_TOKEN` — affiliate product feeds.
-- `PINTEREST_ACCESS_TOKEN` — approved Pinterest data access.
+- `PINTEREST_ACCESS_TOKEN` / `PINTEREST_BOARD_ID` — approved access to the live MIKAYLA inspiration board. Adding or removing Pins from this board updates the on-site feed.
+- `AWIN_PUBLISHER_ID` and the retailer merchant IDs — convert the existing visual-shopping links into tracked affiliate deep links without changing the interface.
 - `SUPABASE_URL` / `SUPABASE_KEY` — account-backed closet and trip storage.
 - `RESEND_API_KEY` — waitlist and access email delivery.
 

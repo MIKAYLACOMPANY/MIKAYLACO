@@ -7,14 +7,14 @@
       eyebrow: "",
       title: "",
       description: "",
-      sections: ["hero", "benefits", "european-summer", "inspiration", "features", "style-journal", "about", "signup"]
+      sections: ["hero", "benefits", "mk-style-feed", "features", "signup"]
     },
     discover: {
       label: "Discover",
       eyebrow: "City fashion intelligence",
       title: "What is the city wearing now?",
       description: "Search any destination, read its current style language, and shop a complete version at the price that works for you.",
-      sections: ["european-summer", "trending-looks", "discovery", "inspiration", "shop-look", "shop-this-look", "it-items"]
+      sections: ["mk-style-feed", "trending-looks", "discovery", "shop-look", "it-items"]
     },
     plan: {
       label: "Plan",
@@ -197,6 +197,14 @@
       discoverCity(document.getElementById("mkHeroCity").value);
     });
     hero.appendChild(form);
+
+    var source = document.createElement("a");
+    source.className = "mk-hero-source";
+    source.href = "https://www.pinterest.com/pin/397583473358907334/";
+    source.target = "_blank";
+    source.rel = "noopener noreferrer";
+    source.textContent = "Look: @cocobeautea · Pinterest ↗";
+    hero.appendChild(source);
   }
 
   function reframeClaims() {
@@ -249,10 +257,194 @@
     }
   }
 
+  var styleFeedState = {
+    items: Array.isArray(window.MIKAYLA_STYLE_FEED) ? window.MIKAYLA_STYLE_FEED.slice() : [],
+    city: "All"
+  };
+
+  function retailerDestination(retailer, query) {
+    var encoded = encodeURIComponent(query);
+    var urls = {
+      farfetch: "https://www.farfetch.com/shopping/women/search/items.aspx?q=" + encoded,
+      revolve: "https://www.revolve.com/r/Search.jsp?search=" + encoded,
+      asos: "https://www.asos.com/search/?q=" + encoded
+    };
+    return urls[retailer] || urls.asos;
+  }
+
+  function shopLink(retailer, query, lookId) {
+    var destination = retailerDestination(retailer, query);
+    if (location.protocol === "file:") return destination;
+    return "./api/shop-link?retailer=" + encodeURIComponent(retailer) +
+      "&look=" + encodeURIComponent(lookId || "") +
+      "&url=" + encodeURIComponent(destination);
+  }
+
+  function buildStyleFeed() {
+    if (document.getElementById("mk-style-feed")) return;
+    var anchor = document.getElementById("european-summer") || document.getElementById("features");
+    if (!anchor || !anchor.parentNode) return;
+
+    var section = document.createElement("section");
+    section.id = "mk-style-feed";
+    section.className = "mk-style-feed";
+    section.innerHTML =
+      '<div class="mk-feed-head">' +
+        '<div><span>Public creator & Pinterest edit</span><h2>Seen in the city.<br><em>Shoppable at your price.</em></h2></div>' +
+        '<div class="mk-feed-tools">' +
+          '<p>Every image opens into a visual shopping result with designer, contemporary, and budget options. The original creator or Pin remains one click away.</p>' +
+          '<form id="mkFeedSearch"><input id="mkFeedCity" type="search" placeholder="Search Paris, Milan, Santorini…" aria-label="Search the style feed by city"><button type="submit">Read the city ↗</button></form>' +
+        '</div>' +
+      '</div>' +
+      '<div class="mk-feed-filters" id="mkFeedFilters"></div>' +
+      '<div class="mk-feed-meta"><span id="mkFeedStatus">Curated public references · affiliate-ready shopping paths</span><span>Tap any image to shop</span></div>' +
+      '<div class="mk-feed-grid" id="mkFeedGrid"></div>';
+
+    anchor.parentNode.insertBefore(section, anchor);
+
+    var drawer = document.createElement("aside");
+    drawer.id = "mkShopDrawer";
+    drawer.className = "mk-shop-drawer";
+    drawer.setAttribute("aria-hidden", "true");
+    drawer.innerHTML = '<button class="mk-shop-close" type="button" aria-label="Close shopping result">×</button><div id="mkShopDrawerBody"></div>';
+    document.body.appendChild(drawer);
+
+    document.getElementById("mkFeedSearch").addEventListener("submit", function (event) {
+      event.preventDefault();
+      var city = document.getElementById("mkFeedCity").value.trim();
+      loadStyleFeed(city || "All");
+    });
+    document.getElementById("mkFeedFilters").addEventListener("click", function (event) {
+      var button = event.target.closest("[data-feed-city]");
+      if (!button) return;
+      loadStyleFeed(button.getAttribute("data-feed-city"));
+    });
+    document.getElementById("mkFeedGrid").addEventListener("click", function (event) {
+      var trigger = event.target.closest("[data-shop-look]");
+      if (trigger) openShopDrawer(trigger.getAttribute("data-shop-look"));
+    });
+    drawer.querySelector(".mk-shop-close").addEventListener("click", closeShopDrawer);
+    drawer.addEventListener("click", function (event) {
+      if (event.target === drawer) closeShopDrawer();
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") closeShopDrawer();
+    });
+
+    renderFeedFilters();
+    renderStyleFeed(styleFeedState.items, "All", "Curated public references");
+    loadStyleFeed("All");
+  }
+
+  function renderFeedFilters() {
+    var cities = ["All"];
+    styleFeedState.items.forEach(function (item) {
+      if (item.city && cities.indexOf(item.city) === -1) cities.push(item.city);
+    });
+    var filters = document.getElementById("mkFeedFilters");
+    if (!filters) return;
+    filters.innerHTML = cities.map(function (city) {
+      return '<button type="button" data-feed-city="' + escapeHTML(city) + '">' + escapeHTML(city) + '</button>';
+    }).join("");
+  }
+
+  function renderStyleFeed(items, city, status) {
+    styleFeedState.city = city || "All";
+    var allItems = Array.isArray(items) ? items : [];
+    var filtered = styleFeedState.city === "All"
+      ? allItems
+      : allItems.filter(function (item) { return String(item.city).toLowerCase() === styleFeedState.city.toLowerCase(); });
+    if (!filtered.length) filtered = allItems.slice(0, 8);
+
+    var grid = document.getElementById("mkFeedGrid");
+    var statusEl = document.getElementById("mkFeedStatus");
+    if (!grid) return;
+    if (statusEl) statusEl.textContent = status || "Curated public references";
+    document.querySelectorAll("#mkFeedFilters [data-feed-city]").forEach(function (button) {
+      button.classList.toggle("active", button.getAttribute("data-feed-city").toLowerCase() === styleFeedState.city.toLowerCase());
+    });
+
+    grid.innerHTML = filtered.map(function (item, index) {
+      var tall = index % 5 === 0 || index % 5 === 3 ? " tall" : "";
+      return '<article class="mk-feed-card' + tall + '">' +
+        '<button class="mk-feed-image" type="button" data-shop-look="' + escapeHTML(item.id) + '" aria-label="Shop ' + escapeHTML(item.title) + '">' +
+          '<img src="' + escapeHTML(item.image) + '" alt="' + escapeHTML(item.title) + '" loading="lazy" referrerpolicy="no-referrer">' +
+          '<span class="mk-feed-city">' + escapeHTML(item.city) + '</span>' +
+          '<span class="mk-feed-shop">Visual shop ↗</span>' +
+        '</button>' +
+        '<div class="mk-feed-copy"><div><h3>' + escapeHTML(item.title) + '</h3><p>' + escapeHTML(item.signal || "") + '</p></div>' +
+          '<a href="' + escapeHTML(item.sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + escapeHTML(item.creator || item.source || "View source") + ' ↗</a>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+    grid.querySelectorAll("img").forEach(function (image) {
+      image.addEventListener("error", function () {
+        var card = image.closest(".mk-feed-card");
+        if (card) card.remove();
+      }, { once: true });
+    });
+  }
+
+  async function loadStyleFeed(city) {
+    city = String(city || "All").trim() || "All";
+    var fallback = Array.isArray(window.MIKAYLA_STYLE_FEED) ? window.MIKAYLA_STYLE_FEED : styleFeedState.items;
+    styleFeedState.items = fallback.slice();
+    renderFeedFilters();
+    renderStyleFeed(fallback, city, city === "All" ? "Curated public references" : "Reading the " + city + " board edit");
+    if (location.protocol === "file:") return;
+
+    try {
+      var response = await fetch("./api/style-signals?city=" + encodeURIComponent(city === "All" ? "" : city));
+      if (!response.ok) return;
+      var data = await response.json();
+      if (!Array.isArray(data.items) || !data.items.length) return;
+      styleFeedState.items = data.items;
+      renderFeedFilters();
+      renderStyleFeed(data.items, city, data.live ? "Live from the MIKAYLA Pinterest board" : "Curated public references");
+    } catch (_) {}
+  }
+
+  function openShopDrawer(id) {
+    var item = styleFeedState.items.find(function (entry) { return entry.id === id; }) ||
+      (window.MIKAYLA_STYLE_FEED || []).find(function (entry) { return entry.id === id; });
+    if (!item) return;
+    var drawer = document.getElementById("mkShopDrawer");
+    var body = document.getElementById("mkShopDrawerBody");
+    var pieces = Array.isArray(item.pieces) ? item.pieces : String(item.signal || "").split("·").map(function (piece) { return piece.trim(); }).filter(Boolean);
+    var lensUrl = "https://lens.google.com/uploadbyurl?url=" + encodeURIComponent(item.image);
+    body.innerHTML =
+      '<div class="mk-shop-visual"><img src="' + escapeHTML(item.image) + '" alt="' + escapeHTML(item.title) + '" referrerpolicy="no-referrer"></div>' +
+      '<div class="mk-shop-content">' +
+        '<span class="mk-shop-eyebrow">' + escapeHTML(item.city) + ' · visual match</span>' +
+        '<h2>' + escapeHTML(item.title) + '</h2>' +
+        '<p>' + escapeHTML(item.signal || "") + '</p>' +
+        '<div class="mk-detected"><span>Pieces detected</span>' + pieces.map(function (piece) { return '<b>' + escapeHTML(piece) + '</b>'; }).join("") + '</div>' +
+        '<div class="mk-price-paths">' +
+          '<a href="' + escapeHTML(shopLink("farfetch", item.query, item.id)) + '" target="_blank" rel="nofollow sponsored noopener"><small>Designer</small><strong>Investment edit</strong><span>Farfetch ↗</span></a>' +
+          '<a href="' + escapeHTML(shopLink("revolve", item.query, item.id)) + '" target="_blank" rel="nofollow sponsored noopener"><small>Contemporary</small><strong>Mid-range match</strong><span>Revolve ↗</span></a>' +
+          '<a href="' + escapeHTML(shopLink("asos", item.query, item.id)) + '" target="_blank" rel="nofollow sponsored noopener"><small>Budget</small><strong>Under-$150 search</strong><span>ASOS ↗</span></a>' +
+        '</div>' +
+        '<div class="mk-shop-source"><a href="' + escapeHTML(item.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Open original source ↗</a><a href="' + escapeHTML(lensUrl) + '" target="_blank" rel="noopener noreferrer">Search image with Google Lens ↗</a></div>' +
+        '<p class="mk-affiliate-note">Shopping links are ready to route through MIKAYLA affiliate IDs when the retailer accounts are connected.</p>' +
+      '</div>';
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    document.body.classList.add("mk-menu-open");
+  }
+
+  function closeShopDrawer() {
+    var drawer = document.getElementById("mkShopDrawer");
+    if (!drawer) return;
+    drawer.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("mk-menu-open");
+  }
+
   function discoverCity(city) {
     city = String(city || "").trim();
     if (!city) return;
     switchView("discover", { instant: true });
+    loadStyleFeed(city);
     var field = document.getElementById("discCityInput");
     if (field) field.value = city;
     setTimeout(function () {
@@ -436,6 +628,7 @@
     buildShell();
     reframeHero();
     reframeClaims();
+    buildStyleFeed();
     buildItineraryUploader();
     correctClaims();
     hookLegacyNavigation();

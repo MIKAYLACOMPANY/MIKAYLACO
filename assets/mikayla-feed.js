@@ -1,0 +1,122 @@
+window.MIKAYLA_STYLE_FEED = [
+  {
+    id: "london-cocobeautea",
+    city: "London",
+    image: "https://i.pinimg.com/736x/84/d5/a0/84d5a029d3bc610de4d9a037acdca073.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/397583473358907334/",
+    creator: "@cocobeautea",
+    source: "Instagram look · saved on Pinterest",
+    title: "The London blazer formula",
+    signal: "Tailored blazer · straight denim · leather loafers · shoulder bag",
+    query: "women black blazer straight jeans leather loafers tan shoulder bag",
+    pieces: ["Black tailored blazer", "Straight-leg denim", "Leather loafers", "Tan shoulder bag"]
+  },
+  {
+    id: "paris-mildagud",
+    city: "Paris",
+    image: "https://i.pinimg.com/736x/e5/73/1d/e5731d7b5de381228c5c203cf7ed352e.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/422281210293170/",
+    creator: "@mildagud",
+    source: "Creator look · Pinterest",
+    title: "Café neutrals with Sambas",
+    signal: "Soft knit · relaxed denim · white sneaker · compact black bag",
+    query: "women beige knit straight jeans white samba sneaker black crossbody bag",
+    pieces: ["Neutral knit", "Relaxed straight jeans", "White low-profile sneaker", "Black crossbody"]
+  },
+  {
+    id: "milan-burgundy",
+    city: "Milan",
+    image: "https://i.pinimg.com/736x/11/e5/35/11e535e26aefb953075ba318ea690ccf.jpg",
+    sourceUrl: "https://in.pinterest.com/pin/2603712281425601/",
+    creator: "The Trend Spotter",
+    source: "MFW street style · Pinterest",
+    title: "Milan’s oxblood moment",
+    signal: "Burgundy leather · ribbed midi · tonal bag · sharp heel",
+    query: "women burgundy leather jacket ribbed midi dress oxblood bag heels",
+    pieces: ["Burgundy leather jacket", "Ribbed midi dress", "Tonal handbag", "Sleek heel"]
+  },
+  {
+    id: "milan-yellow-tailoring",
+    city: "Milan",
+    image: "https://i.pinimg.com/736x/ef/89/0a/ef890a8fe3f8d3d5b9bf79a227ed628f.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/543809723775626076/",
+    creator: "FunkyForty",
+    source: "MFW street style · Pinterest",
+    title: "Soft-colour power tailoring",
+    signal: "Pale-yellow blazer · matching skirt · white heel · black top-handle bag",
+    query: "women pale yellow tailored blazer skirt set white heels black handbag",
+    pieces: ["Pale-yellow blazer", "Tailored midi skirt", "White heel", "Black top-handle bag"]
+  },
+  {
+    id: "milan-pinstripe",
+    city: "Milan",
+    image: "https://i.pinimg.com/736x/20/0b/c6/200bc673af609d90951b9a0834bd9263.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/697565429798979263/",
+    creator: "Who What Wear UK",
+    source: "Editorial street style · Pinterest",
+    title: "The relaxed pinstripe suit",
+    signal: "Navy pinstripe · cropped white shirt · gold hoops · structured tote",
+    query: "women navy pinstripe suit cropped white shirt gold hoops black tote",
+    pieces: ["Navy pinstripe blazer", "Pinstripe trouser", "Cropped white shirt", "Structured tote"]
+  },
+  {
+    id: "santorini-nautical",
+    city: "Santorini",
+    image: "https://i.pinimg.com/736x/de/7b/26/de7b26e20b13970b88748b7dfd6d4409.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/275564070945436480/",
+    creator: "Stella Lanevskaya",
+    source: "Pinterest creator edit",
+    title: "Aegean blue and white",
+    signal: "Knotted stripe shirt · eyelet skirt · cobalt bag · sun hat",
+    query: "women blue striped shirt white eyelet maxi skirt cobalt bag straw hat",
+    pieces: ["Blue striped shirt", "White eyelet skirt", "Cobalt handbag", "Wide-brim hat"]
+  },
+  {
+    id: "santorini-dasha",
+    city: "Santorini",
+    image: "https://i.pinimg.com/736x/ab/65/46/ab6546abaeb61316afccf63ded695fd6.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/1407443629685491/",
+    creator: "@dasha.far",
+    source: "Instagram creator · saved on Pinterest",
+    title: "White-on-white island dressing",
+    signal: "Crisp white set · woven bag · delicate jewellery · oversized sunglasses",
+    query: "women white linen resort set woven handbag gold jewelry sunglasses",
+    pieces: ["White linen top", "White fluid trouser", "Woven handbag", "Gold jewellery"]
+  },
+  {
+    id: "santorini-leonie",
+    city: "Santorini",
+    image: "https://i.pinimg.com/736x/89/89/0b/89890b423ed190d659f6b7e1142875fe.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/324822191857302722/",
+    creator: "Leonie Hanne",
+    source: "Creator editorial · Pinterest",
+    title: "Nude shades above the caldera",
+    signal: "Off-shoulder white top · flowing skirt · nude accessories · statement earrings",
+    query: "women white off shoulder top flowing maxi skirt nude sunglasses earrings",
+    pieces: ["Off-shoulder top", "Flowing neutral skirt", "Nude sunglasses", "Statement earrings"]
+  },
+  {
+    id: "santorini-polkas",
+    city: "Santorini",
+    image: "https://i.pinimg.com/736x/ae/7b/5e/ae7b5e015df1ec2d4796528ca301bc5b.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/159526011785814589/",
+    creator: "Nichole Ciotti",
+    source: "Instagram creator · saved on Pinterest",
+    title: "Polka dots in Oia",
+    signal: "White knit · navy printed skirt · round sunglasses · woven bag",
+    query: "women white knit top navy polka dot midi skirt round sunglasses woven bag",
+    pieces: ["White knit top", "Navy printed midi skirt", "Round sunglasses", "Woven circle bag"]
+  },
+  {
+    id: "positano-stripes",
+    city: "Positano",
+    image: "https://i.pinimg.com/736x/86/08/47/8608476421afcde8a034a8258d683705.jpg",
+    sourceUrl: "https://www.pinterest.com/pin/510314201509293740/",
+    creator: "@ootdmagazine",
+    source: "Creator travel look · Pinterest",
+    title: "Positano sunset stripes",
+    signal: "Pink stripe sundress · tasseled sandal · tan backpack · round sunglasses",
+    query: "women pink striped sundress tassel sandals tan leather bag round sunglasses",
+    pieces: ["Striped sundress", "Tasseled sandal", "Tan leather bag", "Round sunglasses"]
+  }
+];

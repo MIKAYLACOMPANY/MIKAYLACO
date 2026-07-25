@@ -8,6 +8,7 @@ const port = Number(process.env.PORT || 4173);
 const apiNames = new Set([
   "city-photos", "recommend", "outfits", "analyze", "trends", "live-trends",
   "product-search", "waitlist", "featured", "products", "closet", "itinerary",
+  "shop-link", "style-signals",
 ]);
 
 const mimeTypes = {
