@@ -6,9 +6,7 @@ const { URL } = require("url");
 const root = path.resolve(__dirname, "..");
 const port = Number(process.env.PORT || 4173);
 const apiNames = new Set([
-  "city-photos", "recommend", "outfits", "analyze", "trends", "live-trends",
-  "product-search", "waitlist", "featured", "products", "closet", "itinerary",
-  "shop-link", "style-signals",
+  "analyze", "closet", "itinerary", "shop-link", "style-signals",
 ]);
 
 const mimeTypes = {

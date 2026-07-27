@@ -10,7 +10,7 @@ const required = [
   "api/analyze.js",
   "api/itinerary.js",
   "api/closet.js",
-  "api/product-search.js",
+  "api/shop-link.js",
   "api/style-signals.js",
 ];
 

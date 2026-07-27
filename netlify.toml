@@ -15,20 +15,10 @@
     Access-Control-Allow-Headers = "Content-Type"
     Access-Control-Allow-Methods = "GET, POST, OPTIONS"
 
-# Route /api/* to Netlify functions
+# Current compatibility routes for the three shared AI handlers.
 [[redirects]]
-  from = "/api/trends"
-  to = "/.netlify/functions/trends"
-  status = 200
-
-[[redirects]]
-  from = "/api/recommend"
-  to = "/.netlify/functions/recommend"
-  status = 200
-
-[[redirects]]
-  from = "/api/analyse"
-  to = "/.netlify/functions/analyse"
+  from = "/api/analyze"
+  to = "/.netlify/functions/analyze"
   status = 200
 
 [[redirects]]
@@ -39,11 +29,6 @@
 [[redirects]]
   from = "/api/closet"
   to = "/.netlify/functions/closet"
-  status = 200
-
-[[redirects]]
-  from = "/api/waitlist"
-  to = "/.netlify/functions/waitlist"
   status = 200
 
 # Fallback — SPA routing
