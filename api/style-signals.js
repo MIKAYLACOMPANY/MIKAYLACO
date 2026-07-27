@@ -146,62 +146,12 @@ async function fetchCurrentPinterestResults(city, trendKeywords) {
     .map((item, index) => toDiscoverySignal(item, city, index, trendKeywords));
 }
 
-function getBoardImage(pin) {
-  const images = pin?.media?.images || pin?.media?.image || {};
-  const preferred = ["1200x", "600x", "400x300", "150x150"];
-  for (const key of preferred) {
-    if (images[key]?.url) return images[key].url;
-  }
-  const first = Object.values(images).find((image) => image && image.url);
-  return first?.url || "";
-}
-
-function toBoardSignal(pin, index) {
-  const title = pin.title || pin.alt_text || "City style reference";
-  const description = pin.description || pin.alt_text || "Open the original Pin for full creator context.";
-  const cityMatch = `${title} ${description}`.match(/\b(Paris|London|Milan|Rome|Tokyo|Barcelona|Santorini|Positano|Ibiza|Mykonos|Lisbon|Copenhagen|Amsterdam|New York|Dubai|Bali|Tulum|Marrakech)\b/i);
-  const city = cityMatch ? titleCase(cityMatch[1]) : "City Edit";
-  return {
-    id: `pinterest-${pin.id || index}`,
-    city,
-    image: getBoardImage(pin),
-    sourceUrl: `https://www.pinterest.com/pin/${pin.id}/`,
-    creator: pin.board_owner?.username ? `@${pin.board_owner.username}` : "Pinterest",
-    source: "MIKAYLA Pinterest reference",
-    title,
-    signal: description.slice(0, 180),
-    query: `${city} women outfit ${title}`.slice(0, 180),
-    pieces: [],
-    freshness: "Owned-board reference",
-  };
-}
-
-async function fetchBoardFallback(token, boardId, requestedCity) {
-  if (!token || !boardId) return [];
-  const endpoint = `https://api.pinterest.com/v5/boards/${encodeURIComponent(boardId)}/pins?page_size=50`;
-  const response = await fetch(endpoint, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) return [];
-  const data = await response.json();
-  let items = (data.items || []).map(toBoardSignal).filter((item) => item.image);
-  if (requestedCity) {
-    const matches = items.filter((item) => item.city.toLowerCase() === requestedCity.toLowerCase());
-    if (matches.length) items = matches;
-  }
-  return items;
-}
-
 module.exports = async function styleSignals(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "GET required" });
   res.setHeader("Cache-Control", "s-maxage=900, stale-while-revalidate=86400");
 
   const requestedCity = titleCase(req.query?.city || "");
   const token = process.env.PINTEREST_ACCESS_TOKEN;
-  const boardId = process.env.PINTEREST_BOARD_ID;
 
   try {
     if (requestedCity && requestedCity !== "City Edit") {
@@ -216,16 +166,6 @@ module.exports = async function styleSignals(req, res) {
           updatedAt: new Date().toISOString(),
         });
       }
-    }
-
-    const boardItems = await fetchBoardFallback(token, boardId, requestedCity === "City Edit" ? "" : requestedCity);
-    if (boardItems.length) {
-      return res.status(200).json({
-        items: boardItems,
-        live: true,
-        mode: "owned-board",
-        updatedAt: new Date().toISOString(),
-      });
     }
 
     return res.status(200).json({

@@ -12,10 +12,11 @@
 
 1. Use approved Pinterest Trends access for current regional fashion keywords.
 2. Use a licensed image-search provider for automatically refreshed, source-linked Pinterest results by city.
-3. Keep the MIKAYLA Pinterest Business board as a secondary owned reference source, not a feed that requires daily manual updates.
-4. Add MIKAYLA's Instagram profile link as an owned social channel.
-5. Use approved Pinterest and Meta APIs or a licensed provider for live signal ingestion; do not scrape private or restricted social content.
-6. Keep source credit, freshness, and fallback labels visible whenever live signals are shown.
+3. Use the MIKAYLA Pinterest Business account to publish branded editorial Pins and, only after approval, disclosed affiliate Pins that drive traffic back to mikaylaco.com.
+4. Treat development mood-board Pins as visual direction, never as city-trend evidence.
+5. Add MIKAYLA's Instagram profile link as an owned social channel.
+6. Use approved Pinterest and Meta APIs or a licensed provider for live signal ingestion; do not scrape private or restricted social content.
+7. Keep source credit, freshness, and fallback labels visible whenever live signals are shown.
 
 ## Commerce progression
 

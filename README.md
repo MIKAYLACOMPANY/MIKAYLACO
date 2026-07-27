@@ -36,7 +36,8 @@ The existing Vercel project can continue deploying from the GitHub `main` branch
 - `ANTHROPIC_API_KEY` — live outfit, itinerary, and image analysis.
 - `ANTHROPIC_MODEL` / `ANTHROPIC_FAST_MODEL` — current model IDs used by the main and lightweight AI workflows.
 - `AWIN_PUBLISHER_ID` / `AWIN_API_TOKEN` — optional future affiliate product feeds.
-- `PINTEREST_ACCESS_TOKEN` — approved access to Pinterest's current Trends data. The owned MIKAYLA board remains a secondary reference source when `PINTEREST_BOARD_ID` is configured.
+- `PINTEREST_ACCESS_TOKEN` — approved access to Pinterest's current Trends data and, later, MIKAYLA's branded-Pin publishing workflow.
+- `PINTEREST_PUBLISH_BOARD_ID` — optional future destination for branded editorial or approved affiliate Pins. It is not used as the website's trend feed.
 - `DATAFORSEO_LOGIN` / `DATAFORSEO_PASSWORD` — licensed, real-time image-search results for each city query. MIKAYLA filters these to source-linked Pinterest Pin results so the feed updates without manual board maintenance.
 - `AWIN_PUBLISHER_ID` and the retailer merchant IDs — later convert the existing direct retailer searches into tracked affiliate deep links without changing the interface.
 

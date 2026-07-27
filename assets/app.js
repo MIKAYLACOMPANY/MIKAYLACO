@@ -229,8 +229,7 @@
           var trendText = Array.isArray(data.trendKeywords) && data.trendKeywords.length
             ? " · rising now: " + data.trendKeywords.slice(0, 3).map(function (trend) { return trend.keyword; }).join(", ")
             : "";
-          var sourceLabel = data.mode === "automatic-city-discovery" ? "Live city style signals" : "MIKAYLA Pinterest references";
-          status.innerHTML = '<span></span><div><b>' + sourceLabel + '</b><small>Refreshed ' +
+          status.innerHTML = '<span></span><div><b>Live city style signals</b><small>Refreshed ' +
             escapeHTML(new Date(data.updatedAt).toLocaleString()) + escapeHTML(trendText) + '</small></div>';
         }
       } else {
