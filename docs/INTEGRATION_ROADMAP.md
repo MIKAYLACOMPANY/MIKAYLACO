@@ -10,10 +10,12 @@
 
 ## Owned channels to connect
 
-1. Add the approved Pinterest Business board identifier and access token to the private Vercel environment.
-2. Add MIKAYLA's Instagram profile link as an owned social channel.
-3. Use approved Pinterest and Meta APIs or a licensed provider for live signal ingestion; do not scrape private or restricted social content.
-4. Keep source credit, freshness, and fallback labels visible whenever live signals are shown.
+1. Use approved Pinterest Trends access for current regional fashion keywords.
+2. Use a licensed image-search provider for automatically refreshed, source-linked Pinterest results by city.
+3. Keep the MIKAYLA Pinterest Business board as a secondary owned reference source, not a feed that requires daily manual updates.
+4. Add MIKAYLA's Instagram profile link as an owned social channel.
+5. Use approved Pinterest and Meta APIs or a licensed provider for live signal ingestion; do not scrape private or restricted social content.
+6. Keep source credit, freshness, and fallback labels visible whenever live signals are shown.
 
 ## Commerce progression
 

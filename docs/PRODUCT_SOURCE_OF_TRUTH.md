@@ -56,7 +56,9 @@ Paris, New York, London, Tokyo, Milan, Barcelona, Dubai, Amsterdam, Rome, Santor
 - GitHub is the source of record.
 - The interface must remain useful without paid API credentials through clearly labelled local fallbacks.
 - Anthropic vision and text models provide image and itinerary interpretation when configured.
-- Pinterest API may update the approved MIKAYLA inspiration board.
+- Pinterest Trends supplies current search-growth signals when approved access is configured.
+- A licensed image-search provider supplies current, source-linked Pinterest results for each city without requiring daily board maintenance.
+- The approved MIKAYLA Pinterest board remains a secondary owned reference source, not the primary trend engine.
 - The current release uses direct retailer searches at luxury, contemporary, and accessible price levels.
 - Approved affiliate-network or retailer feeds can later supply product details and trackable links without changing the interface.
 - Closet and trip data remain local unless secure account storage is configured.

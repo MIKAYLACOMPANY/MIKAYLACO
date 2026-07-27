@@ -137,7 +137,7 @@
     var container = document.getElementById("discover-feed");
     if (!container) return;
     if (!items.length) {
-      container.innerHTML = '<div class="empty-state"><h2>No sourced looks yet.</h2><p>MIKAYLA is building this city edit. Try another destination or search again when the connected board has been updated.</p></div>';
+      container.innerHTML = '<div class="empty-state"><h2>No sourced looks yet.</h2><p>MIKAYLA is building this city edit. Try another destination while the current search refreshes.</p></div>';
       return;
     }
     container.innerHTML = items.map(function (item) {
@@ -225,10 +225,24 @@
       if (data.live && Array.isArray(data.items) && data.items.length) {
         state.signals = data.items;
         state.signalMode = "live";
-        if (status) status.innerHTML = '<span></span><div><b>Live MIKAYLA board</b><small>Updated ' + escapeHTML(new Date(data.updatedAt).toLocaleString()) + '</small></div>';
+        if (status) {
+          var trendText = Array.isArray(data.trendKeywords) && data.trendKeywords.length
+            ? " · rising now: " + data.trendKeywords.slice(0, 3).map(function (trend) { return trend.keyword; }).join(", ")
+            : "";
+          var sourceLabel = data.mode === "automatic-city-discovery" ? "Live city style signals" : "MIKAYLA Pinterest references";
+          status.innerHTML = '<span></span><div><b>' + sourceLabel + '</b><small>Refreshed ' +
+            escapeHTML(new Date(data.updatedAt).toLocaleString()) + escapeHTML(trendText) + '</small></div>';
+        }
       } else {
         state.signals = feed.slice();
         state.signalMode = "curated";
+        if (status) {
+          var searchedCity = city && city !== "All" ? city : "";
+          var liveSearch = searchedCity
+            ? ' <a href="https://www.pinterest.com/search/pins/?q=' + encodeURIComponent(searchedCity + " street style women outfit") + '" target="_blank" rel="noopener">Open current Pinterest search ↗</a>'
+            : "";
+          status.innerHTML = '<span></span><div><b>Curated public references</b><small>Automatic city discovery is being connected.' + liveSearch + '</small></div>';
+        }
       }
     } catch (_) {
       state.signals = feed.slice();
