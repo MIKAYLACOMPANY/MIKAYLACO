@@ -57,12 +57,39 @@ function eventFromLine(line, index, city) {
     note = "Breathable, packable pieces with enough structure to move beyond the water.";
   }
 
+  const options = [
+    {
+      direction: "Understated",
+      description,
+      stylist_note: note,
+    },
+    {
+      direction: "Fashion-forward",
+      description: venueType === "Resort"
+        ? "Draped resort dress · sculptural sandal · oversized sunglasses · statement cuff · compact woven bag"
+        : venueType === "Restaurant" || venueType === "Bar"
+          ? "Asymmetric midi silhouette · sharp heel · sculptural jewellery · compact top-handle bag"
+          : "Directional tailoring · fitted base layer · low-profile shoe · architectural bag · statement eyewear",
+      stylist_note: "A more directional interpretation that keeps the same occasion and city context.",
+    },
+    {
+      direction: "Practical",
+      description: venueType === "Resort"
+        ? "Linen co-ord · flat leather sandal · secure woven tote · sunglasses · lightweight layer"
+        : venueType === "Restaurant" || venueType === "Bar"
+          ? "Polished separates · low heel · compact shoulder bag · refined earrings · light layer"
+          : "Relaxed tailored trouser · fitted knit · leather flat · hands-free bag · polished outer layer",
+      stylist_note: "An easy-to-wear alternative with the same visual intention and a simpler day-to-night transition.",
+    },
+  ];
+
   return {
     time,
     venue,
     venue_type: venueType,
     dress_code: dressCode,
     outfit: { description, stylist_note: note },
+    outfit_options: options,
   };
 }
 
@@ -142,7 +169,7 @@ ${closet_items.length
   ? closet_items.map((item) => `- ${item.id}: ${item.type || "piece"}${item.color ? `, ${item.color}` : ""}${item.material ? `, ${item.material}` : ""}`).join("\n")
   : "- No owned pieces supplied"}
 
-For each named venue or activity, infer its atmosphere, relative formality, cultural expectations, likely time context, and practical requirements. Build a complete head-to-toe outfit including shoes, bag, and accessories. Use owned closet pieces first, reference them by their exact IDs, and recommend a purchase only for a genuine gap. Reuse the capsule intelligently. Do not claim to have read private social posts or live reviews.
+For each named venue or activity, infer its visual atmosphere, relative formality, likely time context, and weather context. Create exactly three complete head-to-toe styling directions: Understated, Fashion-forward, and Practical. Each must include shoes, bag, and accessories, remain true to the same city and occasion, and differ in styling attitude rather than price. Use owned closet pieces first, reference them by their exact IDs, and recommend a purchase only for a genuine gap. Reuse the capsule intelligently. Do not add political, religious, moral, or general lifestyle commentary. Do not claim to have read private social posts or live reviews.
 
 Return only valid JSON:
 {
@@ -159,19 +186,22 @@ Return only valid JSON:
       "venue": "venue",
       "venue_type": "type",
       "dress_code": "dress code",
-      "outfit": {
+      "outfit_options": [{
+        "direction": "Understated | Fashion-forward | Practical",
         "description": "complete outfit including accessories",
         "stylist_note": "why this works for this exact venue",
         "pieces": [{"item":"piece","owned_item_id":"exact closet id or null","is_owned":false,"rewear_id":"id","is_rewear":false}],
         "gaps": [{"item":"only a genuine missing piece","reason":"why the owned closet cannot cover it","search_query":"product search"}]
-      }
+      }]
     }]
   }]
 }`,
     });
 
     const message = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL || "claude-sonnet-5",
+      model: process.env.ANTHROPIC_MODEL && process.env.ANTHROPIC_MODEL !== "claude-sonnet-5"
+        ? process.env.ANTHROPIC_MODEL
+        : "claude-sonnet-4-20250514",
       max_tokens: 3500,
       messages: [{ role: "user", content }],
     });

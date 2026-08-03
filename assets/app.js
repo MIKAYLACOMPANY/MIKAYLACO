@@ -9,8 +9,14 @@
     closet: readStore("mikayla_closet_v4", []),
     itinerary: readStore("mikayla_itinerary_v4", null),
     savedLooks: readStore("mikayla_saved_looks_v4", []),
+    savedInspiration: readStore("mikayla_saved_inspiration_v1", []),
+    uploadedReferences: readStore("mikayla_uploaded_references_v1", []),
+    hiddenInspiration: readStore("mikayla_hidden_inspiration_v1", []),
+    tasteFeedback: readStore("mikayla_taste_feedback_v1", {}),
     assignments: readStore("mikayla_assignments_v4", {}),
-    mixer: {}
+    mixer: {},
+    pendingVisualReference: null,
+    refinements: readStore("mikayla_refinements_v1", { occasion: "", colour: "", size: "", region: "Canada" })
   };
 
   var studioDefaults = {
@@ -77,6 +83,73 @@
     return prefix + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7);
   }
 
+  function pinId(url) {
+    var match = String(url || "").match(/\/pin\/(\d+)/i);
+    return match ? match[1] : "";
+  }
+
+  function sourcePlatform(url) {
+    var value = String(url || "").toLowerCase();
+    if (value.includes("pinterest.")) return "Pinterest";
+    if (value.includes("instagram.com")) return "Instagram";
+    if (value.includes("tiktok.com")) return "TikTok";
+    return "Original source";
+  }
+
+  function tiktokId(url) {
+    var match = String(url || "").match(/\/video\/(\d+)/i);
+    return match ? match[1] : "";
+  }
+
+  function instagramEmbedUrl(url) {
+    var match = String(url || "").match(/^https:\/\/(?:www\.)?instagram\.com\/(p|reel|tv)\/([a-zA-Z0-9_-]+)/i);
+    return match ? "https://www.instagram.com/" + match[1] + "/" + match[2] + "/embed/captioned/" : "";
+  }
+
+  function sourceEmbed(item) {
+    var sourceUrl = item && item.sourceUrl;
+    var platform = sourcePlatform(sourceUrl);
+    var pinterestId = pinId(sourceUrl);
+    var videoId = tiktokId(sourceUrl);
+    var instagramUrl = instagramEmbedUrl(sourceUrl);
+    if (pinterestId) {
+      return '<a data-pin-do="embedPin" data-pin-width="medium" href="' + escapeHTML(sourceUrl) + '"></a>';
+    }
+    if (videoId) {
+      return '<iframe class="social-post-frame social-post-frame-tiktok" loading="lazy" title="TikTok post by ' + escapeHTML(item.creator || "creator") + '" src="https://www.tiktok.com/player/v1/' + escapeHTML(videoId) + '?controls=1&description=1&music_info=0&rel=0" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+    }
+    if (instagramUrl) {
+      return '<iframe class="social-post-frame social-post-frame-instagram" loading="lazy" title="Instagram post by ' + escapeHTML(item.creator || "creator") + '" src="' + escapeHTML(instagramUrl) + '" allowtransparency="true" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+    }
+    if (item && item.image && sourceUrl) {
+      return '<a class="source-image-link" href="' + escapeHTML(sourceUrl) + '" target="_blank" rel="noopener"><img loading="lazy" src="' + escapeHTML(item.image) + '" alt="' + escapeHTML(item.title || item.city + " style reference") + '"><span>View on ' + escapeHTML(platform) + ' ↗</span></a>';
+    }
+    return '<span><small>' + escapeHTML(item.city || "City edit") + '</small><br>' + escapeHTML(item.title || "MIKAYLA editorial interpretation") + '</span>';
+  }
+
+  function fallbackCitySignals(city) {
+    var search = "https://www.pinterest.com/search/pins/?q=" + encodeURIComponent(city + " women street style outfit");
+    return [
+      { id: "interpretation-" + slug(city) + "-day", city: city, sourceUrl: search, creator: "MIKAYLA", source: "Editorial interpretation", title: "The city day edit", signal: "A polished daytime silhouette shaped around the destination, season, and current weather.", pieces: ["City-ready layer", "Refined day base", "Low-profile shoe", "Structured day bag", "Sunglasses"] },
+      { id: "interpretation-" + slug(city) + "-dinner", city: city, sourceUrl: search, creator: "MIKAYLA", source: "Editorial interpretation", title: "The dinner edit", signal: "An elevated evening direction designed to feel intentional without becoming formalwear.", pieces: ["Evening silhouette", "Refined heel or flat", "Compact bag", "Sculptural jewellery"] },
+      { id: "interpretation-" + slug(city) + "-statement", city: city, sourceUrl: search, creator: "MIKAYLA", source: "Editorial interpretation", title: "The fashion-forward edit", signal: "A stronger proportion or accessory story for travellers who want a more directional interpretation.", pieces: ["Directional main piece", "Clean base", "Statement accessory", "Polished shoe"] }
+    ];
+  }
+
+  function hydratePinterest() {
+    window.setTimeout(function () {
+      try {
+        if (window.PinUtils && typeof window.PinUtils.build === "function") window.PinUtils.build();
+      } catch (_) {}
+    }, 60);
+  }
+
+  function updateSavedCount() {
+    var count = state.savedInspiration.length + state.uploadedReferences.length + state.savedLooks.length;
+    var badge = document.getElementById("saved-nav-count");
+    if (badge) badge.textContent = String(count);
+  }
+
   function toast(message) {
     var element = document.getElementById("toast");
     if (!element) return;
@@ -113,6 +186,7 @@
     if (name === "discover") renderDiscover();
     if (name === "closet") renderCloset();
     if (name === "studio") renderStudio();
+    if (name === "saved") renderSavedPage();
     if (name === "plan") {
       updateClosetCounts();
       if (state.itinerary) renderPlan(state.itinerary);
@@ -127,6 +201,63 @@
     button.setAttribute("aria-expanded", "false");
   }
 
+  function editorialCard(item) {
+    var saved = state.savedInspiration.some(function (candidate) { return candidate.id === item.id; });
+    var platform = sourcePlatform(item.sourceUrl);
+    return '<article class="editorial-card" data-card-id="' + escapeHTML(item.id) + '">' +
+      '<div class="editorial-card-source">' + sourceEmbed(item) + '</div>' +
+      '<div class="editorial-card-copy"><div class="editorial-card-meta"><span>' + escapeHTML(item.city) + '</span><span>' + escapeHTML(item.creator || item.source) + ' · <a href="' + escapeHTML(item.sourceUrl) + '" target="_blank" rel="noopener">' + escapeHTML(platform) + ' ↗</a></span></div>' +
+      '<h3>' + escapeHTML(item.title) + '</h3>' +
+      '<div class="editorial-card-actions"><button type="button" data-open-look="' + escapeHTML(item.id) + '">Scan & shop this look →</button>' +
+      '<button type="button" data-save-look="' + escapeHTML(item.id) + '" aria-pressed="' + String(saved) + '">' + (saved ? "Saved" : "Save") + '</button></div></div></article>';
+  }
+
+  function bindEditorialCards(scope) {
+    scope.querySelectorAll("[data-open-look]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var item = state.signals.find(function (signal) { return signal.id === button.dataset.openLook; }) ||
+          feed.find(function (signal) { return signal.id === button.dataset.openLook; }) ||
+          state.savedInspiration.find(function (signal) { return signal.id === button.dataset.openLook; });
+        if (item) openDrawer(item);
+      });
+    });
+    scope.querySelectorAll("[data-save-look]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        toggleSavedInspiration(button.dataset.saveLook);
+      });
+    });
+  }
+
+  function renderHomeFeed() {
+    var container = document.getElementById("home-feed");
+    if (!container) return;
+    var priority = ["Paris", "Milan", "Positano", "Santorini", "London", "Dubai"];
+    var items = priority.map(function (city) {
+      return feed.find(function (item) { return item.city === city; }) || fallbackCitySignals(city)[0];
+    });
+    container.innerHTML = items.map(editorialCard).join("");
+    bindEditorialCards(container);
+    hydratePinterest();
+  }
+
+  function toggleSavedInspiration(id) {
+    var exists = state.savedInspiration.some(function (item) { return item.id === id; });
+    if (exists) {
+      state.savedInspiration = state.savedInspiration.filter(function (item) { return item.id !== id; });
+      toast("Removed from your private edit.");
+    } else {
+      var source = state.signals.find(function (item) { return item.id === id; }) || feed.find(function (item) { return item.id === id; });
+      if (!source) return;
+      state.savedInspiration.unshift(Object.assign({}, source, { savedAt: new Date().toISOString() }));
+      toast("Saved to your private edit.");
+    }
+    writeStore("mikayla_saved_inspiration_v1", state.savedInspiration);
+    updateSavedCount();
+    renderHomeFeed();
+    if ((location.hash || "#home") === "#discover") renderDiscover();
+    if ((location.hash || "") === "#saved") renderSavedPage();
+  }
+
   function renderDiscover() {
     renderCityFilters();
     var title = document.getElementById("discover-city-title");
@@ -134,19 +265,16 @@
     var items = state.selectedCity === "All"
       ? state.signals
       : state.signals.filter(function (item) { return item.city.toLowerCase() === state.selectedCity.toLowerCase(); });
+    items = items.filter(function (item) { return !state.hiddenInspiration.includes(item.id); });
     var container = document.getElementById("discover-feed");
     if (!container) return;
     if (!items.length) {
       container.innerHTML = '<div class="empty-state"><h2>No sourced looks yet.</h2><p>MIKAYLA is building this city edit. Try another destination while the current search refreshes.</p></div>';
       return;
     }
-    container.innerHTML = items.map(function (item) {
-      return '<button class="masonry-card" type="button" data-look-id="' + escapeHTML(item.id) + '">' +
-        '<span class="masonry-card-image"><img loading="lazy" src="' + escapeHTML(item.image) + '" alt="' + escapeHTML(item.title + " in " + item.city) + '"><span class="source-chip">' + escapeHTML(item.creator || item.source) + '</span></span>' +
-        '<span class="masonry-card-copy"><b>' + escapeHTML(item.title) + '</b><span>Shop the look →</span></span>' +
-      '</button>';
-    }).join("");
-    bindLookCards(container);
+    container.innerHTML = items.map(editorialCard).join("");
+    bindEditorialCards(container);
+    hydratePinterest();
   }
 
   function renderCityFilters() {
@@ -174,7 +302,60 @@
   }
 
   function shopLink(retailer, query, source) {
-    return "./api/shop-link?retailer=" + encodeURIComponent(retailer) + "&q=" + encodeURIComponent(query) + "&source=" + encodeURIComponent(source || "site");
+    var destinations = {
+      revolve: "https://www.revolve.com/r/Search.jsp?search=" + encodeURIComponent(query),
+      farfetch: "https://www.farfetch.com/shopping/women/search/items.aspx?q=" + encodeURIComponent(query),
+      asos: "https://www.asos.com/search/?q=" + encodeURIComponent(query)
+    };
+    var destination = destinations[retailer];
+    if (!destination) return "#";
+    return "./api/shop-link?retailer=" + encodeURIComponent(retailer) + "&url=" + encodeURIComponent(destination) + "&look=" + encodeURIComponent(source || "site");
+  }
+
+  function drawerPiecesMarkup(pieces, item, scanned) {
+    return pieces.map(function (piece) {
+      var name = typeof piece === "string" ? piece : (piece.description || piece.category || piece.type || "Detected piece");
+      var query = typeof piece === "string" ? item.city + " women " + piece : (piece.search_query || item.city + " women " + name);
+      var note = typeof piece === "string" ? "" : (piece.style_notes || piece.trend_note || "");
+      return '<div class="drawer-piece"><div class="drawer-piece-heading"><h3>' + escapeHTML(name) + '</h3>' +
+        (piece && piece.trend_score ? '<small>' + escapeHTML(piece.trend_score) + '% city fit</small>' : '') + '</div>' +
+        (note ? '<p>' + escapeHTML(note) + '</p>' : '') +
+        '<p class="drawer-tier-note">' + (scanned ? 'AI-detected piece · ' : '') + 'closest similar searches · exact only when a verified catalogue confirms the product</p><div class="drawer-actions">' +
+          '<a class="is-primary" href="' + escapeHTML(shopLink("revolve", query, item.id)) + '" target="_blank" rel="noopener"><small>Contemporary · first edit</small><b>Revolve ↗</b></a>' +
+          '<a href="' + escapeHTML(shopLink("asos", query, item.id)) + '" target="_blank" rel="noopener"><small>Accessible</small><b>ASOS ↗</b></a>' +
+          '<a href="' + escapeHTML(shopLink("farfetch", query, item.id)) + '" target="_blank" rel="noopener"><small>Luxury</small><b>Farfetch ↗</b></a>' +
+        '</div></div>';
+    }).join("");
+  }
+
+  async function scanSocialLook(item, button) {
+    var results = document.querySelector("[data-scan-results]");
+    if (!results || !item.image) return;
+    setBusy(button, true, "Scanning every piece…");
+    results.setAttribute("aria-busy", "true");
+    try {
+      var response = await fetch("./api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl: item.image, city: item.city })
+      });
+      var analysis = await response.json();
+      if (!response.ok || analysis.error) throw new Error(analysis.error || "This look could not be scanned.");
+      var detected = Array.isArray(analysis.pieces) ? analysis.pieces : [];
+      if (!detected.length) {
+        results.insertAdjacentHTML("afterbegin", '<p class="scan-status">The live visual model is not configured yet. MIKAYLA is showing the human-curated piece breakdown for this look.</p>');
+        return;
+      }
+      item.pieces = detected;
+      results.innerHTML = '<div class="scan-result-intro"><p class="eyebrow">MIKAYLA visual scan</p><h3>' + escapeHTML(analysis.overall_vibe || "The complete look, detected.") + '</h3>' +
+        (analysis.city_styling_tip ? '<p>' + escapeHTML(analysis.city_styling_tip) + '</p>' : '') + '</div>' + drawerPiecesMarkup(detected, item, true);
+      toast("The complete look is ready to shop.");
+    } catch (error) {
+      results.insertAdjacentHTML("afterbegin", '<p class="scan-status">' + escapeHTML(error.message || "The visual scan is temporarily unavailable.") + ' The curated shopping breakdown remains available below.</p>');
+    } finally {
+      results.removeAttribute("aria-busy");
+      setBusy(button, false);
+    }
   }
 
   function openDrawer(item) {
@@ -185,25 +366,42 @@
     var pieces = Array.isArray(item.pieces) && item.pieces.length
       ? item.pieces
       : String(item.signal || "").split("·").map(function (piece) { return piece.trim(); }).filter(Boolean);
+    var saved = state.savedInspiration.some(function (candidate) { return candidate.id === item.id; });
+    var platform = sourcePlatform(item.sourceUrl);
+    var isSpecificPost = Boolean(pinId(item.sourceUrl) || tiktokId(item.sourceUrl) || instagramEmbedUrl(item.sourceUrl));
+    var originalLabel = isSpecificPost ? "View original " + platform + " post and creator" : "Open current city inspiration source";
     content.innerHTML =
-      '<div class="drawer-image"><img src="' + escapeHTML(item.image) + '" alt="' + escapeHTML(item.title) + '"><a href="' + escapeHTML(item.sourceUrl) + '" target="_blank" rel="noopener">Original source ↗</a></div>' +
+      '<div class="source-embed">' + sourceEmbed(item) + '</div><div class="drawer-source-meta"><a href="' + escapeHTML(item.sourceUrl) + '" target="_blank" rel="noopener">' + originalLabel + ' ↗</a><span>Platform-hosted public source</span></div>' +
       '<div class="drawer-copy"><p class="eyebrow" id="drawer-title">' + escapeHTML(item.city) + ' · ' + escapeHTML(item.creator || item.source) + '</p>' +
       '<h2>' + escapeHTML(item.title) + '</h2><p>' + escapeHTML(item.signal) + '</p>' +
-      pieces.map(function (piece) {
-        var query = item.city + " women " + piece;
-        return '<div class="drawer-piece"><h3>' + escapeHTML(piece) + '</h3><div class="drawer-actions">' +
-          '<a href="' + escapeHTML(shopLink("farfetch", query, item.id)) + '" target="_blank" rel="noopener"><small>Luxury</small><b>Farfetch ↗</b></a>' +
-          '<a href="' + escapeHTML(shopLink("revolve", query, item.id)) + '" target="_blank" rel="noopener"><small>Contemporary</small><b>Revolve ↗</b></a>' +
-          '<a href="' + escapeHTML(shopLink("asos", query, item.id)) + '" target="_blank" rel="noopener"><small>Accessible</small><b>ASOS ↗</b></a>' +
-        '</div></div>';
-      }).join("") +
-      '<a class="drawer-lens" href="https://lens.google.com/uploadbyurl?url=' + encodeURIComponent(item.image) + '" target="_blank" rel="noopener">Search this image with Google Lens ↗</a>' +
-      '<p class="shopping-note">Shopping results currently open direct retailer searches. The original visual remains connected to its source.</p></div>';
+      (item.image ? '<button class="solid-button drawer-scan-button" type="button" data-scan-current-look>Scan every visible piece</button><p class="drawer-scan-note">The original stays attached above while MIKAYLA identifies the clothing, shoes, bag, jewellery, and accessories.</p>' : '') +
+      '<div data-scan-results aria-live="polite">' + drawerPiecesMarkup(pieces, item, false) + '</div>' +
+      '<div class="feedback-row"><button type="button" data-drawer-save="' + escapeHTML(item.id) + '">' + (saved ? "Saved" : "Save inspiration") + '</button><button type="button" data-feedback="love">Love this</button><button type="button" data-feedback="not-style">Not my style</button><button type="button" data-feedback="hide">Hide</button></div>' +
+      '<p class="shopping-note">Shopping is curated inside MIKAYLA; checkout opens the retailer. Results remain labelled similar until a verified product catalogue confirms an exact item.</p></div>';
     backdrop.hidden = false;
     drawer.classList.add("is-open");
     drawer.setAttribute("aria-hidden", "false");
     document.body.classList.add("drawer-open");
     drawer.querySelector(".drawer-close").focus();
+    var saveButton = content.querySelector("[data-drawer-save]");
+    if (saveButton) saveButton.addEventListener("click", function () { toggleSavedInspiration(item.id); closeDrawer(); });
+    var scanButton = content.querySelector("[data-scan-current-look]");
+    if (scanButton) scanButton.addEventListener("click", function () { scanSocialLook(item, scanButton); });
+    content.querySelectorAll("[data-feedback]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var feedback = button.dataset.feedback;
+        state.tasteFeedback[item.id] = feedback;
+        writeStore("mikayla_taste_feedback_v1", state.tasteFeedback);
+        if (feedback === "hide" || feedback === "not-style") {
+          if (!state.hiddenInspiration.includes(item.id)) state.hiddenInspiration.push(item.id);
+          writeStore("mikayla_hidden_inspiration_v1", state.hiddenInspiration);
+          closeDrawer();
+          renderDiscover();
+        }
+        toast(feedback === "love" ? "MIKAYLA will learn from this look." : "Your taste edit has been updated.");
+      });
+    });
+    hydratePinterest();
   }
 
   function closeDrawer() {
@@ -226,17 +424,21 @@
         state.signals = data.items;
         state.signalMode = "live";
         if (status) {
+          var platforms = Array.isArray(data.sourcePlatforms) && data.sourcePlatforms.length
+            ? data.sourcePlatforms.join(" · ")
+            : "Pinterest · Instagram · TikTok";
           var trendText = Array.isArray(data.trendKeywords) && data.trendKeywords.length
             ? " · rising now: " + data.trendKeywords.slice(0, 3).map(function (trend) { return trend.keyword; }).join(", ")
             : "";
           status.innerHTML = '<span></span><div><b>Live city style signals</b><small>Refreshed ' +
-            escapeHTML(new Date(data.updatedAt).toLocaleString()) + escapeHTML(trendText) + '</small></div>';
+            escapeHTML(new Date(data.updatedAt).toLocaleString()) + ' · ' + escapeHTML(platforms) + escapeHTML(trendText) + '</small></div>';
         }
       } else {
-        state.signals = feed.slice();
+        var searchedCity = city && city !== "All" ? city : "";
+        var curatedForCity = searchedCity ? feed.filter(function (item) { return item.city.toLowerCase() === searchedCity.toLowerCase(); }) : feed.slice();
+        state.signals = curatedForCity.length ? feed.slice() : fallbackCitySignals(searchedCity);
         state.signalMode = "curated";
         if (status) {
-          var searchedCity = city && city !== "All" ? city : "";
           var liveSearch = searchedCity
             ? ' <a href="https://www.pinterest.com/search/pins/?q=' + encodeURIComponent(searchedCity + " street style women outfit") + '" target="_blank" rel="noopener">Open current Pinterest search ↗</a>'
             : "";
@@ -244,7 +446,9 @@
         }
       }
     } catch (_) {
-      state.signals = feed.slice();
+      var offlineCity = city && city !== "All" ? city : "";
+      var offlineCurated = offlineCity ? feed.filter(function (item) { return item.city.toLowerCase() === offlineCity.toLowerCase(); }) : feed.slice();
+      state.signals = offlineCurated.length ? feed.slice() : fallbackCitySignals(offlineCity);
     }
     renderDiscover();
   }
@@ -303,9 +507,9 @@
           (piece.trend_score ? '<small>' + escapeHTML(piece.trend_score) + '% city fit</small>' : "") + '</header>' +
           '<p>' + escapeHTML(piece.style_notes || piece.trend_note || "Shop the silhouette and styling effect at the price level that suits you.") + '</p>' +
           '<div class="tier-links">' +
-            '<a href="' + escapeHTML(shopLink("farfetch", query, "visual")) + '" target="_blank" rel="noopener"><small>Luxury</small><b>Investment edit ↗</b></a>' +
-            '<a href="' + escapeHTML(shopLink("revolve", query, "visual")) + '" target="_blank" rel="noopener"><small>Contemporary</small><b>Modern edit ↗</b></a>' +
+            '<a class="is-primary" href="' + escapeHTML(shopLink("revolve", query, "visual")) + '" target="_blank" rel="noopener"><small>Contemporary · first edit</small><b>Modern edit ↗</b></a>' +
             '<a href="' + escapeHTML(shopLink("asos", query, "visual")) + '" target="_blank" rel="noopener"><small>Accessible</small><b>Budget edit ↗</b></a>' +
+            '<a href="' + escapeHTML(shopLink("farfetch", query, "visual")) + '" target="_blank" rel="noopener"><small>Luxury</small><b>Investment edit ↗</b></a>' +
           '</div></article>';
       }).join("");
   }
@@ -411,6 +615,49 @@
       }).join("");
   }
 
+  function outfitOptionsFor(item) {
+    var options = Array.isArray(item.outfit_options) ? item.outfit_options : [];
+    if (options.length) return options.slice(0, 3);
+    var base = item.outfit || {};
+    return [{
+      direction: "Understated",
+      description: base.description || "A complete city-ready look will appear here.",
+      stylist_note: base.stylist_note || "The closest edit for this occasion.",
+      pieces: base.pieces || [],
+      gaps: base.gaps || []
+    }];
+  }
+
+  function tripPanels(result) {
+    var events = [];
+    (result.schedule || []).forEach(function (day) {
+      (day.events || []).forEach(function (event) { events.push(event); });
+    });
+    var capsule = [];
+    events.forEach(function (event) {
+      var option = outfitOptionsFor(event)[0] || {};
+      (option.pieces || []).forEach(function (piece) {
+        var name = piece.item || piece.description;
+        if (name && !capsule.includes(name)) capsule.push(name);
+      });
+    });
+    if (!capsule.length) capsule = ["One city-ready layer", "Two versatile day bases", "One evening silhouette", "Two pairs of shoes", "One day bag", "One evening bag", "Jewellery and eyewear"];
+    var packing = capsule.concat(["Undergarments and sleepwear", "Travel-size care kit", "Weather layer if the forecast changes"]);
+    return '<div class="trip-tools" role="tablist"><button type="button" class="is-active" data-trip-tab="calendar">Trip calendar</button><button type="button" data-trip-tab="capsule">Capsule wardrobe</button><button type="button" data-trip-tab="packing">Packing list</button></div>' +
+      '<section class="trip-panel" data-trip-panel="calendar"><h3>Your trip at a glance</h3><ul class="trip-panel-list">' + events.map(function (event) { return '<li><b>' + escapeHTML(event.time || "") + '</b> · ' + escapeHTML(event.venue || "Your plan") + '</li>'; }).join("") + '</ul></section>' +
+      '<section class="trip-panel" data-trip-panel="capsule" hidden><h3>The capsule</h3><ul class="trip-panel-list">' + capsule.map(function (piece) { return '<li>' + escapeHTML(piece) + '</li>'; }).join("") + '</ul></section>' +
+      '<section class="trip-panel" data-trip-panel="packing" hidden><h3>The packing list</h3><ul class="trip-panel-list">' + packing.map(function (piece) { return '<li>□ ' + escapeHTML(piece) + '</li>'; }).join("") + '</ul></section>';
+  }
+
+  function bindTripTools(scope) {
+    scope.querySelectorAll("[data-trip-tab]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        scope.querySelectorAll("[data-trip-tab]").forEach(function (candidate) { candidate.classList.toggle("is-active", candidate === button); });
+        scope.querySelectorAll("[data-trip-panel]").forEach(function (panel) { panel.hidden = panel.dataset.tripPanel !== button.dataset.tripTab; });
+      });
+    });
+  }
+
   function renderPlan(result) {
     var container = document.getElementById("plan-results");
     if (!container || !result) return;
@@ -419,17 +666,19 @@
     container.innerHTML =
       '<div class="trip-heading"><div><p class="eyebrow">' + escapeHTML(result.dates || "Your trip") + '</p><h2>' + escapeHTML(result.destination || "Your destination") + '</h2></div>' +
       '<p>' + escapeHTML(result.capsule_note || "A compact, repeatable wardrobe built around the places on your itinerary.") + (result.demo ? " This is a clearly labelled local interpretation; connected AI produces deeper venue analysis." : "") + '</p></div>' +
+      tripPanels(result) +
       schedule.map(function (day, dayIndex) {
         return '<section class="trip-day"><h3>Day ' + escapeHTML(day.day || dayIndex + 1) + '<small>' + escapeHTML(day.date || "") + '</small></h3><div>' +
           (day.events || []).map(function (item, eventIndex) {
             var key = dayIndex + "-" + eventIndex;
+            var options = outfitOptionsFor(item);
             return '<article class="trip-event"><time>' + escapeHTML(item.time || "") + '</time><div><small>' + escapeHTML(item.venue_type || item.dress_code || "Occasion") + '</small><h4>' + escapeHTML(item.venue || "Your plan") + '</h4><p>' + escapeHTML(item.dress_code || "") + '</p></div>' +
-              '<div><p class="outfit-copy">' + escapeHTML(item.outfit && item.outfit.description ? item.outfit.description : "A complete look will appear here.") + '</p><p>' + escapeHTML(item.outfit && item.outfit.stylist_note ? item.outfit.stylist_note : "") + '</p>' +
-              renderOutfitDetails(item.outfit) +
+              '<div><div class="outfit-directions">' + options.map(function (option, optionIndex) { return '<div class="outfit-direction' + (optionIndex === 0 ? " is-featured" : "") + '"><small>' + escapeHTML(option.direction || "Option " + (optionIndex + 1)) + '</small><p>' + escapeHTML(option.description || "Complete look") + '</p><p class="stylist-reason">' + escapeHTML(option.stylist_note || "") + '</p>' + renderOutfitDetails(option) + '</div>'; }).join("") + '</div>' +
               renderLookAssignment(key) + '</div></article>';
           }).join("") + '</div></section>';
       }).join("");
     bindAssignmentSelects(container);
+    bindTripTools(container);
     container.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -619,6 +868,7 @@
     var name = document.getElementById("look-name").value.trim() || "Untitled city look";
     state.savedLooks.unshift({ id: uid("look"), name: name, pieces: pieces, createdAt: new Date().toISOString() });
     writeStore("mikayla_saved_looks_v4", state.savedLooks);
+    updateSavedCount();
     document.getElementById("look-name").value = "";
     renderSavedLooks();
     toast("Look saved. You can now assign it to the itinerary.");
@@ -646,15 +896,60 @@
         });
         writeStore("mikayla_saved_looks_v4", state.savedLooks);
         writeStore("mikayla_assignments_v4", state.assignments);
+        updateSavedCount();
         renderSavedLooks();
+        if ((location.hash || "") === "#saved") renderSavedPage();
       });
     });
   }
 
+  function renderSavedPage() {
+    var summary = document.getElementById("saved-summary");
+    var inspiration = document.getElementById("saved-inspiration-grid");
+    var looks = document.getElementById("saved-page-looks");
+    if (!summary || !inspiration || !looks) return;
+    var itineraryEvents = state.itinerary && Array.isArray(state.itinerary.schedule)
+      ? state.itinerary.schedule.reduce(function (count, day) { return count + (day.events || []).length; }, 0)
+      : 0;
+    summary.innerHTML = [
+      [state.savedInspiration.length + state.uploadedReferences.length, "saved inspiration"],
+      [state.closet.length, "closet pieces"],
+      [state.savedLooks.length, "built looks"],
+      [itineraryEvents, "trip occasions"]
+    ].map(function (stat) { return '<div class="saved-stat"><strong>' + stat[0] + '</strong><span>' + stat[1] + '</span></div>'; }).join("");
+    var externalCards = state.savedInspiration.map(editorialCard).join("");
+    var uploadedCards = state.uploadedReferences.map(function (item) { return '<article class="vault-card"><img src="' + escapeHTML(item.image) + '" alt="Private uploaded outfit reference"><div><small>Private upload</small><h3>' + escapeHTML(item.name || "Saved outfit reference") + '</h3><button type="button" data-remove-reference="' + escapeHTML(item.id) + '">Remove</button></div></article>'; }).join("");
+    inspiration.innerHTML = state.savedInspiration.length || state.uploadedReferences.length
+      ? externalCards + uploadedCards
+      : '<div class="saved-empty"><h3>Your edit begins with one look.</h3><p>Save inspiration from any city and MIKAYLA will keep it connected to the creator, destination, and shopping path.</p></div>';
+    bindEditorialCards(inspiration);
+    inspiration.querySelectorAll("[data-remove-reference]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        state.uploadedReferences = state.uploadedReferences.filter(function (item) { return item.id !== button.dataset.removeReference; });
+        writeStore("mikayla_uploaded_references_v1", state.uploadedReferences);
+        updateSavedCount();
+        renderSavedPage();
+      });
+    });
+    hydratePinterest();
+    looks.innerHTML = state.savedLooks.length
+      ? state.savedLooks.map(function (look) {
+        var cost = (look.pieces || []).reduce(function (sum, piece) { return sum + Number(piece.price || 0); }, 0);
+        return '<article class="saved-look"><h3>' + escapeHTML(look.name) + '</h3><p>' + (look.pieces || []).map(function (piece) { return escapeHTML(piece.name); }).join(" · ") + '</p><footer><span>' + (look.pieces || []).filter(function (piece) { return piece.owned; }).length + ' owned · $' + cost + ' new</span><a href="#studio">Open studio →</a></footer></article>';
+      }).join("")
+      : '<div class="saved-empty"><h3>No assembled looks yet.</h3><p>Build a complete look in the Outfit Studio, then assign it to any occasion on your trip.</p></div>';
+  }
+
   function init() {
+    renderHomeFeed();
     renderCloset();
     renderStudio();
     updateClosetCounts();
+    updateSavedCount();
+    document.getElementById("discover-occasion").value = state.refinements.occasion || "";
+    document.getElementById("discover-colour").value = state.refinements.colour || "";
+    document.getElementById("discover-size").value = state.refinements.size || "";
+    document.getElementById("discover-region").value = state.refinements.region || "Canada";
     loadSignals("All");
     route();
 
@@ -703,19 +998,45 @@
       var file = this.files[0];
       if (!file) return;
       if (!file.type.startsWith("image/")) return toast("Choose a JPG, PNG, or WebP image.");
-      var data = await fileToData(file, 1400);
+      var data = await fileToData(file, 1000);
       var preview = document.getElementById("visual-preview");
       preview.src = data.dataUrl;
       preview.alt = "Uploaded outfit preview";
       preview.hidden = false;
+      state.pendingVisualReference = { image: data.dataUrl, name: file.name.replace(/\.[^.]+$/, "") || "Outfit reference" };
+      var saveReference = document.getElementById("save-visual-reference");
+      saveReference.hidden = false;
+      saveReference.disabled = false;
+      saveReference.textContent = "Save original to my private vault";
       document.querySelector("#visual-drop .upload-empty").hidden = true;
     });
     document.getElementById("visual-form").addEventListener("submit", submitVisual);
+    document.getElementById("save-visual-reference").addEventListener("click", function () {
+      if (!state.pendingVisualReference) return;
+      state.uploadedReferences.unshift({ id: uid("reference"), image: state.pendingVisualReference.image, name: state.pendingVisualReference.name, createdAt: new Date().toISOString() });
+      if (writeStore("mikayla_uploaded_references_v1", state.uploadedReferences)) {
+        updateSavedCount();
+        this.textContent = "Saved to private vault";
+        this.disabled = true;
+        toast("Original saved to your private vault.");
+      }
+    });
 
     document.getElementById("plan-file").addEventListener("change", function () {
       document.getElementById("plan-file-name").textContent = this.files[0] ? this.files[0].name : "Choose file";
     });
     document.getElementById("plan-form").addEventListener("submit", submitPlan);
+
+    document.getElementById("apply-refinements").addEventListener("click", function () {
+      state.refinements = {
+        occasion: document.getElementById("discover-occasion").value,
+        colour: document.getElementById("discover-colour").value.trim(),
+        size: document.getElementById("discover-size").value.trim(),
+        region: document.getElementById("discover-region").value
+      };
+      writeStore("mikayla_refinements_v1", state.refinements);
+      toast("Your city edit has been refined for " + state.refinements.region + ".");
+    });
 
     document.getElementById("closet-files").addEventListener("change", function () {
       addClosetFiles(this.files);

@@ -4,7 +4,7 @@ MIKAYLA is a city-specific travel fashion platform: discover what fits the desti
 
 ## Main experiences
 
-- **Discover** — search any city for its style language, sourced creator/Pinterest references, complete looks, accessories, and luxury, contemporary, or accessible shopping paths.
+- **Discover** — search any city for its style language, source-linked Pinterest, Instagram, and TikTok references, complete looks, accessories, and luxury, contemporary, or accessible shopping paths.
 - **Visual Shop** — upload an outfit for full-look analysis or describe the pieces manually when the live vision model is not configured.
 - **Plan** — use the guided trip builder or upload/paste an itinerary. Named venues become styled occasions.
 - **Closet** — add and categorise clothes the traveller already owns.
@@ -38,16 +38,22 @@ The existing Vercel project can continue deploying from the GitHub `main` branch
 - `AWIN_PUBLISHER_ID` / `AWIN_API_TOKEN` — optional future affiliate product feeds.
 - `PINTEREST_ACCESS_TOKEN` — approved access to Pinterest's current Trends data and, later, MIKAYLA's branded-Pin publishing workflow.
 - `PINTEREST_PUBLISH_BOARD_ID` — optional future destination for branded editorial or approved affiliate Pins. It is not used as the website's trend feed.
-- `DATAFORSEO_LOGIN` / `DATAFORSEO_PASSWORD` — licensed, real-time image-search results for each city query. MIKAYLA filters these to source-linked Pinterest Pin results so the feed updates without manual board maintenance.
+- `DATAFORSEO_LOGIN` / `DATAFORSEO_PASSWORD` — licensed, current image-search results for each city query. MIKAYLA filters these to specific public Pinterest, Instagram, and TikTok posts, preserves the original source, and never presents search rank alone as proof that a look is trending.
 - `AWIN_PUBLISHER_ID` and the retailer merchant IDs — later convert the existing direct retailer searches into tracked affiliate deep links without changing the interface.
 
 The current release uses direct retailer search links. It does not represent any active affiliate relationship or commission arrangement.
 - `SUPABASE_URL` / `SUPABASE_KEY` — account-backed closet and trip storage.
 - `RESEND_API_KEY` — waitlist and access email delivery.
 
+`mikaylaco.com` and `www.mikaylaco.com` are already attached to the existing
+Vercel project. Pushing the validated `main` branch publishes the current build
+to that domain.
+
 ## Social preview
 
-The branded Open Graph image is stored at `public/og.png`.
+The active temporary brand and Open Graph artwork is the founder-supplied
+wordmark at `public/mikayla-wordmark-reference.png`. No standalone emblem is
+active on the website.
 
 ## Release gate
 

@@ -12,6 +12,21 @@ const CORS_HEADERS = {
   'Content-Type':                 'application/json',
 };
 
+function isSafePublicImageUrl(value) {
+  try {
+    const url = new URL(String(value || ''));
+    if (url.protocol !== 'https:' || url.username || url.password || url.href.length > 2048) return false;
+    const host = url.hostname.toLowerCase();
+    if (host === 'localhost' || host.endsWith('.local') || host === '0.0.0.0' || host === '::1') return false;
+    if (/^(?:10|127)\./.test(host) || /^192\.168\./.test(host) || /^169\.254\./.test(host)) return false;
+    const private172 = host.match(/^172\.(\d{1,3})\./);
+    if (private172 && Number(private172[1]) >= 16 && Number(private172[1]) <= 31) return false;
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 // Budget-tiered retailers
 const TIERS = {
   luxury: [
@@ -109,6 +124,9 @@ exports.handler = async function(event) {
   if (!imageUrl && !imageBase64) {
     return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Provide imageUrl or imageBase64' }) };
   }
+  if (imageUrl && !isSafePublicImageUrl(imageUrl)) {
+    return { statusCode: 400, headers: CORS_HEADERS, body: JSON.stringify({ error: 'Use a public HTTPS image URL' }) };
+  }
 
   const imageBlock = imageBase64
     ? { type: 'image', source: { type: 'base64', media_type: mediaType, data: imageBase64 } }
@@ -190,7 +208,9 @@ Rules:
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5',
+        model: process.env.ANTHROPIC_MODEL && process.env.ANTHROPIC_MODEL !== 'claude-sonnet-5'
+          ? process.env.ANTHROPIC_MODEL
+          : 'claude-sonnet-4-20250514',
         max_tokens: 3000,
         system: systemPrompt,
         messages: [{ role: 'user', content: [imageBlock, { type: 'text', text: userPrompt }] }],

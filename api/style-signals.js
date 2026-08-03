@@ -51,26 +51,39 @@ function isPinterestPin(url) {
   return /^https?:\/\/(?:[^/]+\.)?pinterest\.[^/]+\/pin\//i.test(String(url || ""));
 }
 
+function socialPlatform(url) {
+  const value = String(url || "");
+  if (isPinterestPin(value)) return "Pinterest";
+  if (/^https?:\/\/(?:www\.)?instagram\.com\/(?:p|reel|tv)\/[a-zA-Z0-9_-]+/i.test(value)) return "Instagram";
+  if (/^https?:\/\/(?:www\.)?tiktok\.com\/@[^/]+\/video\/\d+/i.test(value)) return "TikTok";
+  return "";
+}
+
 function imageSearchItems(data) {
   return data?.tasks?.[0]?.result?.[0]?.items || [];
 }
 
 function toDiscoverySignal(result, city, index, trendKeywords) {
+  const platform = socialPlatform(result.url);
   const title = clean(result.title || result.alt, `${city} street-style reference`);
-  const description = clean(result.alt || result.title, `Current Pinterest result for ${city} style.`);
+  const description = clean(result.alt || result.title, `Current public ${platform} result for ${city} style.`);
   const query = clean(`${city} women ${title}`, `${city} women outfit`).slice(0, 180);
   return {
     id: `discovery-${city.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${index}`,
     city,
     image: result.source_url || result.encoded_url,
     sourceUrl: result.url,
-    creator: "Pinterest",
-    source: "Current Pinterest result",
+    creator: clean(result.source || platform, platform),
+    source: `Current ${platform} public result`,
+    platform,
     title,
     signal: description.slice(0, 220),
     query,
     pieces: [],
-    freshness: "Current search ranking",
+    freshness: "Current public social search ranking",
+    capturedAt: new Date().toISOString(),
+    rights: "Platform-hosted public post; original source remains linked",
+    confidence: "discovery",
     trendKeywords,
   };
 }
@@ -106,11 +119,11 @@ async function fetchCurrentPinterestResults(city, trendKeywords) {
   const date = new Date();
   const trendPhrase = trendKeywords.slice(0, 2).map((trend) => trend.keyword).join(" ");
   const keyword = [
-    "Pinterest",
     city,
     seasonForDate(date),
     date.getUTCFullYear(),
     "women street style outfit",
+    "Instagram TikTok Pinterest",
     trendPhrase,
   ].filter(Boolean).join(" ");
 
@@ -135,14 +148,15 @@ async function fetchCurrentPinterestResults(city, trendKeywords) {
 
   const seen = new Set();
   return imageSearchItems(data)
-    .filter((item) => item?.type === "images_search" && isPinterestPin(item.url) && (item.source_url || item.encoded_url))
+    .filter((item) => item?.type === "images_search" && socialPlatform(item.url) && (item.source_url || item.encoded_url))
     .filter((item) => {
       const key = `${item.url}|${item.source_url || item.encoded_url}`;
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     })
-    .slice(0, 18)
+    .sort((a, b) => (Number(a.rank_group) || 999) - (Number(b.rank_group) || 999))
+    .slice(0, 24)
     .map((item, index) => toDiscoverySignal(item, city, index, trendKeywords));
 }
 
@@ -161,7 +175,8 @@ module.exports = async function styleSignals(req, res) {
         return res.status(200).json({
           items: discovered,
           live: true,
-          mode: "automatic-city-discovery",
+          mode: "current-social-discovery",
+          sourcePlatforms: [...new Set(discovered.map((item) => item.platform))],
           trendKeywords,
           updatedAt: new Date().toISOString(),
         });

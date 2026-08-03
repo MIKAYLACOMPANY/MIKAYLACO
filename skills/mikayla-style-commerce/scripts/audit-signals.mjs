@@ -6,7 +6,7 @@ if (!input) {
   process.exit(2);
 }
 
-const required = ["id", "city", "image", "sourceUrl", "source", "creator", "title", "signal", "query", "pieces"];
+const required = ["id", "city", "image", "sourceUrl", "source", "creator", "title", "signal", "query", "pieces", "platform", "capturedAt", "rights"];
 const text = fs.readFileSync(input, "utf8");
 let items;
 
@@ -29,6 +29,10 @@ for (const [index, item] of items.entries()) {
   if (!Array.isArray(item.pieces)) errors.push(`Item ${index + 1}: pieces must be an array`);
   if (!/^https:\/\//.test(item.image || "")) errors.push(`Item ${index + 1}: image must use HTTPS`);
   if (!/^https:\/\//.test(item.sourceUrl || "")) errors.push(`Item ${index + 1}: sourceUrl must use HTTPS`);
+  if (!/^https:\/\/(?:[^/]+\.)?(?:pinterest\.[^/]+\/pin\/|instagram\.com\/(?:p|reel|tv)\/|tiktok\.com\/@[^/]+\/video\/)/i.test(item.sourceUrl || "")) {
+    errors.push(`Item ${index + 1}: sourceUrl must be a specific Pinterest, Instagram, or TikTok public post`);
+  }
+  if (!["Pinterest", "Instagram", "TikTok"].includes(item.platform)) errors.push(`Item ${index + 1}: unsupported platform`);
   if (ids.has(item.id)) errors.push(`Duplicate id: ${item.id}`);
   ids.add(item.id);
 }
