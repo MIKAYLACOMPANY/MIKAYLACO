@@ -220,7 +220,20 @@ Rules:
     if (!apiResponse.ok) {
       const errText = await apiResponse.text();
       console.error('Anthropic error:', apiResponse.status, errText);
-      return { statusCode: 502, headers: CORS_HEADERS, body: JSON.stringify({ error: 'AI service error' }) };
+      let providerType = 'provider_error';
+      try { providerType = JSON.parse(errText)?.error?.type || providerType; } catch (_) {}
+      const safeMessage = apiResponse.status === 401
+        ? 'The visual AI credential needs to be refreshed.'
+        : apiResponse.status === 404
+          ? 'The configured visual AI model is unavailable.'
+          : apiResponse.status === 429
+            ? 'The visual scanner is temporarily at capacity.'
+            : 'The visual scanner is temporarily unavailable.';
+      return {
+        statusCode: 502,
+        headers: CORS_HEADERS,
+        body: JSON.stringify({ error: safeMessage, providerStatus: apiResponse.status, providerType }),
+      };
     }
 
     const claudeData = await apiResponse.json();
