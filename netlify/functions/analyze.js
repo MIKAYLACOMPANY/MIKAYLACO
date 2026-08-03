@@ -221,13 +221,9 @@ Rules:
       const errText = await apiResponse.text();
       console.error('Anthropic error:', apiResponse.status, errText);
       let providerType = 'provider_error';
-      let providerMessage = '';
       try {
         const providerError = JSON.parse(errText)?.error || {};
         providerType = providerError.type || providerType;
-        providerMessage = String(providerError.message || '')
-          .replace(/sk-[a-zA-Z0-9_-]+/g, '[credential]')
-          .slice(0, 240);
       } catch (_) {}
       const safeMessage = apiResponse.status === 401
         ? 'The visual AI credential needs to be refreshed.'
@@ -239,7 +235,7 @@ Rules:
       return {
         statusCode: 502,
         headers: CORS_HEADERS,
-        body: JSON.stringify({ error: safeMessage, providerStatus: apiResponse.status, providerType, providerMessage }),
+        body: JSON.stringify({ error: safeMessage, providerStatus: apiResponse.status, providerType }),
       };
     }
 
